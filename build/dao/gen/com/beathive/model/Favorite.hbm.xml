@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Favorite"
+            table="favorite"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="fileId"
+                    column="fileId"
+        >
+
+        </property>
+
+        <property
+            name="clipId"
+                    column="clipId"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="userId"
+                    column="userId"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="created"
+                    type="timestamp"
+                    column="created"
+        >
+
+        </property>
+
+        <property
+            name="comment"
+                    type="text"
+                    column="comment"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

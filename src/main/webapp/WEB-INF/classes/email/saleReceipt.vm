@@ -1,0 +1,55 @@
+Congratulations on your purchase! Your loops are available for download.
+
+Please follow the link below:
+${baseURL}${receipt.downloadURL}
+
+This download is guaranteed for ${term}, ending ${termEndDate}.
+
+
+RECIEPT	#${receipt.id}
+Date: ${receipt.created}
+-------------------
+#if( !${loopList.empty} )
+#set( $cnt = 1 )
+LOOPS:
+#foreach( $clip in ${loopList} )
+${cnt}. #parse("email/loopItem.vm" )
+
+
+#set( $cnt = $cnt + 1 )
+#end	
+-------------------
+#end
+
+#if( !${trackpackList.empty} )
+#set( $cnt = 1 )
+
+TRACK PACKS:
+
+#foreach( $clip in ${trackpackList} )
+${cnt}. #parse("email/trackpackItem.vm" )
+
+
+#set( $cnt = $cnt + 1 )
+#end
+-------------------
+#end
+
+Sub-Total (USD) : ${receipt.subTotal}
+#* no fee to buyer so we fake it ${receipt.fee} *#
+Fees : 0.00
+Discount applied : ${discount}
+
+#if(${receipt.promoCode} && ${receipt.promoCode} != "" )
+Promo Code : ${receipt.promoCode}
+Promo discount : ${promoDiscount}
+#end
+
+TOTAL PAID	: ${receipt.total} USD
+-----------------------------------------
+
+
+Thank you for your purchase.
+
+Contact: support@beathive.com
+(c)2010 BeatHive, LLC

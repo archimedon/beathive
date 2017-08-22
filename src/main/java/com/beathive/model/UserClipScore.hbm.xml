@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class
+        name="com.beathive.model.UserClipScore"
+        table="user_clip_score"
+    >
+	<composite-id>
+	    <key-property name="userId" type="java.lang.Long"
+	            column="userId"/>
+	    <key-property name="clipId" type="java.lang.Long"
+	            column="clipId"/>
+	</composite-id>
+	
+	<property
+	    name="storeId"
+	    type="java.lang.Long"
+	    update="true"
+	    insert="true"
+	    column="storeId"
+	    not-null="true"
+	/>
+	<property
+	    name="score"
+	    type="java.lang.Integer"
+	    update="true"
+	    insert="true"
+	    column="score"
+	    not-null="true"
+	/>
+   </class>
+</hibernate-mapping>

@@ -1,0 +1,823 @@
+package com.beathive.webapp.action;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+import org.apache.struts.util.MessageResources;
+import com.beathive.model.Address;
+import com.beathive.model.AudioFile;
+import com.beathive.model.Loop;
+import com.beathive.model.Purchase;
+import com.beathive.model.PurchaseItem;
+import com.beathive.model.Purchase;
+import com.beathive.model.SoundClip;
+import com.beathive.model.Trackpack;
+import com.beathive.model.User;
+import com.beathive.model.Zip;
+import com.beathive.model.ZipItem;
+import com.beathive.service.AudioFileManager;
+import com.beathive.service.RepositoryServiceInterface;
+import com.beathive.service.SoundClipManager;
+import com.beathive.service.MailEngine;
+import com.beathive.service.PurchaseManager;
+import com.beathive.service.UserManager;
+import com.beathive.service.ZipManager;
+import com.beathive.service.commerce.CcReply;
+import com.beathive.service.commerce.CcRequest;
+import com.beathive.service.commerce.ChargeManager;
+import com.beathive.service.commerce.impl.CaptureRequest;
+import com.beathive.service.commerce.impl.CcRequestImpl;
+import com.beathive.util.DateUtil;
+import com.beathive.webapp.form.BillingForm;
+import com.beathive.webapp.form.PurchaseForm;
+import com.beathive.webapp.form.PurchaseItemForm;
+import com.beathive.webapp.form.PaypalForm;
+import com.beathive.webapp.form.PriceForm;
+import com.beathive.webapp.form.SoundClipForm;
+import com.beathive.webapp.form.UserForm;
+import org.springframework.mail.SimpleMailMessage;
+
+import com.beathive.Constants;
+import com.beathive.ftpapp.ArchivePojo;
+import com.beathive.ftpapp.RepositoryException;
+import com.beathive.ftpapp.RepositoryManager;
+
+/**
+ * <p>
+ * <a href="OrderAction.java.html"><i>View Source</i></a>
+ * </p>
+ * 
+ * @author <a href="mailto:ron@webaxe.com">Ronald Dennison</a>
+ * @version $Revision: 1.12 $ $Date: 2004/05/25 06:27:22 $
+ * 
+ * 
+ * @struts.action name="billingForm" path="/cart/authOrder" scope="request"
+ *                validate="true" input="edit" parameter="action"
+ * 
+ * @struts.action name="billingForm" path="/cart/checkout" scope="request"
+ *                validate="false" input="edit" parameter="action"
+ * 
+ * 
+ * @struts.action-forward name="receipt" path="/cart/receipt.jsp" redirect="true"
+ * @struts.action-forward name="edit" path="/user/index.jsp?t=account" redirect="false"
+ * @struts.action-forward name="billingInfo" path="/user/editAccount.do" redirect="true"
+ * @struts.action-forward name="viewcart" path=".cartView"
+ * @struts.action-forward name="confirm" path="/cart/confirmOrder.jsp" redirect="true"
+ * 
+ */
+public final class PurchaseAction extends BaseAction {
+	/** The <code>Log</code> instance for this class */
+	private static Log log = LogFactory.getLog(PurchaseAction.class);
+
+	public ActionForward cancel(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		if (log.isDebugEnabled()) {
+			log.debug("Entering 'cancel' method");
+		}
+
+		if (!StringUtils.equals(request.getParameter("from"), "list")) {
+			return mapping.findForward("mainMenu");
+		} else {
+			String next = mapping.findForward("viewOrders").getPath();
+			return new ActionForward(next, true);
+		}
+	}
+
+
+	/**
+	 * This method will populates the billingForm and presents the user.
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward billingInfo(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		log.debug("enter checkout");
+
+		HttpSession session = request.getSession();
+		String username = request.getRemoteUser();
+		
+		LinkedHashSet userCart = (LinkedHashSet)session.getAttribute(Constants.USER_CART);
+		// make sure cart isn't empty
+		if (userCart==null || userCart.isEmpty()){
+			return mapping.getInputForward();
+		}
+		
+		UserManager uman = (UserManager)getBean("userManager");
+		User user = uman.getUserByUsername(username);
+		
+		// prepare a billingForm
+		BillingForm billing = getBilling(user);
+		
+		
+		billing.setPage(2);	
+
+		super.updateFormBean(mapping, request, billing);
+		
+		return mapping.findForward("edit");
+	}
+/*
+ * try{
+			Order order = genOrder(billingForm , request , getUserContainer(request).getCart());
+			// check that files exist
+			List pojos = getArchiveBeans(order.getItems());
+
+			RepositoryServiceInterface repo = (RepositoryServiceInterface) getBean("repositoryServiceInterface");
+			// if problem with the files
+			repo.checkFiles(pojos);
+
+		}	catch(RepositoryException err){
+			String msg = err.getMessage();
+			log.error("THE fucking ERROR.msg: " + msg);
+			log.error("THE fucking ERROR: " + err);
+			ActionMessages errors = new ActionMessages();
+			errors.add(ActionMessages.GLOBAL_MESSAGE,new ActionMessage("checkout.errors.contactadmin" , getResources(request).getMessage("feedback.admin")));
+
+			StringBuffer msgBuf = new StringBuffer();
+			
+			String[] gsm= StringUtils.split(msg, "&");
+			if (gsm != null){
+				for(int u = 0; u < gsm.length; u++){
+					errors.add(ActionMessages.GLOBAL_MESSAGE,
+		                       new ActionMessage("errors.detail", gsm[u]));
+				msgBuf.append(gsm[u]).append("\n\n");	
+				}
+				
+			}
+			notifyAdmin(msgBuf , getResources(request) , billingForm);
+			
+			
+	    	saveErrors(request.getSession(), errors);
+	    	return mapping.findForward("viewcart_jsp");	
+		}
+ */
+/**
+	 * @param user
+	 * @return
+	 */
+	private BillingForm getBilling(User user) {
+		BillingForm billingForm = new BillingForm();
+		Address address = user.getAddress();
+		if (address!=null){
+			BeanUtils.copyProperties(billingForm , convert(address));
+		}
+		BeanUtils.copyProperties(billingForm , convert(user));
+		return billingForm;
+	}
+
+	
+	/**
+	 * provide a populated order object bearing the cart contents
+	 * @param billingForm
+	 * @param request
+	 * @param cart
+	 * @return
+	 */
+	private Purchase genOrder(BillingForm billingForm,
+			HttpServletRequest request, Cart cart){
+		Purchase order = new Order();
+		try {
+			BeanUtils.copyProperties(order, billingForm);
+		} catch (Exception e1) {
+			log.error(e1);
+		}
+		order.setId(null);
+		order.setSubTotal( new Double(cart.getSubTotal()));
+		order.setTotal( new Double(cart.getSubTotal()));
+		order.setUsername(request.getRemoteUser());
+		order.setIpAddress(request.getRemoteAddr());
+		order.setAuthCode("PREAUTH");
+		order.setCreated(new Date());
+		
+		addOrderItems(order,cart.getItems());
+
+		return order;
+	}
+
+	
+	private void storeUserInfo(UserContainer userContainer, BillingForm billingForm) throws Exception {
+		UserManager umgr = (UserManager)getBean("userManager");
+		User user = umgr.getUser(userContainer.getUser().getUsername());
+		UserAction.updateUser(user , billingForm);
+
+		//updateUser(user , billingForm);
+		
+		// TODO persist changes made to user info if any
+		// if card valid create order
+		umgr.saveUser(user);
+
+		UserForm userf = (UserForm)convert(user);
+		convertLists(userf);
+//		updateUserInfo(userf, billingForm);
+		BeanUtils.copyProperties(userContainer.getUser() , userf);
+	}
+
+	
+	private List getArchiveBeans( Collection orderItems){
+		List list = new ArrayList();
+		ArchivePojo abean = null;
+		OrderItem orderItem = null;
+		Iterator it =  orderItems.iterator();
+		while(it.hasNext()){
+			orderItem = (OrderItem)it.next();
+			log.debug("an orderItem: " + orderItem);
+			abean = new ArchivePojo();
+
+			abean.setId(orderItem.getClipFormatId());
+			abean.setFormatId(orderItem.getFormatName());
+			
+//				abean.setFileData(null);
+//				abean.setContentType(clipformat.getContentType());
+			
+			abean.setType(orderItem.getType());
+			abean.setGenreLabelKey(orderItem.getGenre());
+			abean.setName(orderItem.getClipName()); // + "_" + clip.getName()
+			abean.setUsername(orderItem.getProducerName());
+			abean.setCollection(orderItem.getType().equalsIgnoreCase("Trackpack"));
+			
+			log.debug("collname _pre: " + orderItem.getParentName());
+			if (orderItem.getType().equalsIgnoreCase("Loop")){
+				String pname = orderItem.getParentName();
+				if (StringUtils.isNotBlank(pname)){
+					abean.setCollectionName(pname);
+				}
+				log.debug("collname post: " + abean.getCollectionName());
+				abean.setInstrumentLabelKey(orderItem.getInstrument());
+			}
+			
+			list.add(abean);
+		}
+		return list;
+	}
+	
+/*	private void packageOrder(Order order) {
+		ZipItem zitem = new ZipItem();
+		Collection oitms = order.getItems();
+		Iterator it = oitms.iterator();
+		while (it.hasNext()){
+			
+			// 
+		try{
+//			BeanUtils.copyProperties(zitem , order);
+		}catch(Exception e){}
+		}
+	}
+*/
+	
+	private void systemError(HttpServletRequest request, Exception e) {
+		ActionErrors errors = new ActionErrors();
+		errors.add(ActionMessages.GLOBAL_MESSAGE,
+                new ActionMessage("errors.general"));
+		while (e != null) {
+            errors.add(ActionMessages.GLOBAL_MESSAGE,
+                       new ActionMessage("errors.detail", e.getMessage()));
+            e = (Exception) e.getCause();
+        }
+		errors.add(ActionMessages.GLOBAL_MESSAGE,
+                new ActionMessage("checkout.errors.contactadmin" , getResources(request).getMessage("feedback.admin")));
+		errors.add(ActionMessages.GLOBAL_MESSAGE,
+				new ActionMessage("checkout.errors.nocharge"));
+		saveMessages(request, errors);
+		
+//		emailAdminErrors(e);
+	}
+	
+	public ActionForward delete(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+	throws Exception {
+
+		String itemId = request.getParameter("id");
+		String username = request.getRemoteUser();
+		
+		OrderManager omgr = (OrderManager)getBean("orderManager");
+		
+		if (StringUtils.isBlank(itemId) || StringUtils.isBlank(itemId)){
+			String referer = request.getHeader("referer");
+			if (StringUtils.isBlank(referer)){
+				referer = mapping.findForward("confirm").getPath();
+			}
+			response.sendRedirect(referer);
+		}
+		HttpSession session = request.getSession();
+		Long oid = (Long)session.getAttribute("orderId");
+
+		omgr.removeOrderItem(username , itemId);
+		Order order = (Order)omgr.getOrder(oid);
+		OrderForm oform = (OrderForm)convert(order);
+		convertLists(oform);
+
+		session.setAttribute("order" , oform);
+
+		return mapping.getInputForward();
+	}
+	
+	
+	private Zip makeDownload(Order order  ) throws Exception{
+		// TODO refactor: move repo activity to zipManager
+		List pkg = getArchiveBeans(order.getItems());
+		String zipid_day =  DateUtil.getDateTime("dd-MM-yyyy_hh.mm.ss" , new Date());
+		RepositoryManager repo = (RepositoryManager) getBean("repositoryManager");
+		String 	zippath = repo.zipItems(order.getUsername() + "/" +zipid_day  , pkg);
+
+		log.debug(zippath);
+		Zip zip = new Zip();
+		addZipItems(zip , order.getItems());
+		zip.setOrderId(order.getId());
+		zip.setPath(zippath);
+		zip.setAccessCount(new Integer(0));
+		zip.setCreationTime(new Date());
+		zip.setName(zipid_day);
+		ZipManager zman = (ZipManager)getBean("zipManager");
+		// save ZIP
+		zman.saveZip(zip);
+
+		return zip;
+	}
+	
+	
+	public ActionForward finish(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		HttpSession session = request.getSession();
+		session.removeAttribute("billingForm");
+		session.removeAttribute("order");
+			
+		CcReply authReply = (CcReply)session.getAttribute("authReply");
+
+		Long oid = (Long)session.getAttribute("orderId");
+		CcRequest ccReq = (CcRequest)session.getAttribute("CcRequest");
+		CcRequest capture = new CaptureRequest(ccReq , oid.toString() , authReply.getAuthRequestID());
+//		CcRequest capture = new CaptureRequest(ccReq , order.getId().toString() , authId);
+		ChargeManager chargeMgr = (ChargeManager) getBean("chargeManager");
+		log.debug("capture: " + capture);
+		
+		OrderManager oMgr = (OrderManager) getBean("orderManager");
+		
+		Order order = oMgr.getOrder(oid);
+		Zip zip = null;
+		try {
+			 zip = makeDownload(order);
+		}catch(Exception re){
+			systemError(request , re);
+			return mapping.findForward("viewcart");
+		}
+
+		
+		CcReply captureReply = chargeMgr.ccCapture(capture);
+		log.debug(captureReply);
+		
+		if (captureReply.isSuccessful()){
+//			String authRequestID = authReply.getAuthRequestID();
+//			req.setAuthRequestID(authRequestID);
+//			log.debug("requestId:"+authRequestID);
+			order.setAuthCode(authReply.getAuthCode());
+			order.setTotal ( new Double( authReply.getAuthAmount()));
+			order.setRequestId(authReply.getAuthRequestID());
+			order.setReconciliationId(captureReply.getReconciliationID());
+			oMgr.saveOrder(order);
+			log.debug(order);
+
+			UserManager umgr = (UserManager)getBean("userManager");
+			User user = umgr.getUser(request.getRemoteUser());
+			user.getArchives().add(zip);
+			// update user with ZIP
+			umgr.saveUser(user);
+			OrderForm oform = (OrderForm)convert(order);
+			convertLists(oform);
+
+			session.removeAttribute("orderId");
+			session.removeAttribute("CcRequest");
+			
+			getUserContainer(request).getCart().clear();
+		
+			emailReceipt(oform, getResources(request) , zip.getName());
+
+			session.setAttribute("order" , oform);
+			return mapping.findForward("receipt");
+		}else{
+			ActionMessages errors = new ActionMessages();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+			"ccreply.error.general"));
+	Map ccErr = captureReply.getErrors();
+	Iterator erit = ccErr.entrySet().iterator();
+     while (erit.hasNext()) {
+    	 	Map.Entry entry = (Map.Entry)erit.next();
+    	 	String ekey = (String)entry.getKey();
+    	 	if (ekey !=null){
+        	 	Collection val = (Collection)entry.getValue();
+             errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(ekey));
+        	 	if(val!=null){
+        	 		for (Iterator it = val.iterator(); it.hasNext(); ){
+        	 			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ccreply.error.detail", it.next()));
+        	 		}
+        	 	}
+    	 	}
+     }
+	saveErrors(request, errors);
+	UserManager umgr = (UserManager)getBean("userManager");
+	User user = umgr.getUser(request.getRemoteUser());
+
+	BillingForm billingForm = new BillingForm();
+	BeanUtils.copyProperties(billingForm , user.getAddress());
+	BeanUtils.copyProperties(billingForm , user);
+	billingForm.setPage(2);
+	request.setAttribute("billingForm" , billingForm);
+			return mapping.findForward("edit");
+		}
+	}
+	private void emailReceipt(OrderForm oform , MessageResources resources, String filename) {
+		SimpleMailMessage message = (SimpleMailMessage) getBean("mailMessage");
+		String toStr = oform.getUsername() + " <" + oform.getEmail() + ">";
+		log.debug("sending to: " + toStr);
+		message.setTo(toStr);
+
+		StringBuffer msg = new StringBuffer();
+		/*
+		 * File Name: BH_drumloop1.aif
+Loop Name: Drum Loop 1 
+Format: APPLE
+Price (USD): .99
+Instrument: Drumset
+Genre: Urban
+Producer: Kenny D <shopfront.html> shopfront.html
+Leave Comments: <shopcomments.html> shopcomments.html
+		 */
+		msg.append(resources.getMessage("receipt.email.header1"));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.header2" , filename));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.header3" , filename));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.header4"));
+		msg.append("\n");
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.header5"));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.orderid" , oform.getId() , new Date()));
+		msg.append("\n\n");
+
+		msg.append(resources.getMessage("receipt.email.loopheader"));
+		msg.append("\n\n");
+		Collection items = oform.getItems();
+		Iterator it = items.iterator();
+		
+		Collection tpL = new HashSet();
+		while(it.hasNext()){
+			OrderItemForm oi = (OrderItemForm)it.next();
+			if (oi.getType().equals(SoundClip.TRACKPACK_TYPE)){
+				tpL.add(oi);
+				continue;
+			}
+			msg.append("Loop Name: "+ oi.getClipName());
+			msg.append("\n");
+			log.debug("label.format."+oi.getFormatName());
+			msg.append("Format: "+ resources.getMessage("label.format."+oi.getFormatName()));
+			msg.append("\n");
+			msg.append("Price: "+ oi.getPrice());
+			msg.append("\n");
+			msg.append("Instrument: "+ resources.getMessage(oi.getInstrument()));
+			msg.append("\n");
+			msg.append("Genre: "+ resources.getMessage(oi.getGenre()));
+			msg.append("\n");
+			msg.append("Producer: "
+					+ oi.getProducerName() + " " 
+					+ resources.getMessage("receipt.email.shopfront.url" ,oi.getProducerName())
+					);
+			msg.append("\n");
+			msg.append("Shop: "+ oi.getShopname());
+			msg.append("\n\n");
+		}
+
+		if (!tpL.isEmpty()){
+			it = tpL.iterator();
+			msg.append(resources.getMessage("receipt.email.trackpackheader") +"\n");
+			msg.append("\n\n");
+			while(it.hasNext()){
+				OrderItemForm oi = (OrderItemForm)it.next();
+				msg.append("Folder Name: "+ oi.getClipName());
+				msg.append("\n");
+				log.debug("label.format."+oi.getFormatName());
+				msg.append("Format: "+ resources.getMessage("label.format."+oi.getFormatName()));
+				msg.append("\n");
+				msg.append("Price: "+ oi.getPrice());
+				msg.append("\n");
+				msg.append("Instrument: "+ resources.getMessage(oi.getInstrument()));
+				msg.append("\n");
+				msg.append("Genre: "+ resources.getMessage(oi.getGenre()));
+				msg.append("\n");
+				msg.append("Producer: "
+						+ oi.getProducerName() + " " 
+						+ resources.getMessage("receipt.email.shopfront.url" ,oi.getProducerName())
+						);
+				msg.append("\n");
+				msg.append("Shop: "+ oi.getShopname());
+				msg.append("\n\n");
+			}
+
+		}
+		
+		msg.append(resources.getMessage("receipt.email.gratitude"));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.total" ,oform.getTotal()));
+		msg.append("\n\n");
+		msg.append(resources.getMessage("receipt.email.contact"));
+		msg.append("\n");
+		msg.append(resources.getMessage("receipt.email.copyright"));
+		message.setText(msg.toString());
+
+		message.setSubject(resources.getMessage("receipt.email.subject"));
+
+		MailEngine engine = (MailEngine) getBean("mailEngine");
+		engine.send(message);
+	}
+
+	private void notifyAdmin(StringBuffer msg , MessageResources resources, BillingForm  billingForm) {
+		SimpleMailMessage message = (SimpleMailMessage) getBean("mailMessage");
+		log.debug("Library Admin <" + resources.getMessage("feedback.admin") + ">");
+		message.setTo("Library Admin <" + resources.getMessage("feedback.admin") + ">");
+
+		message.setFrom(billingForm.getEmail());
+		message.setSubject(resources.getMessage("checkout.errors.subject" , billingForm.getFirstName() + " " + billingForm.getLastName()));
+
+		message.setText(msg.toString());
+		MailEngine engine = (MailEngine) getBean("mailEngine");
+		engine.send(message);
+	}
+	
+	
+	private void addZipItems(Zip zip, Set items) throws IllegalAccessException, InvocationTargetException {
+		Iterator it = items.iterator();
+		OrderItem oi = null;
+		ZipItem zi = null;
+		while(it.hasNext()){
+			oi = (OrderItem)it.next();
+			zi = new ZipItem();
+			BeanUtils.copyProperties(zi , oi);
+			zi.setId(null);
+			zip.getItems().add(zi);
+		}
+	}
+
+	/**
+	 * Convert clips to orderItems and put them in the Order
+	 * @param order
+	 * @param clips
+	 */
+	private void addOrderItems(Order order,List clips) {
+		OrderItemForm orderItem = null;
+		// reset Id after all this copying
+//		Set orderItems = new HashSet();
+		for (int g = 0; g < clips.size(); g++) {
+			orderItem = new OrderItemForm();
+			if (order.getId() != null){
+				orderItem.setOrderId(order.getId().toString());
+			}
+			SoundClipForm clif = (SoundClipForm)clips.get(g);
+		
+			orderItem.setClipFormatId(((ClipFormatForm)clif.getFormat().get(0)).getId());
+			orderItem.setFormatName(((ClipFormatForm)clif.getFormat().get(0)).getFormatId());
+			orderItem.setClipName(clif.getName());
+			
+			try{
+				orderItem.setGenre(BeanUtils.getNestedProperty(clif.getGenre().get(0) , "labelKey"));
+			}catch(Exception e){
+				log.debug("prob getting genre name");
+			}
+			log.debug("clif type:  " + clif.getType());
+			try{
+			if (clif.getType().equals(SoundClip.LOOP_TYPE)){
+				log.debug("clif tpid:  " + BeanUtils.getProperty(clif , "trackpackId"));
+				log.debug("is loop");
+				Object tmp = PropertyUtils.getProperty(clif , "trackpack");
+				if (tmp != null){
+				orderItem.setParentName(BeanUtils.getProperty(tmp , "name"));
+				}
+				orderItem.setInstrument(BeanUtils.getNestedProperty(clif , "instrument.labelKey"));
+//				orderItem.setInstrument(((InstrumentForm)((LoopForm)clif).getInstrument()).getLabelKey());
+			}
+			}catch(Exception e ){log.error( "trackpack name etc" , e);}
+			try{
+			orderItem.setPrice(((PriceForm)clif.getPrice()).getAmount());
+			orderItem.setProducerName(clif.getUsername());
+			log.debug(((UserForm)clif.getUser()).getStore().getClass());
+			orderItem.setShopname(BeanUtils.getNestedProperty(clif , "user.store.name"));
+			}catch(Exception e){
+				log.debug("prob getting store name");
+			}
+			orderItem.setType(clif.getType());
+			try {
+				order.addItem((OrderItem)convert(orderItem));
+			} catch (Exception e) {
+				log.error(e);
+			}
+		}
+
+	}
+
+	private CcRequest makeCcRequest(Order order, BillingForm billingForm) {
+		CcRequest req = new CcRequestImpl();
+		try {
+			BeanUtils.copyProperties(req, billingForm);
+		} catch (Exception e) {
+
+		}
+
+		OrderItem orderItem = null;
+		Collection items = order.getItems();
+		Iterator it = items.iterator();
+		while (it.hasNext()) {
+			orderItem = (OrderItem) it.next();
+			req.addItem(orderItem.getPrice().toString());
+		}
+		return req;
+	}
+
+
+	private void updateUser(User user, BillingForm billingForm)
+			throws IllegalAccessException, InvocationTargetException {
+		UserAction.updateUser(user , billingForm);
+/*		if (user.getCreditCard() == null) {
+			CreditCard cc = new CreditCard();
+			cc.setUsername(user.getUsername());
+			user.setCreditCard(cc);
+		}
+		BeanUtils.copyProperties(user.getCreditCard(), billingForm);
+
+		if (user.getAddress() == null) {
+			Address addr = new Address();
+			addr.setUsername(user.getUsername());
+			user.setAddress(addr);
+		}
+		BeanUtils.copyProperties(user.getAddress(), billingForm);
+
+		// get updated names
+		user.setFirstName(billingForm.getFirstName());
+		user.setLastName(billingForm.getLastName());
+		user.setMiddleName(billingForm.getMiddleName());
+*/
+	}
+
+	/**
+		 * only presents a billingForm if the users current billingInfo is doesn't
+		 * validate on the form level updateUserInfo(userForm , billingForm); double
+		 * cart_total = userContainer.getCart().getSubTotal()
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return
+		 * @throws Exception
+		 */
+		public ActionForward auth(ActionMapping mapping, ActionForm form,
+				HttpServletRequest request, HttpServletResponse response)
+				throws Exception {
+	
+			log.debug("Entering auth");
+			
+			HttpSession session = request.getSession();
+			LinkedHashSet userCart = (LinkedHashSet)session.getAttribute(Constants.USER_CART);
+			// make sure cart isn't empty
+			if (userCart==null || userCart.isEmpty()){
+				return mapping.getInputForward();
+			}
+			
+			BillingForm billingForm = (BillingForm) form;
+	
+			
+			ActionMessages errors = new ActionMessages();
+	
+	
+			
+			Purchase order = genOrder(billingForm , request , userCart);
+			OrderManager omgr = (OrderManager) getBean("orderManager");
+			// save pre-authorized order
+			omgr.saveOrder(order);
+			
+			Collection items = order.getItems();
+			log.debug("order " + order);
+			// create a request using the orderId as as merchant refernce code
+			CcRequest req = new CcRequestImpl();
+			try {
+				BeanUtils.copyProperties(req, billingForm);
+			} catch (Exception e) {
+	
+			}
+	
+			OrderItem orderItem = null;
+			Iterator itmIt = items.iterator();
+			while (itmIt.hasNext()) {
+				orderItem = (OrderItem) itmIt.next();
+				req.addItem(orderItem.getPrice().toString());
+			}
+	
+			req.setMerchantReferenceCode(order.getId().toString());
+	
+			ChargeManager chargeMgr = (ChargeManager) getBean("chargeManager");
+			// authorize the charges
+			CcReply authReply = chargeMgr.ccAuth(req);		
+			
+			HttpSession session = request.getSession();
+			// if successful authrization set user billinfo to reflect the changes.
+			// TODO - this should really e weeded into a setup biiling page 
+			// not here but until...
+			if (authReply.getErrors() == null || authReply.getErrors().isEmpty()){	
+				
+				
+				UserManager umgr = (UserManager)getBean("userManager");
+	//			User user = umgr.getUser(userContainer.getUser().getUsername());
+				User user = umgr.getUser(request.getRemoteUser());
+	
+	
+				updateUser(user , billingForm);
+				user.getAddress().setAVSCode(authReply.getAVSCode());
+				// TODO persist changes made to user info if any
+				// if card valid create order
+				umgr.saveUser(user);
+	
+				UserForm userf = (UserForm)convert(user);
+				convertLists(userf);
+				userContainer.setUser(userf);
+	
+				
+				session.setAttribute("authReply" , authReply);
+				session.setAttribute("CcRequest" , req);
+				OrderForm oform = (OrderForm)convert(order);
+				convertLists(oform);
+				request.getSession().setAttribute("order" , oform);
+				
+				session.setAttribute("orderId" , order.getId());
+				log.debug("success");
+				log.debug("reply: " + authReply);
+				session.setAttribute("billingForm" , billingForm);
+				return mapping.findForward("confirm");
+			} else {
+				errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+						"ccreply.error.general"));
+				Map ccErr = authReply.getErrors();
+				Iterator erit = ccErr.entrySet().iterator();
+		         while (erit.hasNext()) {
+		        	 	Map.Entry entry = (Map.Entry)erit.next();
+		        	 	String ekey = (String)entry.getKey();
+		        	 	if (ekey !=null){
+			        	 	Collection val = (Collection)entry.getValue();
+			             errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(ekey));
+			        	 	if(val!=null){
+			        	 		for (Iterator it = val.iterator(); it.hasNext(); ){
+			        	 			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("ccreply.error.detail", it.next()));
+			        	 		}
+			        	 	}
+		        	 	}
+		         }
+				saveErrors(request, errors);
+	//			request.getSession().setAttribute("billingForm", billingForm);
+	//			updateFormBean(mapping ,request , billingForm);
+				//			request.getSession().setAttribute("order", order);
+	//			return mapping.findForward("billingInfo");
+	
+	//			request.getSession().setAttribute("fromCheckout" , "/cart/checkout.do?action.checkout");
+				// return new ActionForward("/user/editAccount.do",true);
+				billingForm.setPage(2);
+				return mapping.findForward("edit");
+			}
+	
+		}
+
+}

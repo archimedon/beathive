@@ -1,0 +1,8 @@
+"${clip.clipName}" [id:${clip.id}]
+
+	Format: ${clip.formatName}
+	Price (USD):  ${clip.price}
+	Instrument: ${clip.instrument}
+	Genre: ${clip.genre}
+	Producer: ${clip.storeName}
+	Leave Comments: http://www.beathive.com/shop/comments.html?id=${clip.storeId}

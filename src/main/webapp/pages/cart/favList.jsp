@@ -1,0 +1,1 @@
+<%@ include file="/common/var_contentType.jsp"%><bean:size id="wishsize" name="userFavorites" property="list"/><c:if test="${not empty userCartPager}"><bean:size id="cartsize" name="userCartPager" property="list"/></c:if>{'wishsize':'${wishsize}' , 'cartsize':'${cartsize}'}

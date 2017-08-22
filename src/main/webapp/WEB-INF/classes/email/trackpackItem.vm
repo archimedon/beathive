@@ -1,0 +1,7 @@
+"${clip.clipName}" [id:${clip.id}]  (${clip.numLoops} components loops)
+
+	Format: ${clip.formatName}
+	Price (USD):  ${clip.price}
+	Genre: ${clip.genre}
+	Producer: ${clip.storeName}
+	Leave Comments: http://www.beathive.com/shop/comments.html?id=${clip.storeId}

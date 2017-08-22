@@ -1,0 +1,219 @@
+/**
+ * 
+ */
+package com.beathive.service.impl;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.security.Authentication;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.beathive.Constants;
+import com.beathive.ExtendedPaginatedList;
+import com.beathive.PaginatedListImpl;
+import com.beathive.model.Favorite;
+import com.beathive.model.LabelValue;
+import com.beathive.model.SoundClip;
+import com.beathive.model.User;
+import com.beathive.model.Store;
+import com.beathive.service.CartManager;
+import com.beathive.service.ScenarioManager;
+import com.beathive.service.StoreManager;
+import com.beathive.service.UserManager;
+import com.beathive.util.ConvertUtil;
+import com.beathive.webapp.form.AudioFileForm;
+import com.beathive.webapp.form.FavoriteForm;
+import com.beathive.webapp.form.GenreForm;
+import com.beathive.webapp.form.LoopFormCart;
+import com.beathive.webapp.form.SoundClipForm;
+import com.beathive.webapp.form.StoreForm;
+import com.beathive.webapp.form.TrackpackFormCart;
+
+/**
+ * @author ron
+ *
+ */
+public class ScenarioManagerImpl extends BaseManager implements ScenarioManager{
+
+	CartManager cartManager;
+	UserManager userManager;
+	StoreManager storeManager;
+	
+	
+	
+	
+	
+	public void makeUserScene(User authUser, HttpServletRequest request) {
+
+		Date d = authUser.getLastLogin();
+		if (d!= null)
+		{
+			request.getSession().setAttribute("lastlogin", d);
+		}
+		
+		User user = userManager.getUser(authUser.getId().toString());
+		user.setLastLogin(new Date());
+
+		
+		if (isProducer(user)) {
+			doProducerView(user, request);
+		}
+	}
+
+	public void doProducerView(User user, HttpServletRequest request){
+		List<Store> shops = storeManager.getUserStores(user.getUsername());
+		List storeMenu = new LinkedList();
+
+		if (shops != null && !shops.isEmpty()) {
+			for (Store g : shops) {
+				String gid = g.getId().toString();
+				storeMenu.add(new LabelValue(g.getName(), gid));
+			}
+			Store store = (Store) shops.get(0);
+			if (store != null) {
+				StoreForm storeForm = new StoreForm();
+				try {
+					BeanUtils.copyProperties(storeForm, store);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				request.getSession().setAttribute("storeForm", storeForm);
+			}
+			request.getSession().setAttribute("storeMenu", storeMenu);
+		}
+	}
+
+	public static boolean isProducer(Authentication auth) {
+		GrantedAuthority[] roles = auth.getAuthorities();
+		for (GrantedAuthority role : roles) {
+			if (role.getAuthority().equals("producer")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param user
+	 * @param request
+	 */
+	public void doBasicUser(User user, HttpSession session) {
+		UserManager userManager = (UserManager) wctx.getBean("userManager");
+
+		Date d = user.getLastLogin();
+		session.setAttribute("lastlogin", d);
+		user.setLastLogin(new Date());
+		user = userManager.getUser(user.getId().toString());
+
+		List<Favorite> favs = user.getFavorites();
+		
+		// if user has a wish list
+		if (favs != null && !favs.isEmpty()) {
+			// get new pager
+			ExtendedPaginatedList pageList = new PaginatedListImpl();
+			// and favs
+			
+			List citems = new LinkedList();
+			CartManager mgr = (CartManager) wctx.getBean("cartManager");
+
+			SoundClipForm clipForm = null;
+			for (Favorite fav : favs) {
+				// get the clip
+				SoundClip clip = mgr.getCartSoundClip(fav.getClipId()
+						.toString());
+				// determine clip type
+				if (clip.getClass().getName().toLowerCase()
+						.indexOf("trackpack") > -1) {
+					// then copy it
+					clipForm = (TrackpackFormCart) ConvertUtil.convert(clip,
+							TrackpackFormCart.class);
+					// set the fileId in the view
+					((TrackpackFormCart) clipForm).setFileId(fav.getFileId()
+							.toString());
+				} else {
+					// then copy it
+					clipForm = (LoopFormCart) ConvertUtil.convert(clip,
+							LoopFormCart.class);
+					// set the fileId in the view
+					((LoopFormCart) clipForm).setFileId(fav.getFileId()
+							.toString());
+				}
+				// convert necessary Lists
+				ConvertUtil.convertNamedList(clipForm, "audioFormat",
+						AudioFileForm.class);
+				ConvertUtil
+						.convertNamedList(clipForm, "genre", GenreForm.class);
+
+				// add to items
+				citems.add(clipForm);
+			}
+			// set in pager's list
+			pageList.setList(citems);
+
+			session.setAttribute(Constants.USER_FAVORITES, pageList);
+		}
+		user.setLastLogin(new Date());
+		try {
+			userManager.saveUser(user);
+		} catch (Exception e) {
+			System.err.print(e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @return the cartManager
+	 */
+	public CartManager getCartManager() {
+		return cartManager;
+	}
+
+	/**
+	 * @param cartManager the cartManager to set
+	 */
+	public void setCartManager(CartManager cartManager) {
+		this.cartManager = cartManager;
+	}
+
+	/**
+	 * @return the userManager
+	 */
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+	/**
+	 * @param userManager the userManager to set
+	 */
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+
+	/**
+	 * @return the storeManager
+	 */
+	public StoreManager getStoreManager() {
+		return storeManager;
+	}
+
+	/**
+	 * @param storeManager the storeManager to set
+	 */
+	public void setStoreManager(StoreManager storeManager) {
+		this.storeManager = storeManager;
+	}
+
+}

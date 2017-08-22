@@ -1,0 +1,144 @@
+/*table.trackpackList{ border-spacing: 0px 2px;} */
+/*
+table.trackpackList{border-collapse:collapse}
+
+table.trackpackList td, table.trackpackList th{border:0; border-bottom:3px ridge #555;padding:0px}
+*/
+/** =EXCEPTION sstyle for trackpackView from loop page= **/
+
+/* the injected components */
+/*table#componentRow { border-bottom:4em solid transparent; background-color:inherit; }*/
+
+/* an inner container for the injected loops*/
+/*
+td#iloops { background-color:transparent; padding:0; border:0; margin:0; text-align:left; vertical-align:top; max-height:490px;}
+*/
+
+.cat_pagination a{color:#FFF;
+	padding: 0px 2px 0px 2px;
+}
+.cat_pagination a { 
+text-decoration:none; background-color:#565049; width:auto; height:auto;  -moz-border-radius:2px; -webkit-border-radius:2px;
+}
+.cat_pagination a:hover { color:#FFF; text-decoration:underline; background-color:#FE9915; width:auto; height:auto;  -moz-border-radius:2px; -webkit-border-radius:2px; }
+
+
+td#iloops { background-color:transparent; padding:0; border:0px solid blue; margin:0; text-align:left; vertical-align:top; max-height:490px;}
+
+/* table.innerres==table#componentRow */
+
+
+
+
+#searchResultsInnerLoop { border:0px solid green; width:700px; padding:0; margin:0; }
+table.loopList, table.trackpackList {
+/*background-image:url(../images/bg_tile.gif);*/
+	background-color: pink;
+}
+
+ table.trackpackList  td#componentRow{
+/*background-image:url(../images/bg_tile.gif);*/
+	background-color: pink;
+}
+
+/* the injected components */
+tr#componentRow.innerres { }
+
+/* an inner container for the injected loops*/
+/*
+td#iloops { background-color:transparent; padding:0; border:0; margin:0; text-align:left; vertical-align:top; max-height:490px;}
+*/
+
+/* table.innerres==table#componentRow */
+
+
+/* directory buttons */
+.bigLinks {
+	font-size: 1em;
+	padding:0;
+	margin:0;
+	color: red;
+	font-family: arial, helvetica, sans-serif;
+	white-space:nowrap;
+	list-style-type:none;
+}
+.bigLinks li {display:inline;}
+.bigLinks li a {
+	padding: 0.2em 1em; text-decoration:none; float:left;
+	background: blue; color: white; border:1px solid gray;
+}
+.bigLinks li a:hover { background: red ; color: blue ; }
+
+
+
+
+#iloops{
+
+	background-color: #000;
+}
+
+#iloops #innerResultBody{
+	display:block;
+
+	min-height:435px;
+/*background-image:url(../images/bg_tile.gif);*/
+}
+
+#iloops .pagelinks{
+	position:relative;
+	bottom: 0;
+}
+/* this div wraps the pagebanners, pagelinks and the result table*/
+div#resultBody{
+	padding: 0;
+width:100%;
+	border: 0;
+}
+#resultBody .menuBox{
+	width:100%;
+}
+
+
+
+/** FROM TYPO.CSS */
+/* TABLE */
+table { font-size:1em; margin:0 0 1.5em; padding:0; }
+table caption { font-weight:bold; margin:0; padding:0 0 1.5em; }
+th { font-weight:bold; text-align:left; }
+td { font-size:1em; }
+
+/*********************************
+           Project: CSS Table Galery
+           Title: Like Adwords
+           Author: Cleiton Francisco
+           URL: http://www.cleiton.net/
+           Country: Brazil
+           Update: 2005-12-18
+         *******************************/
+.table { border-collapse:collapse; border:2px solid #74B3DC; color:#000; background:#fff; width:100%; }
+.table caption { padding:0 .6em .8em; font-size:1.3em; font-weight:bold; text-align:left; color:#000; background:transparent; }
+
+/* For Tapestry's contribTable */
+.table th table,.table th table td { width:100%; border:0; }
+.contribTable th { padding:0!important; background:#d7e9f5; }
+.contribTable th .tableHeaderTable { margin:0!important; }
+.table td,.table th,.tableHeaderTable td { border:1px solid #e0e0e0; padding:.5em; }
+.table thead th,.tableHeaderTable td { border:1px solid #e0e0e0; text-align:left; font-size:1em; font-weight:bold; background:#d7e9f5; }
+.tableHeaderTable td a { text-decoration:none!important; }
+.table tfoot th,tfoot td { border:1px solid #e0e0e0; text-align:left; font-size:1em; background:#e8e8cf; }
+.table tfoot th { font-weight:bold; }
+.table tbody td a { background:transparent; text-decoration:underline; }
+.table tbody td a:hover { background:transparent; text-decoration:underline; }
+.table tbody th a { background:transparent; text-decoration:underline; font-weight:bold; }
+.table tbody th,.table tbody td { text-align:left; }
+.table tfoot td { border:1px solid #996; }
+.table tbody tr:hover,.table tr.over,.contribTable tr:hover { background:#ffffd9!important; 
+/* important needed for Tapestry, as is .table tr:hover */
+}
+.contribTable tr.even { background:#fff!important; }
+.contribTable tr.odd { background:#eee!important; }
+
+/* END TABLE */
+hr { display:none; }
+div.hr { height:1px; margin:1.5em 10px; border-bottom:1px dotted black; }
+

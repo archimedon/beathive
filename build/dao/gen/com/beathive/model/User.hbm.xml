@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.User"
+            table="app_user"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="version"
+            type="java.lang.Integer"
+        />
+
+        <property
+            name="created"
+                    type="date"
+                    column="account_created"
+                update="false"
+                insert="true"
+        >
+
+        </property>
+
+        <property
+            name="firstName"
+                    column="firstName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="lastName"
+                    column="lastName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="passwordHint"
+                    column="passwordHint"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="username"
+                    column="username"
+                length="50"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+        <property
+            name="email"
+                    column="email"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+        <property
+            name="password"
+                    column="password"
+                not-null="true"
+        >
+
+        </property>
+
+        <set
+            name="roles"
+            table="user_role"
+            lazy="false"
+            cascade="save-update"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="user_id"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-many-to-many tag is deprecated, use @hibernate.many-to-many instead -->
+            <many-to-many
+                class="com.beathive.model.Role"
+                column="role_id"
+                outer-join="auto"
+             />
+
+        </set>
+
+        <property
+            name="alert"
+                    type="yes_no"
+                    column="alert"
+        >
+
+        </property>
+
+        <property
+            name="middleName"
+                    column="middleName"
+        >
+
+        </property>
+
+        <one-to-one
+            name="address"
+            cascade="all"
+        >
+
+        </one-to-one>
+
+        <one-to-one
+            name="preference"
+            cascade="all"
+        >
+
+        </one-to-one>
+
+        <set
+            name="stores"
+            table="user_store"
+            lazy="true"
+            cascade="delete"
+            order-by="storeId"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="userId"
+            >
+
+            </key>
+
+            <many-to-many
+                class="com.beathive.model.Store"
+                column="storeId"
+                unique="true"
+             >
+
+             </many-to-many>
+
+        </set>
+
+        <set
+            name="purchases"
+            table="user_order"
+            lazy="true"
+            cascade="all"
+            order-by="purchaseId"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="userId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-many-to-many tag is deprecated, use @hibernate.many-to-many instead -->
+            <many-to-many
+                class="com.beathive.model.Purchase"
+                column="purchaseId"
+                outer-join="auto"
+             />
+
+        </set>
+
+        <set
+            name="archives"
+            table="user_zip"
+            lazy="true"
+            cascade="all"
+            order-by="zipId"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="userId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-many-to-many tag is deprecated, use @hibernate.many-to-many instead -->
+            <many-to-many
+                class="com.beathive.model.Zip"
+                column="zipId"
+                outer-join="auto"
+             />
+
+        </set>
+
+        <property
+            name="accountExpired"
+                    type="yes_no"
+                    column="account_expired"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="accountLocked"
+                    type="yes_no"
+                    column="account_locked"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="credentialsExpired"
+                    type="yes_no"
+                    column="credentials_expired"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="enabled"
+                    type="yes_no"
+                    column="account_enabled"
+        >
+
+        </property>
+
+        <property
+            name="modified"
+                    type="timestamp"
+                    column="account_modified"
+        >
+
+        </property>
+
+        <property
+            name="lastLogin"
+                    type="timestamp"
+                    column="lastLogin"
+        >
+
+        </property>
+
+        <bag
+            name="favorites"
+            lazy="false"
+            inverse="false"
+            cascade="all"
+        >
+
+            <key
+                column="userId"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.beathive.model.Favorite"
+            />
+
+        </bag>
+
+        <bag
+            name="cartItems"
+            lazy="false"
+            inverse="true"
+            cascade="delete"
+        >
+
+            <key
+                column="userId"
+            >
+
+            </key>          
+
+            <one-to-many
+                class="com.beathive.model.CartItem"
+            />
+
+        </bag>
+
+    </class>    
+
+    <query 
+
+        name="loadUserByUsername"
+
+    >
+
+            <!-- The "query" attribute of @hibernate.query is deprecated, use the "value" attribute instead -->
+            <![CDATA[from User usr where usr.username=:username]]>
+
+    </query>
+
+    <query 
+
+        name="loadUserByEmail"
+
+    >
+
+            <!-- The "query" attribute of @hibernate.query is deprecated, use the "value" attribute instead -->
+            <![CDATA[from User usr where usr.email=:email]]>
+
+    </query>
+
+</hibernate-mapping>
+

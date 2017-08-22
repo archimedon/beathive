@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.ChangeEmailKey"
+            table="change_email_key"
+    >
+
+    <id
+        name="accesscode"
+            column="accesscode"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="assigned">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="username"
+                    column="username"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+        <many-to-one
+            name="user"
+                    column="userId"
+                unique="true"
+                cascade="none"
+                insert="false"
+                update="false"
+                lazy="false"
+        >
+
+        </many-to-one>
+
+        <property
+            name="created"
+                    type="date"
+                    column="created"
+                not-null="true"
+                update="false"
+                insert="true"
+        >
+
+        </property>
+
+        <property
+            name="email"
+                    column="email"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+        <property
+            name="userId"
+                    column="userId"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

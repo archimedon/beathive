@@ -1,0 +1,453 @@
+
+package com.beathive.webapp.action;
+
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import com.beathive.util.ConvertUtil;
+import com.beathive.webapp.action.BaseAction;
+import com.beathive.Constants;
+import com.beathive.QueryMeta;
+import com.beathive.QueryMetaImpl;
+import com.beathive.model.AudioFile;
+import com.beathive.model.Genre;
+import com.beathive.model.Instrument;
+import com.beathive.model.Loop;
+import com.beathive.model.Price;
+import com.beathive.model.SoundClip;
+import com.beathive.model.User;
+import com.beathive.service.LookupManager;
+import com.beathive.service.Manager;
+import com.beathive.service.SoundClipManager;
+import com.beathive.service.UserManager;
+import com.beathive.webapp.form.AudioFileForm;
+import com.beathive.webapp.form.ClipDetailsForm;
+import com.beathive.webapp.form.LoopForm;
+import com.beathive.webapp.form.LoopFormSearch;
+
+/**
+ * Action class to handle CRUD on a Loop object
+ *
+ * @struts.action name="loopSearchForm" path="/component/loops" scope="request"
+ *  validate="false" parameter="method" input="mainMenu"
+ * @struts.action name="loopSearchForm" path="/loops" scope="request"
+ *  validate="false" parameter="method" input="mainMenu"
+ * @struts.action name="loopForm" path="/producer/editLoop" scope="request"
+ *  validate="false" parameter="method" input="list"
+ * @struts.action name="loopForm" path="/producer/saveLoop" scope="request"
+ *  validate="true" parameter="method" input="edit"
+ *  
+ * @struts.action-set-property property="cancellable" value="true"
+ * @struts.action-forward name="edit" path="/WEB-INF/pages/loopForm.jsp"
+ * @struts.action-forward name="list" path="/WEB-INF/pages/loopList.jsp"
+ * @struts.action-forward name="search" path="/searchLoops.html"
+ * @struts.action-forward name="audioView" path="/WEB-INF/pages/unboundLoopList.jsp"
+ */
+public final class LoopAction extends BaseAction {
+    public ActionForward cancel(ActionMapping mapping, ActionForm form,
+                                HttpServletRequest request,
+                                HttpServletResponse response)
+    throws Exception {
+        return mapping.findForward("search");
+    }
+
+    public ActionForward delete(ActionMapping mapping, ActionForm form,
+                                HttpServletRequest request,
+                                HttpServletResponse response)
+    throws Exception {
+        if (log.isDebugEnabled()) {
+            log.debug("Entering 'delete' method");
+        }
+
+        ActionMessages messages = new ActionMessages();
+        LoopForm loopForm = (LoopForm) form;
+
+        // Exceptions are caught by ActionExceptionHandler
+        SoundClipManager mgr = (SoundClipManager) getBean("soundClipManager");
+        mgr.removeSoundClip(loopForm.getId());
+
+        messages.add(ActionMessages.GLOBAL_MESSAGE,
+                     new ActionMessage("soundClip.deleted"));
+
+        // save messages in session, so they'll survive the redirect
+        saveMessages(request.getSession(), messages);
+
+        return mapping.findForward("search");
+    }
+
+    public ActionForward edit(ActionMapping mapping, ActionForm form,
+                              HttpServletRequest request,
+                              HttpServletResponse response)
+    throws Exception {
+        if (log.isDebugEnabled()) {
+            log.debug("Entering 'edit' method");
+        }
+
+        LoopForm loopForm = (LoopForm) form;
+
+        // if an id is passed in, look up the user - otherwise
+        // don't do anything - user is doing an add
+        if (loopForm.getId() != null) {
+            SoundClipManager mgr = (SoundClipManager) getBean("soundClipManager");
+            SoundClip soundClip = mgr.getSoundClip(loopForm.getId());
+            loopForm = (LoopForm) convert(soundClip);
+            updateFormBean(mapping, request, loopForm);
+        }
+
+        return mapping.findForward("edit");
+    }
+
+    public ActionForward details(ActionMapping mapping, ActionForm form,
+    		HttpServletRequest request,
+    		HttpServletResponse response)
+    throws Exception {
+    	ClipDetailsForm details = (ClipDetailsForm) form;
+    	
+    	String loopId = details.getLoopId();
+    	log.debug(BeanUtils.describe(details));
+    	if(StringUtils.isNotBlank(loopId) && ! details.getAttribs().isEmpty()){
+    		Map data = details.getAttribs();
+    			SoundClipManager mgr = (SoundClipManager) getBean("soundClipManager");
+    	    	Manager baseMgr = (Manager)getBean("manager");
+
+    			SoundClip clip = mgr.getSoundClip(loopId);
+    			log.debug("loop name: " + clip.getName());
+    			Set<Map.Entry> entries = data.entrySet();
+    			
+    			for (Map.Entry<String, String> entry : entries){
+    				
+    				String key = entry.getKey();
+    				String val = entry.getValue();
+    				log.debug("key: "   + key  +" value: "  + val);
+    				if (key.equals("genre")){
+    					String[] gids;
+    					if (val.indexOf(",")> -1){
+    						
+    						gids = val.split(",");
+    					}else{
+    						gids = new String[]{entry.getValue()};
+    					}
+    					setClipGenres(baseMgr , clip , gids);
+    				}else if (key.equals("instrument.id")){
+    					setInstruments(baseMgr , (Loop)clip , val);
+    					//PropertyUtils.setNestedProperty(clip, "instrument.id", new Long(val));
+    				}else if (key.indexOf("price")>-1){
+							Price priceObj = new Price();
+							priceObj.setAmount(new Double(val));
+							PropertyUtils.setProperty(clip, "price", priceObj);
+	    			}else{
+	    				BeanUtils.copyProperty(clip, key, entry.getValue());
+    				}
+    			}
+    			
+    			clip.setModified(new Date());
+   			mgr.saveSoundClip(clip);
+   			if (clip.isReady()){data.put("ready", new Boolean(clip.isReady()));}
+   			request.setAttribute("loopdata", data);
+    		
+    		LoopForm lf = new LoopForm();
+    		BeanUtils.copyProperties(lf, clip);
+			ConvertUtil.convertNamedList(lf , "audioFormat", AudioFileForm.class);
+
+//    		ConvertUtil.convertLists(lf);
+    		request.setAttribute("clip", lf);
+    		return mapping.findForward("jsdata");
+    	}
+    	return null;
+    }
+    /**
+	 * @param clip
+	 * @param gids
+	 */
+	private void setClipGenres(Manager baseMgr , SoundClip clip, String[] gids) {
+    	List genres = new LinkedList();
+    	for (int i = 0 ; i < gids.length; i++){
+    		genres.add((Genre)baseMgr.getObject(Genre.class, new Long(gids[i])));
+ //   		clip.addGenre((Genre)baseMgr.getObject(Genre.class, new Long(gids[i])));
+    	}
+    	log.debug(genres);
+    	clip.setGenre(genres);
+	}
+
+	public ActionForward save(ActionMapping mapping, ActionForm form,
+                              HttpServletRequest request,
+                              HttpServletResponse response)
+    throws Exception {
+        if (log.isDebugEnabled()) {
+            log.debug("Entering 'save' method");
+        }
+
+        // Extract attributes and parameters we will need
+        ActionMessages messages = new ActionMessages();
+        LoopForm loopForm = (LoopForm) form;
+        
+        // Note "setDescriptors()" is "private' in Loop making this is superfluous
+        loopForm.setDescriptors(null);
+
+        boolean isNew = ("".equals(loopForm.getId()) || loopForm.getId() == null);
+
+        
+        
+        SoundClipManager mgr = (SoundClipManager) getBean("soundClipManager");
+        
+        
+        Loop loop = (Loop)convert(loopForm);
+        ConvertUtil.convertLists(loop);
+        Date date = new Date();
+        loop.setModified(date);
+        loop.setCreated(date);
+
+        // add genres
+        checkGenres(request , loop);
+        
+        // update clipFormats (file refs)
+        checkAudioFiles(request , loop);
+        
+        mgr.saveSoundClip(loop);
+
+        // add success messages
+        if (isNew) {
+            messages.add(ActionMessages.GLOBAL_MESSAGE,
+                         new ActionMessage("soundClip.added"));
+
+            // save messages in session to survive a redirect
+            saveMessages(request.getSession(), messages);
+
+            return mapping.findForward("search");
+        } else {
+            messages.add(ActionMessages.GLOBAL_MESSAGE,
+                         new ActionMessage("soundClip.updated"));
+            saveMessages(request, messages);
+
+            return mapping.findForward("edit");
+        }
+    }
+
+	private void setInstruments(Manager baseMgr , Loop clip, String iid) {
+		Instrument instrument = (Instrument)baseMgr.getObject(Instrument.class, new Long(iid));
+		if (instrument!=null){
+			clip.setInstrumentId(instrument.getId());
+			log.error("instr: " + instrument);
+			clip.setInstrument(instrument);
+		}else{
+			log.error("no instr");
+		}
+	}
+
+
+	private void checkGenres(HttpServletRequest request, Loop loop) {
+		String[] genreIds = request.getParameterValues("clipGenres");
+		Manager baseMgr = (Manager)getBean("manager");
+		if (genreIds !=null){
+			setClipGenres(baseMgr, loop, genreIds);
+		}
+	}
+	
+	/**
+	 * @param request
+	 * @param loop
+	 */
+	private void checkAudioFiles(HttpServletRequest request, Loop loop) {
+		String[] clipAudioFiles = request.getParameterValues("clipAudioFiles");
+		if (clipAudioFiles !=null){
+			Manager baseMgr = (Manager)getBean("manager");
+			for (int i = 0 ; i < clipAudioFiles.length; i++){
+				loop.addAudioFile((AudioFile)baseMgr.getObject(AudioFile.class, new Long(clipAudioFiles[i])));
+			}
+		}
+	}
+	
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+                                HttpServletRequest request,
+                                HttpServletResponse response)
+    throws Exception {
+        if (log.isDebugEnabled()) {
+            log.debug("Entering 'search' method");
+        }
+
+        LoopFormSearch loopForm = (LoopFormSearch) form;
+        String username = request.getRemoteUser();
+//        loopForm.setDescriptors(null);
+//        Set<String> keys = new HashSet(loopForm.getDescriptors().keySet());
+//        for (String key: keys){
+//        	if (StringUtils.isBlank((String)loopForm.getDescriptors().get(key))){
+//        		loopForm.getDescriptors().remove(key);
+//        	}
+//        }
+//        Loop soundClip = (Loop) convert(loopForm);
+      Loop soundClip = new Loop();
+//      makeQuery(soundClip,loopForm);
+      loopForm.setDescriptors(new HashMap());
+      BeanUtils.copyProperties(soundClip , loopForm);
+//      soundClip.setDescriptors(new HashMap());
+ //       BeanUtils.copyProperties(soundClip , loopForm);
+ /*ConvertUtil.convertLists(soundClip);
+        soundClip.setScore(null);
+ */
+//       soundClip.setStoreId(null);
+//       soundClip.setBpm(null);
+//        soundClip.setName(null);
+      
+      soundClip.setSearchable(true);
+ //     soundClip.setAudioFormat(null);
+ //     soundClip.setGenre(null);
+      soundClip.setCreated(null);
+ //     soundClip.setModified(null);
+      User viewer = null;
+      if (StringUtils.isNotBlank(username)){
+        UserManager userMgr = (UserManager)getBean("userManager");
+    	viewer = userMgr.getUserByUsername(request.getRemoteUser());
+      }
+    	
+
+    	Calendar cal = Calendar.getInstance();
+    	cal.roll(Calendar.YEAR, false);
+//    	viewer.setLastLogin(cal.getTime());
+    	QueryMeta meta = new QueryMetaImpl(viewer);
+//    	meta.setFetchSize(10);
+//    	//   	viewerQuery.setInstrumentId(instrumentId);
+//    	Instrument instrument = new Instrument();
+//    	instrument.setGroupId(gid);
+//    	instrument.setId(instrumentId);
+    	//   	viewerQuery.setInstrument(instrument);
+//    	Genre g = (Genre)bdao.getObject(Genre.class, new Long(7));
+ //   	Loop tp = new Loop();
+    	
+    	/**setting created in the query Loop/Trackpack causes DAO add a since-last-login clause */
+ //   	tp.setCreated(cal.getTime());
+//    	soundClip.setEnergy("label.energy.relaxed");
+//    	soundClip.setScale("label.scale.minor");
+//    	soundClip.setTimesignature("label.timesignature.4_4");
+//    	soundClip.setBpm(new Integer(79));
+/*
+    	soundClip.getGenre().add(new Genre(new Long(5)));
+    	soundClip.setGenre(null);
+    	soundClip.setAudioFormat(null);
+    	soundClip.setSearchable(true);
+        soundClip.setCreated(null);
+        soundClip.setModified(null);
+*/
+//
+//    	
+//    	soundClip.getAudioFormat().add(new AudioFile("wav"));
+//
+        
+        log.debug(soundClip);
+        SoundClipManager mgr = (SoundClipManager) getBean("soundClipManager");
+//         List results = mgr.getSoundClips(soundClip, meta);
+       List results = mgr.getLoops(soundClip, meta);
+        log.debug(results);
+        request.setAttribute(Constants.LOOP_LIST, results);
+        request.setAttribute("queryMeta", meta);
+
+        return mapping.findForward("list");
+    }
+    public ActionForward unspecified(ActionMapping mapping, ActionForm form,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response)
+            throws Exception {
+        return search(mapping, form, request, response);
+    }
+    
+    
+    private void makeQuery(Loop clip , LoopFormSearch loopForm) throws Exception{
+    	String[] excl = {
+//				"aFavorite","audioFormat","avgScore",
+//				"created",
+//				"genre","bpm" ,
+//				"id",
+//				"modified",
+//				"name",
+//				"ownedByViewer",
+//				"price","searchable","statusId","timesrated","type",
+				// will do shop specific searches
+				//"storeId" ,
+				"instrumentId",
+				"instrument"
+//				"trackpack",
+//				"trackpackId" ,
+				// methods"producer"
+//				"numFormats","userClipScore","userFavorites","userItems","viewerScore" ,
+//				"keyword" ,
+				// "descriptors" ,
+//				, "energy" , "feel", "keynote", "mood" , "origin", "passage","score" , "sonority" , "texture", "timesignature", "scale"	
+				};
+	
+		// exclude properties
+    	Object o = null;
+		for (int y = 0; y < excl.length; y++){
+			o = BeanUtils.getProperty(loopForm ,excl[y] );
+			log.debug("set: " + excl[y] + " to :" + o);
+			if (o != null){
+//			BeanUtils.copyProperty(clip, excl[y], loopForm);
+			BeanUtils.setProperty(clip, excl[y], o);
+			}
+		}
+//		clip.setInstrument(loopForm.getInstrument());
+//		clip.setInstrumentId(loopForm.getInstrument().getId());
+    }
+    
+    
+	/**
+	 * @param request
+	 * @param loop
+	 */
+    public ActionForward listUnbound(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request,
+            HttpServletResponse response)
+throws Exception {
+		String storeId = request.getParameter("storeId");
+		if (StringUtils.isNotBlank(storeId)){
+			LookupManager lookupMgr = (LookupManager)getBean("lookupManager");
+			List files = lookupMgr.getProducerUnboundAudio(storeId);
+			if (files!=null && (!files.isEmpty())){
+				files = (List) ConvertUtil.convertList(files, AudioFileForm.class);
+				request.getSession().setAttribute("unboundAudioFiles", files);
+			}else{
+				request.getSession().removeAttribute("unboundAudioFiles");
+			}
+		}
+		return mapping.findForward("audioView");
+	}
+	
+    public ActionForward listClipAudio(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request,
+            HttpServletResponse response)
+throws Exception {
+		String clipId = request.getParameter("clipId");
+		if (StringUtils.isNotBlank(clipId)){
+			LookupManager lookupMgr = (LookupManager)getBean("lookupManager");
+			List files = lookupMgr.getClipAudio(clipId);
+			if (files!=null && (!files.isEmpty())){
+				files = (List) ConvertUtil.convertList(files, AudioFileForm.class);
+				request.getSession().setAttribute("clipAudioFiles", files);
+			}else{
+				request.getSession().removeAttribute("clipAudioFiles");
+			}
+		}
+		return mapping.findForward("audioView");
+	}
+
+}

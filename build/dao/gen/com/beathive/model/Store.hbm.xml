@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Store"
+            table="store"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <many-to-one
+            name="user"
+                    column="userId"
+                cascade="none"
+                outer-join="false"
+                insert="false"
+                update="false"
+                lazy="proxy"
+        >
+
+        </many-to-one>
+
+        <property
+            name="userId"
+                    column="userId"
+        >
+
+        </property>
+
+        <property
+            name="agreement"
+                    type="yes_no"
+                    column="agreement"
+                update="false"
+                insert="true"
+        >
+
+        </property>
+
+        <property
+            name="level"
+                    column="level"
+        >
+
+        </property>
+
+        <property
+            name="bannerImg"
+                    column="bannerImg"
+        >
+
+        </property>
+
+        <property
+            name="description"
+                    type="text"
+                    column="description"
+                length="2000"
+        >
+
+        </property>
+
+        <property
+            name="modified"
+                    column="modified"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="name"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+        <property
+            name="created"
+                    type="date"
+                    column="created"
+                not-null="true"
+                update="false"
+        >
+
+        </property>
+
+        <property
+            name="statusId"
+                    column="statusId"
+        >
+
+        </property>
+
+        <property
+            name="numLoops"
+                    column="numLoops"
+                formula="(select count(s.id) from soundclip s where s.storeId=id and s.searchable='Y' and s.type='Loop' and s.ready='Y' and (s.statusId is NULL or s.statusId=2) and IF(s.trackpackId is not NULL , (select g.ready='Y' from soundclip g where g.id=s.trackpackId) ,0))"
+        >
+
+        </property>
+
+        <property
+            name="numTrackpacks"
+                    column="numTrackpacks"
+                formula="(select count(t.id) from soundclip t where t.storeId=id and t.type='Trackpack' and t.ready='Y' and t.statusId is NULL)"
+        >
+
+        </property>
+
+        <bag
+            name="comments"
+            table="store_comment"
+            lazy="true"
+            cascade="delete"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="storeId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-many-to-many tag is deprecated, use @hibernate.many-to-many instead -->
+            <many-to-many
+                class="com.beathive.model.Comment"
+                column="commentId"
+                outer-join="auto"
+             />
+
+        </bag>
+
+        <property
+            name="average"
+                    column="average"
+                formula="(select avg(cs.score) from user_clip_score cs where cs.storeId=id)"
+        >
+
+        </property>
+
+        <property
+            name="paymentEmail"
+                    column="paymentEmail"
+        >
+
+        </property>
+
+        <property
+            name="views"
+                    column="views"
+                update="false"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

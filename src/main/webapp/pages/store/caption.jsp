@@ -1,0 +1,11 @@
+<%@ include file="/common/var_contentType.jsp"%>
+<ul class="hed">
+<li><h1>Welcome to ${requestScope.storeForm.name}</h1><label>Producer: </label><b>${requestScope.storeForm.producerName}</b></li>
+			<c:set var="groupid"><%=request.getParameter("instrumentForm.groupId")%></c:set>
+			<c:set var="instrumentid"><%=request.getParameter("instrumentForm.id") +"" %></c:set>
+<c:if var="hasGenre" test='${not empty param.genreId}'><li><br/><label class="hed">This shop contents is filtered with the following by:</label><br/></li><li><label class="hed"><fmt:message key="${genreMap[param.genreId].labelKey}"/></label></li></c:if>
+<c:if var="hasInstgrp" test='${groupid ne "null" and not empty groupid}'><li><label class="hed"><fmt:message key="${instrumentGroupMap[groupid].labelKey}"/></c:if><c:if var="hasInst" test='${instrumentid ne "null"}'> - <fmt:message key="${instrumentMap[instrumentid].labelKey}"/></label></li></c:if>
+<li class="xtra">
+<c:forTokens delims="," items="tempo,origin,feel,passage,timespan" var="nm" varStatus="stat">
+<c:if test='${param[nm] ne "null" and not empty param[nm]}'><c:set var="val" value="${param[nm]}"/><c:if test='${nm eq "timespan"}'><br/><b>|</b> </c:if><label><fmt:message key="label.${nm}.set"/>:</label> <b><c:choose><c:when test='${nm eq "tempo"}'><c:choose><c:when test='${val eq "130"}'><fmt:message key="label.tempo.fast"/></c:when><c:when test='${val eq "80"}'><fmt:message key="label.tempo.medium"/></c:when><c:otherwise><fmt:message key="label.tempo.medium"/></c:otherwise></c:choose></c:when><c:when test='${nm eq "timespan"}'><c:if test="${fn:contains(val , '1')}"><fmt:message key="label.timespan.previous_1_month"/></c:if><c:if test="${fn:contains(val , '3')}"><fmt:message key="label.timespan.previous_3_month"/></c:if><c:if test="${fn:contains(val , '7')}"><fmt:message key="label.timespan.previous_1_week"/></c:if></c:when><c:otherwise><fmt:message key="${val}"/></c:otherwise></c:choose></b> <b>|</b></c:if></c:forTokens></li>
+</ul><c:if test="${hasGenre or hasInst  or hasInstgrp or not empty val}"><a href="<c:url value='/shop/loops.html?method=search&storeId=${param.storeId}'/><c:if test="${not empty param.type}">&type=${param.type}</c:if>" id="dropFilter" title="<fmt:message key="results.store.viewall"/>"><fmt:message key="results.store.viewall"/></a></c:if><%--</span>--%>

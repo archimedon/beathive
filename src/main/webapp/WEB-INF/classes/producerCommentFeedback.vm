@@ -1,0 +1,18 @@
+
+Hello ${producer.username},
+
+
+${comment.postedBy} has has posted a new comment to your BeatHive Shop. You may view it and respond by going to your shop front page or by clicking on the link below:
+
+<http://www.beathive.com/viewShop.do?type=comment&shop=${producer.username}>
+
+---------------------------
+${comment.statement}
+
+---------------------------
+Date: ${comment.entryTime}
+
+
+This is an automated email action. Please send an email to <contact@BeatHive.com> with any questions or concerns.
+
+- BeatHive.com

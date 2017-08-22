@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.beathive.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.Authentication;
+
+import com.beathive.model.User;
+
+/**
+ * @author ron
+ *
+ */
+public interface ScenarioManager {
+	
+	public void makeUserScene(User user, HttpServletRequest request) ;
+	
+	public void doProducerView(User user, HttpServletRequest request);
+
+	/**
+	 * @param user
+	 * @param request
+	 */
+	public void doBasicUser( User user,	HttpServletRequest request);
+}

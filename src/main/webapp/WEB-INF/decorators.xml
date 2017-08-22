@@ -1,0 +1,20 @@
+<decorators defaultdir="/decorators">
+    <excludes>
+        <pattern>/remoting/*</pattern>
+        <pattern>/resources/*</pattern>
+        <pattern>/component/*</pattern>
+        <pattern>/ppnotify*</pattern>
+    </excludes> 
+    <decorator name="default" page="default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    <decorator name="admin" page="admin.jsp">
+        <pattern>/admin/*</pattern>
+    </decorator>
+    <decorator name="producer" page="producer.jsp">
+        <pattern>/producer/*</pattern>
+    </decorator>
+    <decorator name="shop" page="shop.jsp">
+        <pattern>/shop/*</pattern>
+    </decorator>
+</decorators>

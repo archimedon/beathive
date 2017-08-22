@@ -1,0 +1,172 @@
+<div><div style="display: none;" id="tooltip"><h3></h3><div class="body"></div><div class="url"></div></div><input style="margin: -5px 0pt 0pt -175px; padding: 0pt; position: absolute; width: 220px; height: 10px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 266px; left: 432px;" name="uploads[0]" type="file"><input style="margin: -5px 0pt 0pt -175px; padding: 0pt; position: absolute; width: 220px; height: 10px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583;" name="uploads[0]" type="file"><input style="margin: -5px 0pt 0pt -175px; padding: 0pt; position: absolute; width: 220px; height: 10px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583; top: 264px; left: 442px;" name="uploads[0]" type="file"><div style="width: 400px; height: 400px; background-color: rgb(204, 204, 204); position: absolute; left: 30%; top: 30%;" id="attribsBox"><h3><a style="line-height: 15px;" id="attribcloser">close</a></h3><div id="attribForm">
+
+<form id="loopInfo" method="post" action="/producer/saveLoopInfo.html?method=details"><input name="loopId" value="12062" type="hidden">
+<table id="attribsTable" border="0">
+<caption align="top"></caption>
+<tbody><tr id="uploadwrap">
+<td class="text" width="150">Overwrite AIF or <span>WAV</span></td>
+<td nowrap="nowrap" width="150"><a id="uploadbutton">click to upload</a></td>
+<td colspan="2" align="right">
+</td>
+
+<td colspan="2" align="right"><button class="done">done</button></td>
+</tr>
+
+<tr>
+		<td class="loopInfo_title">
+			<label for="keynote">
+				Key
+	        </label>
+        </td>
+        <td>
+				<select name="attrib(keynote)" class="keynoteMenu">
+
+    <option value="">N/A</option>
+    <option value="label.keynote.a">A</option>
+    <option value="label.keynote.a_sharp">A#/Bb</option>
+    <option value="label.keynote.b">B</option>
+    <option value="label.keynote.c">C</option>
+    <option value="label.keynote.c_sharp">C#/Db</option>
+
+    <option value="label.keynote.d">D</option>
+    <option value="label.keynote.d_sharp">D#/Eb</option>
+    <option value="label.keynote.e">E</option>
+    <option value="label.keynote.f">F</option>
+    <option value="label.keynote.f_sharp">F#/Gb</option>
+    <option value="label.keynote.g">G</option>
+
+    <option value="label.keynote.g_sharp">G#/Ab</option>
+</select>
+
+		</td>
+		<td>
+			<label for="scale">
+				Scale Type
+	        </label>
+        </td>
+        <td>
+
+				<select name="attrib(scale)" class="scaleMenu">
+    <option value="">N/A</option>
+    <option value="label.scale.major">Major</option>
+    <option value="label.scale.minor">Minor</option>
+    <option value="label.scale.diatonic">Diatonic</option>
+    <option value="label.scale.chromatic">Chromatic</option>
+
+</select>
+
+		</td>
+    </tr>
+	<tr>
+		<td>
+			<label for="timesignature">
+				Time Signature
+	        </label>
+        </td>
+
+        <td>
+				<select name="attrib(timesignature)" class="timesignatureMenu">
+    <option value="">N/A</option>
+    <option value="label.timesignature.4_4">4/4</option>
+    <option value="label.timesignature.3_4">3/4</option>
+    <option value="label.timesignature.6_8">6/8</option>
+    <option value="label.timesignature.12_8">12/8</option>
+
+    <option value="label.timesignature.odd">Odd</option>
+</select>
+
+		</td>
+		<td><label for="searchable">Feature {0}</label><span class="RequiredFormField">**</span></td>
+			 <td>
+			<select name="attrib(searchable)">
+			<option value="false">Hidden</option>
+
+			<option value="true" selected="true">Visible</option>
+			</select></td>
+</tr>
+
+	<tr>
+		<td>
+			<label for="passageMenu">passage
+				Character
+	        </label>
+        </td>
+        <td>
+
+				<select name="attrib(passage)" class="passageMenu">
+    <option value="">N/A</option>
+    <option value="label.passage.clean">Clean</option>
+    <option value="label.passage.distorted">Distorted</option>
+</select>
+
+		</td>
+		<td>
+
+			<label for="energyMenu">
+				Energy
+	        </label>
+        </td>
+        <td>
+				<select name="attrib(energy)" class="energyMenu">
+    <option value="">N/A</option>
+    <option value="label.energy.relaxed">Relaxed</option>
+
+    <option value="label.energy.intense">Intense</option>
+</select>
+
+		</td>
+    </tr>
+ 
+ 	<tr>
+		<td>
+			<label for="feelMenu">
+				Musical Feel
+	        </label>
+
+        </td>
+        <td>
+				<select name="attrib(feel)" class="feelMenu">
+    <option value="">N/A</option>
+    <option value="label.feel.straight">Straight</option>
+    <option value="label.feel.shuffle">Shuffle</option>
+</select>
+
+		</td>
+		<td>
+			<label for="sonorityMenu">
+				Sonority
+	        </label>
+        </td>
+        <td>
+				<select name="attrib(sonority)" class="sonorityMenu">
+    <option value="">N/A</option>
+
+    <option value="label.sonority.melodic">Melodic</option>
+    <option value="label.sonority.dissonant">Dissonant</option>
+</select>
+
+		</td>
+    </tr>
+  
+ 	<tr>
+		<td>
+			<label for="originMenu">
+
+				Sound Source
+	        </label>
+        </td>
+        <td>
+				<select name="attrib(origin)" class="originMenu">
+    <option value="">N/A</option>
+    <option value="label.origin.acoustic">Acoustic</option>
+    <option value="label.origin.electric">Electric</option>
+
+</select>
+
+		</td>
+		<td>
+		</td>
+    </tr>
+<tr><td colspan="4" align="right"><button class="done">done</button></td></tr>
+
+</tbody></table></form></div></div><input style="margin: -5px 0pt 0pt -175px; padding: 0pt; position: absolute; width: 220px; height: 10px; opacity: 0; cursor: pointer; display: none; z-index: 2147483583;" name="uploads[0]" type="file"></div>

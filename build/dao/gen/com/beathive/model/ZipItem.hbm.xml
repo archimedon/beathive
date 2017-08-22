@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.ZipItem"
+            table="zipitem"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="zipId"
+                    column="zipId"
+        >
+
+        </property>
+
+        <property
+            name="clipFormatId"
+                    column="clipFormatId"
+        >
+
+        </property>
+
+        <property
+            name="clipName"
+                    column="clipName"
+        >
+
+        </property>
+
+        <property
+            name="producerIdentityId"
+                    column="producerIdentityId"
+        >
+
+        </property>
+
+        <property
+            name="producerName"
+                    column="producerName"
+        >
+
+        </property>
+
+        <property
+            name="shopname"
+                    column="shopname"
+        >
+
+        </property>
+
+        <property
+            name="type"
+                    column="type"
+        >
+
+        </property>
+
+        <property
+            name="purchaseId"
+                    column="purchaseId"
+        >
+
+        </property>
+
+        <property
+            name="purchaseItemId"
+                    column="purchaseItemId"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Zip"
+            table="zip"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <version
+            name="version"
+            column="version"
+            type="java.lang.Integer"
+        />
+
+        <property
+            name="downloadURL"
+                    column="downloadURL"
+        >
+
+        </property>
+
+        <property
+            name="description"
+                    column="description"
+        >
+
+        </property>
+
+        <property
+            name="path"
+                    column="path"
+        >
+
+        </property>
+
+        <property
+            name="accessCount"
+                    column="accessCount"
+        >
+
+        </property>
+
+        <property
+            name="accessTime"
+                    column="accessTime"
+                update="false"
+        >
+
+        </property>
+
+        <property
+            name="creationTime"
+                    column="creationTime"
+                update="false"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="name"
+        >
+
+        </property>
+
+        <property
+            name="purchaseId"
+                    column="purchaseId"
+        >
+
+        </property>
+
+        <set
+            name="items"
+            lazy="true"
+            cascade="save-update"
+            where="zipId is not null"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="zipId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.beathive.model.ZipItem"
+            />
+
+        </set>
+
+        <property
+            name="accessKey"
+                    column="accessKey"
+        >
+
+        </property>
+
+        <property
+            name="fileSize"
+                    column="fileSize"
+        >
+
+        </property>
+
+        <property
+            name="customerName"
+                    column="customerName"
+        >
+
+        </property>
+
+        <property
+            name="customerId"
+                    column="customerId"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

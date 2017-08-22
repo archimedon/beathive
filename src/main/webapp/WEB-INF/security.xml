@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+
+    <!-- ======================== FILTER CHAIN ======================= -->
+    
+<bean id="securityFilter" class="org.springframework.security.util.FilterChainProxy">
+    <security:filter-chain-map path-type="ant">
+        <security:filter-chain pattern="/login.jsp"             filters="httpSessionContextIntegrationFilter,channelProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterSecurityInterceptor"/>
+        <security:filter-chain pattern="/**"             filters="httpSessionContextIntegrationFilter,authenticationProcessingFilter,channelProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,logoutFilter,exceptionTranslationFilter,filterSecurityInterceptor,switchUserProcessingFilter"/>
+    </security:filter-chain-map>
+</bean>
+<!--  bean id="lastLoginListener" class="com.beathive.webapp.listener.LastLoginListener">
+     <property name="userManager" ref="userManager"/>
+</bean -->
+
+    <bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.context.HttpSessionContextIntegrationFilter"/>
+
+    <bean id="logoutFilter" class="org.springframework.security.ui.logout.LogoutFilter">
+        <constructor-arg value="/index.jsp"/> <!-- URL redirected to after logout -->
+        <constructor-arg>
+            <list>
+                <ref bean="rememberMeServices"/>
+                <bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+        <property name="filterProcessesUrl" value="/logout.jsp"/>
+    </bean>
+
+<bean id="authenticationProcessingFilter" class="com.beathive.webapp.filter.AuthenticationProcessingLastLoginFilter">
+	<property name="authenticationManager" ref="authenticationManager"/>
+     <property name="cartManager" ref="cartManager"/>
+     <property name="userManager" ref="userManager"/>
+     <property name="paginatedListFactory" ref="paginatedListFactory"/>
+        <property name="authenticationFailureUrl" value="/login.jsp?error=true"/>
+        <property name="defaultTargetUrl" value="/"/>
+        <property name="filterProcessesUrl" value="/j_security_check"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+    <!-- SSL Switching: to use this, configure it in the filterChainProxy bean -->
+    <bean id="channelDecisionManager" class="org.springframework.security.securechannel.ChannelDecisionManagerImpl">
+        <property name="channelProcessors">
+            <list>
+                <bean class="org.springframework.security.securechannel.SecureChannelProcessor"/>
+                <bean class="org.springframework.security.securechannel.InsecureChannelProcessor"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="channelProcessingFilter" class="org.springframework.security.securechannel.ChannelProcessingFilter">
+        <property name="channelDecisionManager" ref="channelDecisionManager"/>
+        <property name="filterInvocationDefinitionSource">
+            <value>
+                PATTERN_TYPE_APACHE_ANT
+                /admin/**=REQUIRES_SECURE_CHANNEL
+                /cart.*=REQUIRES_SECURE_CHANNEL
+                /purchaseComplete.*=REQUIRES_SECURE_CHANNEL
+                /ppcomplete.*=REQUIRES_SECURE_CHANNEL
+ 				/ppnotify.html*=REQUIRES_SECURE_CHANNEL
+				/shop/saveComment.*=REQUIRES_SECURE_CHANNEL
+				/shop/comments.*=REQUIRES_SECURE_CHANNEL
+				/feedbackForm.*=REQUIRES_SECURE_CHANNEL
+				/sendFeedback.*=REQUIRES_SECURE_CHANNEL
+                /purchase.*=REQUIRES_SECURE_CHANNEL
+                /j_security_check*=REQUIRES_SECURE_CHANNEL
+
+                /agreementForm*=REQUIRES_INSECURE_CHANNEL
+                /addStore.*=REQUIRES_INSECURE_CHANNEL
+             
+                /get/**/*=REQUIRES_INSECURE_CHANNEL
+                /user/rateClip*=REQUIRES_INSECURE_CHANNEL
+                /user/wishList.*=REQUIRES_INSECURE_CHANNEL
+                /user/*=REQUIRES_SECURE_CHANNEL
+                /login*=REQUIRES_SECURE_CHANNEL
+                /register.*=REQUIRES_SECURE_CHANNEL
+                /signup.*=REQUIRES_SECURE_CHANNEL
+                /saveUser.*=REQUIRES_SECURE_CHANNEL
+                /**=REQUIRES_INSECURE_CHANNEL
+ </value>
+            <!--                
+ /user/zips.html=REQUIRES_INSECURE_CHANNEL-->
+        </property>
+    </bean>
+ 
+    <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter"/>
+
+    <!-- bean id="rememberMeProcessingFilter" class="org.springframework.security.ui.rememberme.RememberMeProcessingFilter" -->
+    <bean id="rememberMeProcessingFilter" class="com.beathive.webapp.filter.UserPrefRememberMeFilter">
+		<property name="cartManager" ref="cartManager"/>
+		<property name="userManager" ref="userManager"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+    <bean id="anonymousProcessingFilter" class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+        <property name="key" value="anonymous"/>
+        <property name="userAttribute" value="anonymous,ROLE_ANONYMOUS"/>
+    </bean>
+            <bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+                <property name="loginFormUrl" value="/login.jsp"/>
+                <property name="forceHttps" value="false"/>
+            </bean>
+
+    <bean id="exceptionTranslationFilter" class="org.springframework.security.ui.ExceptionTranslationFilter">
+        <property name="authenticationEntryPoint"  ref="authenticationProcessingFilterEntryPoint"/>
+    </bean>
+
+    <!-- Note the order that entries are placed against the objectDefinitionSource is critical.
+         The FilterSecurityInterceptor will work from the top of the list down to the FIRST pattern that matches the request URL.
+         Accordingly, you should place MOST SPECIFIC (ie a/b/c/d.*) expressions first, with LEAST SPECIFIC (ie a/.*) expressions last -->    
+    <bean id="filterInvocationInterceptor" class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="objectDefinitionSource">
+            <value>
+                PATTERN_TYPE_APACHE_ANT
+                /reload.*=admin
+                /purchaseComplete.*=ROLE_ANONYMOUS,admin,user,producer
+                /purchase.*=ROLE_ANONYMOUS,admin,user,producer
+                /ppcomplete.*=ROLE_ANONYMOUS,admin,user,producer
+				/shop/saveComment.*=admin,user,producer
+				/shop/comments.*=admin,user,producer
+				/feedbackForm.*=ROLE_ANONYMOUS,admin,user,producer
+				/sendFeedback.*=ROLE_ANONYMOUS,admin,user,producer
+                /clickstreams.*=admin
+                /flushCache.*=admin
+                /saveUser.*=admin,user
+                /cart*=admin,user,producer
+                /producer/*=admin,user,producer
+                /agreementForm*=user
+                /addStore.*=user
+                /ppnotify.html*=ROLE_ANONYMOUS
+                /admin/**=admin
+                /j_security_check*=ROLE_ANONYMOUS,admin,user,producer
+                /user/*=user
+
+                /login.*=ROLE_ANONYMOUS,admin,user,producer
+                /register.*=ROLE_ANONYMOUS,admin,user,producer
+                /signup.*=ROLE_ANONYMOUS,admin,user,producer
+
+
+
+                /passwordHint.*=ROLE_ANONYMOUS,admin,user,producer
+                /reload.*=admin
+                /signup.*=ROLE_ANONYMOUS,admin,user
+                /**=ROLE_ANONYMOUS,admin,user,producer
+
+            </value>
+        </property>
+    </bean>
+<!-- changed: upgrade from acegi1.0.7 to springframework 2.5.4  -->
+    <bean id="filterSecurityInterceptor" class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="objectDefinitionSource">
+			<security:filter-invocation-definition-source path-type="ant">
+				<security:intercept-url pattern='/login.jsp*' access='ROLE_ANONYMOUS'/>
+				<security:intercept-url pattern='/user/*' access='user'/>
+				<security:intercept-url pattern='/addStore.*' access='user'/>
+				<security:intercept-url pattern='/agreementForm.*' access='user'/>
+				<security:intercept-url pattern='/ppnotify.html.*' access='ROLE_ANONYMOUS'/>
+				<security:intercept-url pattern='/admin/*' access='admin'/>
+				<security:intercept-url pattern='/cart.*' access='user'/>
+			</security:filter-invocation-definition-source>
+		</property>
+    </bean>
+
+
+
+    <bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+        <property name="allowIfAllAbstainDecisions" value="false"/>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.vote.RoleVoter">
+                    <property name="rolePrefix" value=""/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="rememberMeServices" class="org.springframework.security.ui.rememberme.TokenBasedRememberMeServices">
+        <property name="userDetailsService" ref="userDao"/>
+        <property name="key" value="IBeatHive"/>
+        <property name="parameter" value="rememberMe"/>
+    </bean>
+
+    <bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="daoAuthenticationProvider"/>
+                <ref local="anonymousAuthenticationProvider"/>
+                <ref local="rememberMeAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="daoAuthenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+         <property name="userDetailsService" ref="userDao"/>
+         <!-- 
+         <property name="forcePrincipalAsString" value="true"/>
+          -->
+         <property name="userCache" ref="userCache"/>
+         <property name="passwordEncoder" ref="passwordEncoder"/>
+    </bean>
+
+    <bean id="anonymousAuthenticationProvider" class="org.springframework.security.providers.anonymous.AnonymousAuthenticationProvider">
+        <property name="key" value="anonymous"/>
+    </bean>
+
+    <bean id="rememberMeAuthenticationProvider"     class="org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider">
+        <property name="key" value="IBeatHive"/>
+    </bean>
+
+    <!-- This bean definition must be available to ApplicationContext.getBean() so StartupListener
+         can look for it and detect if password encryption is turned on or not -->
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.Md5PasswordEncoder"/>
+    <!-- bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder"/ -->
+
+    <!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
+    <bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener"/>
+
+    <!-- Apply method-level interceptor to userManager bean -->
+    <aop:config>
+        <aop:advisor id="managerSecurity" advice-ref="methodSecurityInterceptor" pointcut="execution(* com.beathive.service.UserManager.*(..))"/>
+    </aop:config>
+
+    <bean id="methodSecurityInterceptor" class="org.springframework.security.intercept.method.aopalliance.MethodSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <property name="objectDefinitionSource">
+             <value>
+                 com.beathive.service.UserManager.getUsers=admin
+                 com.beathive.service.UserManager.removeUser=admin
+             </value>
+        </property>
+    </bean>
+    
+ <bean id="switchUserProcessingFilter" class="com.beathive.webapp.filter.SwitchUserFilter">
+    <property name="userDetailsService" ref="userDao" />
+    <property name="switchUserUrl"><value>/admin/j_spring_security_switch_user</value></property>
+    <property name="exitUserUrl"><value>/j_spring_security_exit_user</value></property>
+    <property name="targetUrl" value="/"/>
+ </bean>
+
+</beans>

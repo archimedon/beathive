@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Purchase"
+            table="purchase"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="total"
+                    column="total"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="authCode"
+                    column="authCode"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="created"
+                    column="created"
+        >
+
+        </property>
+
+        <property
+            name="email"
+                    column="email"
+        >
+
+        </property>
+
+        <component
+            name="executor"
+        >
+
+        <property
+            name="name"
+                    column="name"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="flatFee"
+                    column="flatFee"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="rateFee"
+                    column="rateFee"
+                not-null="true"
+        >
+
+        </property>
+
+        </component>
+
+        <property
+            name="firstName"
+                    column="firstName"
+        >
+
+        </property>
+
+        <property
+            name="ipAddress"
+                    column="ip_address"
+        >
+
+        </property>
+
+        <property
+            name="lastName"
+                    column="lastName"
+        >
+
+        </property>
+
+        <property
+            name="subTotal"
+                    column="subTotal"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="customerId"
+                    column="customerId"
+        >
+
+        </property>
+
+        <set
+            name="items"
+            lazy="false"
+            cascade="all"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="purchaseId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.beathive.model.PurchaseItem"
+            />
+
+        </set>
+
+        <property
+            name="requestId"
+                    column="requestId"
+        >
+
+        </property>
+
+        <property
+            name="middleName"
+                    column="middleName"
+        >
+
+        </property>
+
+        <property
+            name="reconciliationId"
+                    column="reconciliationId"
+        >
+
+        </property>
+
+        <property
+            name="customerName"
+                    column="customerName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="discount"
+                    column="bulk_discount"
+        >
+
+        </property>
+
+        <property
+            name="downloadURL"
+                    column="downloadURL"
+        >
+
+        </property>
+
+        <property
+            name="promoCode"
+                    column="promoCode"
+        >
+
+        </property>
+
+        <property
+            name="promoDiscount"
+                    column="promoDiscount"
+        >
+
+        </property>
+
+        <property
+            name="zipId"
+                    column="zipId"
+        >
+
+        </property>
+
+        <property
+            name="trxnFee"
+                    column="trxnFee"
+                update="false"
+                insert="false"
+                formula="( select ( ((p.rateFee * p.total) + p.flatFee) / 2 ) from purchase p where p.id=id )"
+                lazy="false"
+        >
+
+        </property>
+
+        <property
+            name="net"
+                    column="net"
+                update="false"
+                insert="false"
+                formula="( select ( (p.total - ((p.rateFee * p.total) + p.flatFee)) /2 ) from purchase p where p.id=id )"
+                lazy="false"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

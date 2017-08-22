@@ -1,0 +1,453 @@
+.fr {float:right;}
+.fl {float:left;}
+.clr {clear:both;}
+
+input { border:1px solid #999; padding:4px 2px; }
+
+/** used for shop banners everywhere **/
+img.bannerImg { width:120px; height:120px; border:4px groove inherit; padding:0; }
+
+/** shop-directory: body#shopdirectory 
+ * http://dev.beathive.com:9090/stores.html?genreId=7&method=search 
+ **/
+body#shopdirectory ul#storeGenres.menuList { background-image:url(images/sub_nav_zebra_bg.png); background-repeat:repeat; clear:both; display:block; height:86px; padding:5px; width:700px; }
+#storeGenres a { 
+/* color:#E2DFDA; */
+color:#fff; display:block; margin:0; padding:7px 8px 8px; text-decoration:none; width:96px; border: solid 1px #cccccc;}
+#storeGenres a:hover { background:#e2dfda; color:#565049; }
+ul#storeGenres.menuList li { float:left; }
+ul#storeGenres.menuList .selected { background:#FE9915; }
+
+/** for shop list*/
+body#shopdirectory #storeListing { padding:0; }
+body#shopdirectory #storeListing td { padding:.7em 0; width:500px; border-bottom:2px ridge #e2e2e2; }
+
+/** shop stats within the directory*/
+body#shopdirectory #storeListing .storeStats { float:right; width:85px; padding:2.5px; }
+body#shopdirectory #storeListing .storeStats .keyword { 
+/* color: #069;*/
+color:sienna; font-weight:bold; background-color:inherit; }
+body#shopdirectory #storeListing .storeStats { background-color:WhiteSmoke; float:right; margin:0 10px 6em 1em; padding:10px; width:130px; }
+body#shopdirectory span.itemsFound { padding:5px; padding-top:14px; width:100%; clear:both; display:block; height:22px; background-color:#FE9915; color:#fff; font-size:20px; vertical-align:middle; text-transform:uppercase; font-weight:900; }
+body#shopdirectory span.itemsFound .count { color:#fff; }
+.viewShop { float:left; margin-right:10px; font-weight: normal; font-size: .9em; }
+.shopinfo .viewShop { float:left; margin-right:10px; font-weight: normal; font-size: 1.4em; }
+.shopsummary { margin-left:140px; width:450px; *position:relative; *top:-120px;}
+.shopsummary span.text { margin-top:5px;display:block; }
+
+/** cart checkout page - http://dev.beathive.com:9090/viewCart.html */
+
+/* this was an attempt to layout out the cart data in when viewing cart. */
+#cartDetail a.checkout { background:#f2f0ea; text-transform:uppercase; text-decoration:none; color:#fe7013; padding:3px; border:1px solid #b9b4ab; font-weight:bold; }
+#cartDetail #methodOfPayments { margin-top:40px; text-align:right; font-weight:bold; }
+#cartDetail #methodOfPayments ul#payments { margin:10px 0; }
+#cartDetail #methodOfPayments #payments li { display:inline; }
+#cartDetail #methodOfPayments #payments li img { display:inline; }
+
+/*applied to anchors, labels, submits on a lot of pages 
+not finalized - the colors clash. Also, Jayson defined .checkout. the behaviour for all buttons needs streamlining */
+.button { border:1px solid #b9b4ab; font-weight:bold; background-color:#f2f0ea; color:#FE9915; }
+.button:hover { border:1px solid #b9b4ab; color:#E55C00; }
+
+/* http://dev.beathive.com:9090/cart.html?method=info */
+form#billingForm label { font-weight:bold; }
+form#billingForm .anyClassName,form#billingForm FormInside { 
+/*color: #fe7013;*/
+}
+#dropFilter { color:#E55C00; text-decoration:none; font-size:15px; font-weight:750; }
+
+/** An attempt to streamline style for the rightcolumn borrowed from cart.css */
+
+/*  Shopping Cart */
+.rightColItem { background:#e2dfda; padding:10px; color:#776e60; }
+.rightColItem h2 { border-bottom:1px solid #aca69c; color:#776e60; text-transform:uppercase; font-weight:bold; font-size:12px; padding-bottom:3px; }
+.rightColItem ul li { overflow:hidden; clear:both; }
+.rightColItem ul li.item { background:#f3f0eb; padding:6px 23px; margin:5px 0; }
+.rightColItem ul li.separator { border-bottom:1px solid #aca69c; margin:0 0 5px; }
+
+/*for the date in the loginBox*/
+.xsmall { font-size:75%; text-transform:lowercase; }
+
+/** contains search-result-tabs */
+
+/*
+.menuBox ul{
+line-height:1em;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0;
+padding:0;
+width:auto;
+}
+.menuBox ul li {
+background-color:#57504A;
+border:0px solid black;
+margin:3px 3px 0 3px;
+padding:3px 3px 0 3px;
+display:inline;
+float:left;
+line-height:1em;
+}
+*/
+ul.menuList { line-height:1em; list-style-image:none; list-style-position:outside; list-style-type:none; margin:0; padding:0; width:auto; }
+ul.menuList li { display:inline; float:left; }
+.menuList * a { color:#fff; }
+
+ul#searchTabs {
+*padding: 5px 0 5px 0;
+*line-height: 1.7em;
+*height: -10px;
+}
+
+/** RD - copied the menuList code so that any UL wrapped in a .menuBox behaves like a menuList 
+.menuBox ul li.tabOn {
+background-color:#FE9915;
+}
+
+.menuBox ul{
+line-height:1em;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0;
+padding:0;
+width:auto;
+}
+.menuBox ul li {
+background-color:#57504A;
+border:1px solid black;
+margin:3px;
+padding:3px;
+display:inline;
+float:left;
+line-height:1em;
+}
+**/
+ul.menuList li.tabOn { background:#fe9915; font-weight:bold; text-transform:uppercase; }
+.trackpackList { border-collapse:collapse; }
+.trackpackList tr.even { background-color:#f3f0eb; }
+.trackpackList tr.odd { background-color:#e2dfda; }
+.trackpackList td { border-bottom:1px solid #444; }
+table.loopList th,table.loopList td { border-bottom:0; vertical-align:top; }
+table.loopList th { color:#fff; }
+table.loopList td { border-bottom:0; vertical-align:top; padding: 5px;}
+.loopList tr.even { background-color:#f3f0eb; border:0; }
+.loopList tr.odd { background-color:#e2dfda; border:0; }
+
+/** holds responses from swfgen*/
+#cons { color:#FE9915; display:block; clear:both; }
+
+/*  Shopping Cart */
+#cartSummary { background:#e2dfda; padding:10px; color:#776e60; }
+#cartstats { }
+#cartSummary h2 { border-bottom:1px solid #aca69c; color:#776e60; text-transform:uppercase; font-weight:bold; font-size:12px; padding-bottom:3px; }
+#cartSummary ul li { overflow:hidden; clear:both; }
+#cartSummary ul li.item { background:#f3f0eb; padding:6px 23px; margin:5px 0; }
+#cartSummary ul li.separator { border-bottom:1px solid #aca69c; margin:0 0 5px; }
+#cartSummary .cartTitle { float:left; width:120px; font-weight:bold; }
+#cartSummary .cartAmount { float:right; }
+#cartSummary .cartAmount a.checkout { float:right; margin:0px; padding:6px 10px 3px 10px; }
+#cartSummary .cartCenter { text-align:center; }
+#cartSummary .checkout { margin:0px 0; overflow:visible; }
+#cartSummary a.checkout { background:#f2f0ea; text-transform:uppercase; text-decoration:none; color:#fe7013; padding:5px; border:1px solid #b9b4ab; font-weight:bold; height: 14px;}
+#cartSummary .checkout2 { margin:15px 0 25px; overflow:visible; }
+#cartSummary a.checkout2 { background:#f2f0ea; text-transform:uppercase; text-decoration:none; color:#fe7013; padding:5px; border:1px solid #b9b4ab; font-weight:bold; height: 14px;}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
+#cartSummary .cartAmount a.checkout { float:right; }
+#cartSummary a.checkout { background:#f2f0ea; text-transform:uppercase; text-decoration:none; color:#fe7013; padding:5px 0px 5px 5px; border:1px solid #b9b4ab; font-weight:bold; height:15px; font-size: 1em;}
+}
+
+#cartSummary #methodOfPayments { margin-top:40px; text-align:right; font-weight:bold; }
+#cartSummary #methodOfPayments ul#payments { margin:10px 0; }
+#cartSummary #methodOfPayments #payments li { display:inline; }
+#cartSummary #methodOfPayments #payments li img { display:inline; }
+#meter { border:1px solid #aca69c; color:#aaa; margin:6px 0 0; }
+#meter td { border-collapse:collapse; border-left:1px solid #fff; vertical-align:middle; text-align:center; padding:2px; font-weight:bold; font-size:10px; }
+#cartSummary #savings { margin:0 0 0; font-size: 1em; letter-spacing: 1px !important}
+
+
+/*for viewCart.html */
+#cartDetail { background:#e2dfda; padding:10px; color:#776e60; }
+#cartDetail h2 { border-bottom:1px solid #aca69c; color:#776e60; text-transform:uppercase; font-weight:bold; font-size:36px; padding-bottom:3px; }
+#cartDetail ul li { overflow:hidden; clear:both; }
+#cartDetail ul li.item { background:#f3f0eb; padding:6px 23px; margin:5px 0; }
+#cartDetail ul li.separator { border-bottom:1px solid #aca69c; margin:0 0 5px; }
+#cartDetail .cartTitle { float:left; width:140px; font-weight:bold; }
+#cartDetail .cartAmount { float:right; font-weight:bold; }
+#cartDetail .cartCenter { text-align:center; }
+#cartDetail #checkout { margin:8px 0; overflow:visible; }
+#cartDetail a.checkout { background:#f2f0ea; text-transform:uppercase; text-decoration:none; color:#fe7013; padding:3px; border:1px solid #b9b4ab; font-weight:bold; }
+#cartDetail #methodOfPayments { margin-top:40px; text-align:right; font-weight:bold; }
+#cartDetail #methodOfPayments ul#payments { margin:10px 0; }
+#cartDetail #methodOfPayments #payments li { display:inline; }
+#cartDetail #methodOfPayments #payments li img { display:inline; }
+#cartDetail #meter { border:1px solid #aca69c; color:#aaa; margin:6px 0 0; }
+#cartDetail #meter td { border-collapse:collapse; border-left:1px solid #fff; vertical-align:middle; text-align:center; padding:2px; font-weight:bold; font-size:10px; }
+#cartDetail #savings { color:#FE9915; }
+
+/* changed from class to id in the HTML. It is more efficient in JS for me to getObjectbyId when updating image position  */
+#cartSummary table#meter {border: 0px solid blue; background-image:url(/images/CandyStripe2.gif); background-repeat:no-repeat; background-position:-132px 0;}
+
+
+#cartDetail #resultBody { }
+#cartDetail #resultBody #userCart tbody { min-height:40px; height:200px; overflow-y:none; }
+
+/* used to indicate the percentage being applied */
+.inView { color:#fff; }
+
+/* demonstrates use of dynamic class attribute in body tag */
+body#viewCartPage { 
+/*background: blue;*/
+}
+body#viewCartPage #content { 
+/*background: green;*/
+}
+
+/* billing info */
+body#billingFormPage { 
+/* background: red;*/
+}
+
+/* all loop results */
+body#searchresults { 
+/*background: grey;*/
+}
+
+/* receipt page */
+body#purchaseCompletePage .button { font-size:130%; padding: 5px;}
+
+/* viewCart */
+body#viewCartPage h1 { font-size:130%; padding-bottom:12px; border-bottom:1px solid #aca69c; }
+body#viewCartPage #main { width:100%; }
+body#purchaseCompletePage #main { width:100%; }
+
+/* producer-Home Page */
+body#producerHomePage h1 { font-size:130%; padding-bottom:12px; border-bottom:1px solid #aca69c; }
+body#producerHomePage .summary { width:500px; }
+body#producerHomePage .summary.small { width:250px; }
+body#producerHomePage .summary th { color:#000; font-size:110%; }
+
+/* wishList page */
+body#wishListPage h1 { font-size:130%; padding-bottom:12px; border-bottom:1px solid #aca69c; }
+body#setupshopPage { }
+
+/** --- right column summary --- **/
+#shopSummary .storeStats { margin-left:1px; width:85px; border:1px solid slategray; padding:5px; background-color:WhiteSmoke; font-size: .8em;}
+#shopSummary .bannerImg { border-width:2px; padding:0; margin-right:3px; }
+#shopSummary ul.flat { display:table; list-style-type:none; padding:0; margin-left:0; position:relative; left:0; }
+#shopSummary ul.flat li { display:inline; padding:0 4px; text-align:center; }
+#shopSummary ul.flat li a { text-decoration:underline; }
+
+/** should be in typo.css 
+Ron Thur May 28 2009*/
+.subHed { font-size:13px; border-bottom-width:1px; border-bottom-style:solid; border-bottom-color:#FE9915; color:#FE9915; }
+caption { text-align:left; }
+
+/* This is the style for the informational messages presented to the user */
+div.error,div.message,li.error { background:#ffffcc; border:1px solid #000; color:#000000; font-family:Arial, Helvetica, sans-serif; font-weight:normal; margin:10px auto; padding:3px; text-align:left; vertical-align:bottom; }
+
+/* use a different color for the errors */
+div.error,li.error { border:2px solid red; }
+
+/* IE fix, followed by the rest of the world fix */
+li.error { padding:3px!important; }
+ul>li.error { padding:0!important; }
+div.message p,div.message p { margin-bottom:0; }
+img.validationWarning,div.error img.icon,div.message img.icon,li.error img.icon { display:inline; border:0!important; width:14px; height:13px; vertical-align:middle; margin-left:3px; background:transparent!important; 
+/* important added because some themes define div#main img */
+}
+div.message a { background:transparent; color:#0000FF; }
+div.message a:visited { background:transparent; color:#0000FF; }
+div.message a:hover { background:transparent; color:#008000; }
+div.message a:active { text-decoration:underline overline; }
+div.message img.icon { vertical-align:middle; }
+span.fieldError,.errorMessage { color:red; font-size:.95em; font-weight:bold; display:block; }
+label.error { display:inline; clear:none; }
+.inform { border:1px solid #999; background-color:#f4f4f4; width:27.7em; height:4em; margin:1.5em auto; }
+
+/** SEARCH CRITERIA PAGE **/
+#soundClipForm fieldset { display:inline; float:left; height: 100px; padding:5px; }
+#soundClipForm fieldset label { padding:5px; text-align: center; width: 120px; }
+/* #soundClipForm .oneunit { width:75px; height:75px; } */
+#soundClipForm .descriptor { width:140px; height:90px; }
+#soundClipForm .twounitWide { width:150px; height:75px; }
+#soundClipForm .highlight { border:1px solid #b9b4ab;  background:#CCCCCC; /* color:#fff; */ }
+#soundClipForm .disabled { color:#ccc!important; }
+#soundClipForm #slider { margin:10px 0 0 0; width:60px; }
+#soundClipForm #instrumentgroupTable { border:1px; width:300px; margin-top:8px;}
+#soundClipForm #resultTracker .counterNumber { color:#fff; background-color:#000; font-size:17px; padding:3px; font-style:bold; display:inline; }
+/* #soundClipForm fieldset.squareUnit { width:150px;} */
+#soundClipForm #pagesizeEL { width:100px; }
+#soundClipForm #pagesizeEL #size { width:35px; }
+
+/** END SEARCH CRITERIA PAGE **/
+
+/** inline styles moved to here **/
+label.loop_attribs { color:brown; font-size:.8em; }
+h2 small { font-size:11px; color:#776E60; }
+#contactBox { display:none; width:400px; height:400px; }
+#storeForm .emptyImg { width:120px; border:1px solid black; height:120px; }
+
+/** END inline styles moved to here **/
+
+/** SALES REPORT PAGE **/
+#salesReportPage #soldLoops { width:820px; }
+#soldLoops tbody { overflow-y:auto; min-height:400px; max-height:400px; }
+#salesReportPage .cliptable { border:1px solid #000; font-size:10pt; margin:5px; width:100%; }
+#salesReportPage .cliptable th { border-right:1px solid #c8c8ff; padding-left:2px; padding-right:12px; font-family:arial, helvetica, sans-serif; font-weight:bold; 
+/* color: white;*/
+background-color:#000; margin-right:10px; white-space:nowrap; }
+#salesReportPage .cliptable td { font-family:verdana, arial, helvetica, sans-serif; padding-left:2px; }
+#salesReportPage .cliptable tr.total td { white-space:nowrap; vertical-align:top; font-weight:bold; border-top:1px solid black; padding-bottom:10px; }
+.cliptable tr.total td.customer { visibility:hidden; }
+.cliptable td.hidden { display:none; }
+.cliptable th.hidden { display:none; }
+.cliptable th.r { text-align:right; padding-right:10px; }
+.cliptable th.c { text-align:center; }
+.cliptable td.r { text-align:right; padding-right:10px; }
+.cliptable td.c { text-align:center; }
+.cliptable tr.odd { background-color:whitesmoke; }
+
+/*.cliptable tr.even {
+     background-color: #d6cfe6;
+}
+*/
+.cliptable th a,.cliptable th a:visited { text-align:left; 
+/*color: white;*/
+}
+.cliptable th a:hover { color:#ffcc00; background-color:transparent; }
+.cliptable .order1 { background-position:right; background-image:url(../images/arrow_up.gif); background-repeat:no-repeat; }
+.cliptable .order2 { background-position:right; background-image:url(../images/arrow_down.gif); background-repeat:no-repeat; }
+#salesReportPage .pagelinks { color:#999999; margin:5px; }
+#salesReportPage .pagelinks img { vertical-align:middle; }
+#salesReportPage span.export { padding:0 4px 1px 20px; font-size:x-small; text-align:center; }
+#salesReportPage span.excel { background-image:url(../images/ico_file_excel.png); background-repeat:no-repeat; width:16px; }
+#salesReportPage span.csv { background-image:url(../images/ico_file_csv.png); background-repeat:no-repeat; width:16px; }
+#salesReportPage span.xml { background-image:url(../images/ico_file_xml.png); background-repeat:no-repeat; width:16px; }
+#salesReportPage span.pdf { background-image:url(../images/ico_file_pdf.png); background-repeat:no-repeat; width:16px; }
+#salesReportPage span.rtf { background-image:url(../images/ico_file_rtf.png); background-repeat:no-repeat; width:16px; }
+#salesReportPage .cliptable tr.rowMouseOver { background-image:url(../images/selected.gif); background-repeat:repeat-x; background-color:#ffff99; }
+#salesReportPage .pageHeader { height:60px; background-image:url(../images/header.gif); background-repeat:repeat-x; }
+#salesReportPage .pageHeaderText { font-size:30px; margin-left:5px; 
+/* color: whitesmoke;*/
+font-family:"century gothic", verdana, arial, helvetica, sans-serif; font-weight:bold; text-align:left; display:inline; white-space:nowrap; }
+#salesReportPage .leftMenu { white-space:nowrap; height:100%; background-color:#d6cfe6; font-family:verdana, arial, helvetica, sans-serif; }
+.content { width:100%; padding:10px; }
+.rightColumn { width:3px; }
+.customer { width:20%; text-align:left; }
+.orderNumber { width:10%; text-align:left; }
+.orderDate { text-align:center; width:10%; }
+.productName { width:25%; }
+.quantity { text-align:center; width:10%; }
+.lineItemTotal { text-align:right; width:15%; padding-right:10px; }
+#salesReportPage .borderedInline { display:inline; border:1px solid black; }
+#salesReportPage a:link { color:#000099; text-decoration:none; background-color:transparent; font-weight:bold; }
+#salesReportPage a:visited { color:#000099; text-decoration:none; background-color:transparent; font-weight:bold; }
+#salesReportPage a:hover { color:#d68000; background-color:transparent; font-weight:bold; }
+#salesReportPage img { border:0; }
+
+/** END SALES REPORT PAGE **/
+.addGenreButton { display:block; color:ccc; font-size:20px; float:left; }
+.removeGenreButton { color:ccc; width:15px; height:15px; padding:0; font-size:15px; float:left; }
+
+/* Added Thur Sept 10th - 1:42 AM*/
+#producer_main .menuBox { position:relative; top:0; left:0; width:940px; padding:5px; background-image:url(images/sub_nav_zebra_bg.png); background-repeat:repeat; clear:both; display:block; }
+#producer_main h1 { margin:30px 0 10px; font-size:36px; font-weight:bold; text-align:center; letter-spacing:10px; }
+
+/*
+#producer_main .menuBox 
+{
+	position: relative; top:0; left:0;
+	width: 940px; padding: 5px;
+	background-image:url(images/sub_nav_zebra_bg.png);
+	background-repeat:repeat;
+	clear:both;
+	display:block;
+}
+#producer_main .menuBox ul.menuList	{position: absolute; left: 10px; bottom:5px;}
+#producer_main .menuBox ul.menuList li a {padding: 5px 10px; text-decoration: none;}
+#producer_main .menuBox ul.menuList li a:hover {background: #FE9915;}
+#producer_main .menuBox ul.menuList li.selected a {background: #FE9915;}
+*/
+table.summary { border:0 solid #999; width:500px; border-collapse:collapse; margin:0 auto 20px; }
+
+/* table.summary td {border: 1px solid #999; border-collapse: collapse;} */
+table.summary td,table.summary th { padding:5px 10px; border:1px solid #999; border-collapse:collapse; }
+table.summary th { border:0 solid #323232; width:105px; font-weight:bold; text-transform:capitalize; }
+
+/* (RBD) removed 11/4/09. this code is dynamically inserted.
+#primary-nav li:last-child { float:right; margin-right:25px; }
+#primary-nav li:last-child a { color:#FE9915; }
+*/
+div#menuBox { width:940px; height:29px; clear:both; display:block; background:#777 url(images/sub_nav_zebra_bg.png) repeat; border-bottom:4px solid #FE9915; color:#FFFFFF; padding:15px 0 3px; vertical-align:bottom; position:relative; top:0; left:0; }
+div#menuBox.short { width:700px; }
+
+/* div.menuBox .short {width: 700px;} */
+div#menuBox ul.menuList li { border:0 solid black; }
+div#menuBox ul.menuList { position:absolute; left:10px; bottom:5px; *bottom:-5px;}
+div#menuBox ul.menuList li a { padding:5px 10px; text-decoration:none; font-weight:bold; font-size:1.3em;}
+div#menuBox ul.menuList li a:hover { background:#FE9915; font-weight:bold; font-size:1.3em;}
+div#menuBox ul.menuList li.selected a { background:#FE9915; font-weight:bold; font-size:1.3em;}
+label.singleOpt { font-size:85%; border:1px solid #000; background-color:#fff; color:#000; padding:1px 1px 1px 5px; width:73px; display:block; }
+
+body#searchFormPage #requiredCriteria {width:420px;}
+body#searchFormPage #pagesizeEL {clear:none; width:36px !important;text-align:center;display:none; margin-left:10px;}
+body#searchFormPage #pagesizeEL #size {text-align:center;}
+body#searchFormPage #pagesizeEL legend {text-align:center;}
+body#searchFormPage #instrumentgroupTable li {white-space:nowrap;}
+/* body#searchFormPage .squareUnit {width:130px !important;} */
+body#searchFormPage #instruction {width:40px;height:50px; white-space:normal; clear:none;background-color: yellow;}
+
+#viewCartPage #cartSummary table#meter{background-image:url('/images/CandyStripeLarge.gif') !important; background-repeat:no-repeat; background-position:-157px 0;width: 160px !important;}
+
+
+.player x:-moz-any-link {margin-top:50px;}
+
+
+
+
+/* (RBD) added 11/4/09. An attempt to fix the layout of the genres in producer view */
+.loopGenres{width: 130px;}
+.loopGenres .addGenreButton,.removeGenreButton{	background-repeat:no-repeat;background-position:center center;	background-size:100%;}
+.loopGenres ul li{text-align: left;	white-space: nowrap;}
+.loopGenres ul li select{float: left;}
+.addGenreButton{width: 18px;background-image: url("/images/BUTTONS/add.png");}
+.removeGenreButton{width: 18px;background-image: url("/images/BUTTONS/delete.png");}
+
+
+/* (RBD) added 11/10/09 */
+/* used for result table captions */
+#shopInfo{width:230px; overflow: hidden; margin: 5px 10px 10px 5px; float: left;}
+#shopInfo #storeHed {white-space:nowrap;}
+#shopInfo #storeHed li.storename{ color: #fff; font-size: 1.4em; padding-bottom: 5px; font-weight: bold; }
+#shopInfo #storeHed li.producername{}
+#searchCriteria{margin: 0px 10px 10px 5px;padding:0;}
+#dropFilter{font-size: 1em;}
+
+#faq { margin: 10px; }
+#userCart { margin-left: -10px; width: 885px; }
+.loginsupport { margin-top: 20px; text-align: center; margin-left: 20%;}
+
+.general_list {
+list-style-type: disc;
+list-style-position: inside;
+line-height: 1.4em;
+width: 700px;
+}
+
+.buttonbar {
+margin-bottom: 30px;
+}
+
+#instrumentgroupTable tbody {background: #ffffff;}
+
+.requiredCriteria small {color: #fff;}
+
+#rememberMe {float: left; margin:3px 10px 5px 5px;}
+
+input#j_password {margin-bottom:10px;}
+
+.cat_pagination .fromWishlist {font-size:1em;}

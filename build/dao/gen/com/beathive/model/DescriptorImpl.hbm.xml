@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.DescriptorImpl"
+            table="descriptor"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="assigned">
+
+    </generator>
+
+    </id>
+
+        <discriminator
+            column="clazz"
+        />
+
+        <property
+            name="sortorder"
+                    column="sort_order"
+        >
+
+        </property>
+
+        <property
+            name="labelKey"
+                    column="labelkey"
+                not-null="true"
+                unique="true"
+        >
+
+        </property>
+
+    <subclass
+        name="com.beathive.model.Texture"
+            discriminator-value="texture"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Origin"
+            discriminator-value="origin"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Energy"
+            discriminator-value="energy"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Scale"
+            discriminator-value="scale"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Timesignature"
+            discriminator-value="timesignature"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Sonority"
+            discriminator-value="sonority"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Format"
+            discriminator-value="format"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Feel"
+            discriminator-value="feel"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Keynote"
+            discriminator-value="keynote"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Passage"
+            discriminator-value="passage"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Timespan"
+            discriminator-value="timespan"
+    >
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Mood"
+            discriminator-value="mood"
+    >
+
+    </subclass>
+
+    </class>    
+
+</hibernate-mapping>
+

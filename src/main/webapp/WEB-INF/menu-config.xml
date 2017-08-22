@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+        
+        <Displayer name="TabbedMenu"  type="net.sf.navigator.displayer.TabbedMenuDisplayer"/>
+  
+    </Displayers>
+    <Menus>
+    
+    
+    <!-- Horz Nav -->
+    	<!-- -->	
+        <Menu name="MainMenu" title="mainMenu.title" page="/home.html"/>
+    	<!-- Adin Drop down   width="125"-->
+
+
+
+ <Menu name="AdminMenu" title="menu.admin" description="Admin Menu"  roles="admin" forward="adminHome"/>
+
+            <Menu name="SalesReport" title="menu.admin.producersales" forward="siteSalesReport" roles="admin"/>
+            <Menu name="ViewUsers" title="menu.admin.users" forward="viewUsers" roles="admin"/>
+            <Menu name="ActiveUsers" title="mainMenu.activeUsers" action="/admin/activeUsers" roles="admin"/>
+            <Menu name="ReloadContext" title="menu.admin.reload" action="reload" roles="admin"/>
+            <Menu name="FlushCache" title="menu.flushCache" action="flush" roles="admin"/>
+            <Menu name="Clickstream" title="menu.clickstream" page="/admin/clickstreams.jsp" roles="admin"/>
+            <Menu name="PromoMenu" title="promoList.title" page="/admin/promos.html" roles="admin"/>
+
+
+        <!-- Menu name="CustomerMenu" title="menu.member" description="User Settings" roles="admin,user,producer" forward="userHome">
+       	 	<Item name="UserMenu" title="menu.user" description="User Menu" forward="editProfile" roles="admin,user,producer"/>
+        	<Item name="ZipMenu" title="zipList.title" forward="userDownloads" roles="admin,user,producer"/>
+        	<Item name="EditPreference" title="preference.title" forward="editPreference" roles="admin,user,producer"/>
+        </Menu -->
+       	 	<Menu name="ExitUser" title="XX" description="Revert" page="/j_spring_security_exit_user"/>
+
+       	 	<Menu name="UserMenu" title="menu.user" description="User Menu" forward="editProfile" roles="admin,user,producer"/>
+        	<Menu name="ZipMenu" title="zipList.title" forward="userDownloads" roles="admin,user,producer"/>
+        	<Menu name="EditPreference" title="preference.title" forward="editPreference" roles="admin,user,producer"/>
+
+    	<!-- -->
+        <Menu name="SearchLoops" title="menu.search.loops" description="SearchLoops" forward="searchLoops" />
+
+        <Menu name="FAQ" title="menu.about.faq" page="/about/faq.html"/>
+
+    	<!-- -->
+        <Menu name="ShopDirectory" title="menu.shop.listing" description="Shop Directory" forward="shopDirectory"/>
+    	<!-- -->
+        <Menu name="ViewWishList" title="menu.viewwishlist" page="/user/wishList.html?method.view=1" roles="user,admin,producer"/>
+    	<!-- New Shop/login/producer's home -->
+        <Menu name="ProducerHome" title="menu.producer.home" description="Create Shop" forward="producerHome" />
+    	<!-- Activated for producer following login -->
+        <Menu name="ProducerHomeIn" title="menu.producer.home" description="My Shop" forward="producerHome"/> 
+        <Menu name="ProducerOptions" title="menu.producer.home" description="Producer Menu" forward="producerHome"> 
+			<!-- Item name="CreateShop" title="menu.shop.create" forward="createShop"  roles="user"/ -->
+        <Item name="ProducerHomeIn" title="menu.producer.home" description="My Shop" forward="producerHome" roles="admin,producer"/> 
+			<Item name="ShopReport" title="menu.viewreports" forward="shopReport" roles="admin,producer" />
+
+			<Menu name="Inventory" title="menu.producer.inventory" forward="inventory"  roles="admin,producer">
+				<Item name="TrackpackInventory" title="menu.producer.trackpackinventory" page="/producer/home.html?method=inventory&amp;type=trackpack"  roles="admin,producer"/>
+				<Item name="LoopInventory" title="menu.producer.loopinventory" page="/producer/home.html?method=inventory&amp;type=loop" roles="admin,producer"/>
+		   </Menu>
+	
+			<Item name="EditShop" title="menu.producer.editstoreinfo" forward="editStore" roles="admin,producer" />
+			<Item name="UploadClip" title="menu.producer.uploadclip" forward="uploadClip" roles="admin,producer"/>
+			<!-- Item name="CloseShop" title="menu.producer.closeShop" forward="closeShop" roles="admin,producer"/ -->
+
+<Menu name="StoreMenu" title="storeList.title" page="/stores.html"/>
+<!--
+			<Item name="UploadClip" title="menu.producer.uploadclip" page="/producer/uploadClip.html" />
+			<Item name="EditTrackpack" title="menu.producer.edittrackpack" page="/producer/editTrackpack.html" />
+			<Item name="EditLoop" title="menu.producer.editloop" page="/producer/editLoop.html" />
+			<Item name="UploadTrackpack" title="menu.producer.uploadtrackpack" page="/producer/uploadTrackpack.html" />
+-->
+       </Menu>
+<Menu name="ShopReport" title="menu.viewreports" forward="shopReport" roles="admin,producer" />
+		<Menu name="CreateShop" title="menu.shop.create" forward="createShop"  roles="user"/>
+    	<!-- NOT USED -->
+        <Menu name="Logout" title="user.logout" forward="logout" roles="admin,user,producer"/>
+<!--
+			<Menu name="ShopReport" title="menu.viewreports" forward="shopReport" roles="admin,producer" />
+			<Menu name="Inventory" title="menu.producer.inventory" forward="inventory"  roles="admin,producer"/>
+
+			<Menu name="EditShop" title="menu.producer.editstoreinfo" forward="editShop" roles="admin,producer" />
+			<Menu name="UploadClip" title="menu.producer.uploadclip" forward="uploadClip" roles="admin,producer"/>
+			<Menu name="CloseShop" title="menu.producer.closeShop" forward="closeShop" roles="admin,producer"/>
+-->
+        <Menu name="AddStore" title="menu.producer.editstoreinfo" forward="addStore"/>
+        <Menu name="EditShop" title="menu.producer.editstoreinfo" forward="editStore" roles="admin,producer" />
+        <Menu name="ViewCart" title="menu.viewcart" action="viewCart"/>
+       <!-- Menu name="ViewReports" title="menu.producer.reports" page="/producer/home.html"/ -->
+
+        <Menu name="ProducerMainMenu" title="mainMenu.title" page="/home.html"/>
+        <Menu name="UploadClip" title="menu.producer.uploadclip" description="UploadClip" page="/producer/uploadClip.html" roles="admin,producer"/>
+
+        <Menu name="EditTrackpack" title="menu.producer.edittrackpack" description="EditTrackpack" page="/producer/editTrackpack.html" roles="admin,producer"/>
+
+        <Menu name="EditLoop" title="menu.producer.editloop" description="EditLoop" page="/producer/editLoop.html" roles="admin,producer"/>
+
+        <Menu name="UploadTrackpack" title="menu.producer.uploadtrackpack" description="UploadTrackpack" page="/producer/uploadTrackpack.html" roles="admin,producer"/>
+
+        <Menu name="FAQ" title="menu.about.faq" page="/about/faq.html"/>
+
+
+        <Menu name="UserMenu" title="menu.user" description="User Menu" forward="editProfile" roles="admin,user,producer"/>
+        <Menu name="ZipMenu" title="zipList.title" page="/user/zips.html"/>
+   </Menus>
+</MenuConfig>

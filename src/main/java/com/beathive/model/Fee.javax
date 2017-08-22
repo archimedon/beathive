@@ -1,0 +1,82 @@
+/**
+ * 
+ */
+package com.beathive.model;
+
+/**
+ * @author ron ron@beathive.com
+ * @version 1.9 Date: May 2, 2009
+ */
+public class Fee extends BaseObject {
+	
+	private String executorName;
+	private Double flatCharge = new Double(0);
+	private Double rate = new Double(0);
+	
+	/**
+	 * @return the flat
+	 */
+	public Double getFlatCharge() {
+		return flatCharge;
+	}
+
+	/**
+	 */
+	public void setFlatCharge(Double flat) {
+		this.flatCharge = flat;
+	}
+
+	/**
+	 * @return the percent
+	 */
+	public Double getRate() {
+		return rate;
+	}
+
+	/**
+	 */
+	public void setRate(Double percent) {
+		this.rate = percent;
+	}
+
+	/**
+	 * @return the executorName
+	 */
+	public String getExecutorName() {
+		return executorName;
+	}
+
+	/**
+	 * @param executorName the executorName to set
+	 */
+	public void setExecutorName(String executorName) {
+		this.executorName = executorName;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.beathive.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.beathive.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.beathive.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

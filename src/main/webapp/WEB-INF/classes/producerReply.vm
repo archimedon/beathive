@@ -1,0 +1,16 @@
+You've received a message through BeatHive!
+
+Producer: ${producerName}
+Store name: ${storename}
+Click the link below to contact the sender through BeatHive:
+<https://www.beathive.com/user/contactProducer.do?username=${producerNameEncoded}&type=pmsg>
+
+---------------
+
+Message:
+${message}
+
+---------------
+
+DO NOT REPLY TO THIS EMAIL. To contact the sender through BeatHive,
+visit:  <https://www.beathive.com/user/contactProducer.do?username=${producerNameEncoded}&type=pmsg>

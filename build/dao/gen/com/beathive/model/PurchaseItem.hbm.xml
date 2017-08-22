@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.PurchaseItem"
+            table="purchase_item"
+    >
+
+    <id
+        name="id"
+            column="id"
+                type="long"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="purchaseId"
+                    column="purchaseId"
+                length="10"
+                not-null="true"
+        >
+
+        </property>
+
+        <many-to-one
+            name="purchase"
+                    column="purchaseId"
+                cascade="none"
+                insert="false"
+                update="false"
+                lazy="false"
+        >
+
+        </many-to-one>
+
+        <property
+            name="fileId"
+                    column="fileId"
+                length="10"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="clipName"
+                    column="clipName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="instrument"
+                    column="instrument"
+        >
+
+        </property>
+
+        <property
+            name="price"
+                    column="price"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="storeName"
+                    column="storeName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="type"
+                    column="type"
+        >
+
+        </property>
+
+        <property
+            name="genre"
+                    column="genre"
+        >
+
+        </property>
+
+        <property
+            name="formatName"
+                    column="formatName"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="parentName"
+                    column="parentName"
+        >
+
+        </property>
+
+        <property
+            name="clipId"
+                    type="long"
+                    column="clipId"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="customerId"
+                    column="customerId"
+        >
+
+        </property>
+
+        <property
+            name="fileRef"
+                    column="fileRef"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="storeId"
+                    column="storeId"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="numLoops"
+                    column="numLoops"
+        >
+
+        </property>
+
+        <property
+            name="trxnFee"
+                    column="trxnFee"
+                update="false"
+                insert="false"
+                formula="(select ( pi.price/p.subTotal * ((p.rateFee * p.total) + p.flatFee) / 2 ) from purchase_item pi join purchase p on p.id=pi.purchaseId where p.authCode &lt;&gt; 'PREAUTH' and pi.id=id)"
+                lazy="false"
+        >
+
+        </property>
+
+        <property
+            name="net"
+                    column="net"
+                update="false"
+                insert="false"
+                formula="(select ( pi.price/p.subTotal * (p.total - ((p.rateFee * p.total) + p.flatFee)) /2 ) from purchase_item pi join purchase p on p.id=pi.purchaseId where p.authCode &lt;&gt; 'PREAUTH' and pi.id=id)"
+                lazy="false"
+        >
+
+        </property>
+
+        <property
+            name="samplePath"
+                    column="samplePath"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="paid"
+                    column="paid"
+                not-null="true"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

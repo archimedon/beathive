@@ -1,0 +1,40 @@
+/* the info area above the results 
+caption#metaData{
+	border: 1px solid gold;
+}
+*/
+caption#metaData ul li b { color:#fff; }
+caption#metaData ul li label { color:#ccc; }
+caption#metaData ul li label.hed { color:#000; }
+caption#metaData ul { margin:0; padding:0; list-style-type:none; }
+caption#metaData li { margin:0; padding:0; float:left; }
+caption#metaData li { padding-right:1em; }
+
+/** Ron Thur Sept 21 2009*/
+caption#metaData .subHed { font-size:110%; border-bottom-width:1px; border-bottom-style:solid; border-bottom-color:#FE9915; color:#FE9915; }
+caption#metaData { height:60px; background:#57504a; }
+caption#metaData h5 { color:gold; }
+caption#metaData h1,#metaData h3 { border:0; padding:0; line-height:8px; margin-bottom:0; font-variant:normal!important; color:#fff; }
+caption#metaData #searchCriteria{
+	position:relative; display:block; height:30px; width: 420px;float:left; padding:5px; *width:380px;
+}
+caption#metaData .shopInfo{
+	display:inline;
+}
+caption#metaData .smallBannerImg{
+	width: 54px;
+	height: 54px;
+	display:inline;
+	clear: none;
+}
+
+/* the inserted UL in the caption for mouseover loops events. This shows the loop attributes */
+caption#metaData .clipdescriptors{
+	color: #FE9915;
+}
+
+caption#metaData #storeHed{
+	display:inline;width:160px; float:left;
+}
+
+

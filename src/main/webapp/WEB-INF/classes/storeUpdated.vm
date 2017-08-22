@@ -1,0 +1,21 @@
+<html>
+<head>
+<style type="text/css">ul li {list-style: none;}</style>
+</head>
+<body>
+<h3>Dear $firstName $lastName ($username),</h3>
+
+<blockquote>
+<p>View/Edit new <a href="http://www.beathive.com/producer/home.html?sort=created&dir=desc&method=searchInventory&type=trackpack&storeId=${storeId}&ready=false">Track Packs</a> and/or <a href="http://www.beathive.com/producer/home.html?sort=created&dir=desc&method=searchInventory&type=loop&storeId=${storeId}&ready=false">Loops</a>
+</p>
+The following uploads have been processed:
+
+<ul>
+#foreach( $loop in ${loops} )
+<li>$loop.name</li>
+<li>&nbsp;&nbsp;----------&nbsp;&nbsp;</li>
+#end
+</ul>
+</blockquote>
+</body>
+</html>

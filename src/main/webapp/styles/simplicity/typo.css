@@ -1,0 +1,68 @@
+/*
+Color pallete:
+http://dev.beathive.com:9090/COLORS.jsp
+
+#776E60 	#776E60 	brown
+#57514A 	#57514A 	dark brown
+#E55C00 	#E55C00 	dark orange
+#FE9915 	#FE9915 	orange
+#F2F0EA 	#F2F0EA 	off-white
+#f3f0eb 	#f3f0eb 	light pearl
+#e2dfda 	#e2dfda 	dark pearl
+
+*/
+
+/* TYPOGRAPHY */
+body { text-align:left; font-size:12px; line-height:14px; color:#776E60; font-family:Helvetica, Arial, sans-serif; }
+
+strong, em, b, i {font-family: Helvetica, Arial, sans-serif;}
+h1, h2, h3, h4, h5, h6, address {/* set this to fix "lucinda san unicode" issue with bold font-weight */font-family: Helvetica, Arial, sans-serif;}
+
+
+/* LINKS */
+a,a:link
+a:active { color:#776E60; text-decoration:underline; }
+a:visited { color:#776E60; background-color:transparent; }
+a:hover { color:#E55C00; text-decoration:none; }
+a img { border:0; }
+
+/* END LINKS */
+
+
+a.sidebar_link { font-size: 10px; }
+
+/* HEADINGS */
+h1 { font-size:14px; text-transform:uppercase; color:#57514A; }
+div#branding h1 { font-size:2.6em; letter-spacing:-1px; margin:0; line-height:1.5em; color:#3e9ade; }
+div#branding p { margin:0; line-height:1em; }
+h2 { font-size:12px; border-bottom-width:1px; border-bottom-style:solid; border-bottom-color:#FE9915; color:#FE9915; margin-bottom:5px;}
+h3 { font-size:12px; font-weight:bold; text-transform:uppercase; color:#57514A; border-bottom-width:1px; border-bottom-style:solid; border-bottom-color:#57514A; }
+h4 { border-bottom-width:1px; border-bottom-style:dotted; border-bottom-color:#776E60; text-transform:uppercase; font-size:10px; }
+h5 { font-size:1.1em; line-height:1.3em; margin:0 0 .25em; padding:0; color:black; }
+h6 { font-size:1em; line-height:1.3em; margin:0 0 .25em; padding:0; color:black; }
+
+/* END HEADINGS */
+
+/* TEXT */
+p { font:12px/20px; margin:0 0 16px; padding:0; }
+blockquote { border-left:10px solid #ddd; margin-left:10px; }
+pre { font-family:monospace; font-size:12px; }
+strong,b { font-weight:bold; }
+em,i { font-style:italic; }
+code { font-family:"courier new", courier, monospace; font-size:12px; white-space:pre; }
+
+/* END TEXT */
+
+/* LISTS */
+ul.glassList { list-style:url(../../images/aquadot.jpg) disc outside; vertical-align:top; line-height:1.5em; }
+dl { margin:0 0 1.5em; padding:0; line-height:1.4em; }
+dl dt { font-weight:bold; margin:.25em 0; padding:0; }
+dl dd { margin:0 0 0 30px; padding:0; }
+
+/* END LISTS */
+
+/* TABLE */
+hr { display:none; }
+div.hr { height:1px; margin:1.5em 10px; border-bottom:1px dotted black; }
+
+/* END TYPOGRAPHY */

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>com/beathive/model/Address.hbm.xml</value>
+<!-- 
+                <value>com/beathive/model/Agreement.hbm.xml</value>
+                <value>com/beathive/model/Exchange.hbm.xml</value>
+                <value>com/beathive/model/Format.hbm.xml</value>
+-->            
+                <value>com/beathive/model/CanadaTerritory.hbm.xml</value>
+                <value>com/beathive/model/Country.hbm.xml</value>
+                <value>com/beathive/model/State.hbm.xml</value>
+                <value>com/beathive/model/Favorite.hbm.xml</value>
+                <value>com/beathive/model/DescriptorImpl.hbm.xml</value>
+                <value>com/beathive/model/Instrument.hbm.xml</value>
+                <value>com/beathive/model/Instrumentgroup.hbm.xml</value>
+                <value>com/beathive/model/Genre.hbm.xml</value>
+                <value>com/beathive/model/Preference.hbm.xml</value>
+                <value>com/beathive/model/Purchase.hbm.xml</value>
+                <value>com/beathive/model/PurchaseItem.hbm.xml</value>
+                <value>com/beathive/model/SoundClip.hbm.xml</value>
+                <value>com/beathive/model/AudioFile.hbm.xml</value>
+                <!-- finance and processing -->
+                <value>com/beathive/model/Status.hbm.xml</value>
+                <value>com/beathive/model/Tempo.hbm.xml</value>
+
+                <value>com/beathive/model/UserClipScore.hbm.xml</value>
+                <value>com/beathive/model/Comment.hbm.xml</value>
+                <value>com/beathive/model/Store.hbm.xml</value>
+                <value>com/beathive/model/Zip.hbm.xml</value>
+                <value>com/beathive/model/ZipItem.hbm.xml</value>
+                <value>com/beathive/model/Role.hbm.xml</value>
+                <value>com/beathive/model/User.hbm.xml</value>
+                <value>com/beathive/model/PaymentExecutor.hbm.xml</value>
+                <value>com/beathive/model/CartItem.hbm.xml</value>
+                <value>com/beathive/model/Promo.hbm.xml</value>
+                <!-- enables a user's account following proof of email-address -->
+                <value>com/beathive/model/UserKey.hbm.xml</value>
+                <value>com/beathive/model/ChangeEmailKey.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">@HIBERNATE-DIALECT@</prop>
+                <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+			<prop key="hibernate.cache.use_second_level_cache">true</prop>
+			<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- Generic Dao - can be used when doing standard CRUD -->
+    <bean id="dao" class="com.beathive.dao.hibernate.BaseDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- LookupDao: Hibernate implementation -->
+    <bean id="lookupDao" class="com.beathive.dao.hibernate.LookupDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- LookupDao: Hibernate implementation -->
+    <bean id="soundClipDao" class="com.beathive.dao.hibernate.SoundClipDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- shopDao: Hibernate implementation -->
+    <bean id="storeDao" class="com.beathive.dao.hibernate.StoreDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- UserDao: Hibernate implementation -->
+    <bean id="userDao" class="com.beathive.dao.hibernate.UserDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- RoleDao: Hibernate implementation -->
+    <bean id="roleDao" class="com.beathive.dao.hibernate.RoleDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- CartDao: Hibernate implementation -->
+    <bean id="cartDao" class="com.beathive.dao.hibernate.CartDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- CartDao: Hibernate implementation -->
+    <bean id="zipDao" class="com.beathive.dao.hibernate.ZipDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- purchaseDao: Hibernate implementation -->
+    <bean id="purchaseDao" class="com.beathive.dao.hibernate.PurchaseDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+<bean id="promoDao" class="com.beathive.dao.hibernate.PromoDaoHibernate" autowire="byName"/>
+
+<bean id="commentDao" class="com.beathive.dao.hibernate.CommentDaoHibernate" autowire="byName"/>
+
+    <bean id="preferenceDao" class="com.beathive.dao.hibernate.PreferenceDaoHibernate" autowire="byName"/>
+
+<!-- bean id="paymentExecutorDao" class="com.beathive.dao.hibernate.PaymentExecutorDaoHibernate" autowire="byName"/ -->
+
+</beans>

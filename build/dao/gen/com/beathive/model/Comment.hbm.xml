@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Comment"
+            table="comment"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="entryTime"
+                    type="timestamp"
+                    column="entryTime"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="postedByUsername"
+                    column="postedByUsername"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="statement"
+                    column="statement"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="userId"
+                    column="userId"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="postedById"
+                    column="postedById"
+                not-null="false"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

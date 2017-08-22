@@ -1,0 +1,72 @@
+  <!-- ========== Global Forward Definitions =================================== -->
+  <global-forwards>
+	<forward name="mainMenu" path="/home.html" redirect="true" />
+	<!-- Forwards specified in actions -->
+	<forward name="addUser" path="/editUser.html?method=Add&amp;from=list" redirect="true" />
+	<forward name="cancelUser" path="/editUser.html?method=Cancel" />
+	<forward name="deleteUser" path="/editUser.html?method=Delete" />
+	<forward name="updateUser" path="/userProfile.html" />
+	<!-- Forwards for links used in Menu -->
+	<forward name="editProfile" path="/editProfile.html" />
+	<!-- The 'editUser' forward is protected so only admins can use it -->
+	<forward name="editUser" path="/editUser.html" />
+	<forward name="viewUsers" path="/editUser.html?method=Search" />
+	
+	<!-- ========================================== -->
+
+	<!--  Feb. 22 2009. Transcribe links from current BH to named forwards [ron]  -->
+	<!--  used in main menu -->
+    <forward name="searchLoops" path="/searchLoops.html"/>
+    <forward name="shopDirectory" path="/shopDirectory.html" redirect="true"/>
+    <forward name="producerHome" path="/producer/home.html"/>
+    
+    <forward name="inventory" path="/producer/home.html?method=inventory"/>
+    <forward name="editShop" path="/producer/home.html?method=edit"/>
+    <forward name="shopReport" path="/producer/home.html?method=viewreport"/>
+    <forward name="closeShop" path="/producer/home.html?method=done"/>
+    <forward name="uploadClip" path="/producer/uploadClip.html"/>
+    
+	
+	
+	
+	
+	<!-- ========================================== -->
+	<!-- Logout by forward to a JSP, I do this b/c if I forward to an 
+		an action, and the users session is expired - they'll be prompted
+		to login - just to logout!  Seems silly to me.
+	-->
+    <forward name="logout" path="/logout.jsp"/>
+
+	<!-- ========================================== -->
+	<!-- Add Loop and producer Forwards 													-->
+    <forward name="viewShop" path="/shops.jsp" redirect="false"/>
+    <forward name="viewUsers" path="/users.html" redirect="true"/>
+    
+<!-- 
+ 	<forward name="newPassword" path=".lostpassword" redirect="true" />
+ -->
+	<forward name="shopInstructions" path="/shopInstructions.html" redirect="true" />
+	<!-- forward name="producerhome" path="/producer/MyShop.html" redirect="true" / -->
+<!-- 
+	<forward name="trackpackInput" path=".uploadTrackpack" />
+ -->
+	<forward name="loopDetail" path="/describeLoop.html" redirect="true" />
+	<forward name="trackpackDetail" path="/describeTrackpack.html" redirect="true" />
+	<!--  forward name="packLoopInput" path=".uploadLoopPack"/ -->
+	<forward name="packLoopDetail" path="/trackpackComponent.html" redirect="true" />
+	<forward name="trackpackView" path="/trackpackView.html" redirect="true" />
+	<forward name="findProducers" path="/editUser.html?method=Find+Producers" redirect="true" />
+	<forward name="editSoundClip" path="/editSoundClip.html" />
+	<forward name="findloop" path="/findLoop.html" />
+	<!--  forward name="searchLoop" path="/searchSoundClip.html"/ -->
+	<forward name="viewLoop" path="/viewLoop.html" />
+	<forward name="producerLoops" path="/viewLoop.html?method=By+Producer" />
+	<forward name="findTrackpack" path="/findTrackpack.html" />
+	<forward name="searchTrackpack" path="/searchTrackpack.html" />
+	<forward name="viewTrackpack" path="/viewTrackpack.html" />
+	<!-- oooooooooooooooooo -->
+	<forward name="addItem" path="/saveItem.html" />
+	<forward name="removeItem" path="/deleteItem.html" />
+   
+</global-forwards>
+	<!-- ========================================== -->

@@ -1,0 +1,12 @@
+This message is from ${sender}. Click the link below to contact the sender through BeatHive:
+<http://www.beathive.com/producer/reply.do?tobh=1&recipientName=${senderEncoded}>
+
+---------------
+Message:
+${message}
+
+---------------
+DO NOT REPLY TO THIS EMAIL. To contact this person through BeatHive,
+visit: <http://www.beathive.com/producer/reply.do?tobh=1&recipientName=${senderEncoded}>
+
+

@@ -1,0 +1,2 @@
+<%@ include file="/common/var_contentType.jsp"%><c:choose><c:when test="${param.cmd eq 'userloggedin'}"><c:set var='stat' value='false'/><security:authorize ifAnyGranted="user,producer,admin"><c:set var='stat' value='true'/></security:authorize>
+{"loggedin":<c:out value="${stat}"/>}</c:when><c:otherwise></c:otherwise></c:choose>

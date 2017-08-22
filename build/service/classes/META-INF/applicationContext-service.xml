@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.directwebremoting.org/schema/spring-dwr
+http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+    <aop:config>
+        <aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.UserManager.*(..))" order="0"/>        
+        <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.UserManager.save*User(..))" order="1"/>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Manager.*(..))" order="2"/>
+    </aop:config>
+    
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <tx:advice id="userManagerTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="UserExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <bean id="lookupManager" class="com.beathive.service.impl.LookupManagerImpl">
+        <property name="lookupDao" ref="lookupDao"/>
+    </bean>
+
+    <bean id="manager" class="com.beathive.service.impl.BaseManager">
+        <property name="dao" ref="dao"/>
+    </bean>
+
+
+    <bean id="userManager" class="com.beathive.service.impl.UserManagerImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="storeManager" class="com.beathive.service.impl.StoreManagerImpl">
+        <property name="storeDao" ref="storeDao"/>
+    </bean>
+
+    <bean id="webServiceManager" class="com.beathive.service.dwr.impl.WebServiceManagerImpl">
+      	<dwr:remote javascript="WebService"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="soundClipManager" ref="soundClipManager"/>
+        <property name="storeManager" ref="storeManager"/>
+    </bean>
+
+    <bean id="userSecurityAdvice" class="com.beathive.service.UserSecurityAdvice">
+        <property name="userCache" ref="userCache"/>
+    </bean>
+
+<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+  <property name="configLocation" value="classpath:/ehcache-failsafe.xml"/>
+</bean>
+    
+<bean id="userCacheBackend" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+  <property name="cacheManager" ref="cacheManager"/>
+  <property name="cacheName" value="userCache"/>
+</bean>
+
+<bean id="userCache" class="org.springframework.security.providers.dao.cache.EhCacheBasedUserCache">
+  <property name="cache" ref="userCacheBackend"/>
+</bean>        
+
+
+    <bean id="roleManager" class="com.beathive.service.impl.RoleManagerImpl">
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+
+    <bean id="mailEngine" class="com.beathive.service.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+    </bean>
+
+    <bean id="soundClipManager" class="com.beathive.service.impl.SoundClipManagerImpl">
+    	<!--  Set Data access  -->
+        <property name="soundClipDao" ref="soundClipDao"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="dao" ref="dao"/>
+        <!-- used to nofity users when SWFGEN2 is done processing -->
+        <property name="mailEngine" ref="mailEngine"/>
+        <!-- configure actual file root directory.
+        	This needs to be in sync with the directory SWFGEN has mounted
+        	see applicationContext-shared.xml on swfgen2.beathive.com/zazz -->
+		<property name="audioFileRoot" value="${soundclipmanager.audioFileRoot}"/>
+        <property name="usersDownloadDir" value="${soundclipmanager.usersDownloadDir}"/>
+	</bean>
+    
+    <bean id="zipManager" class="com.beathive.service.impl.ZipManagerImpl">
+        <property name="zipDao" ref="zipDao"/>
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library">org/springframework/web/servlet/view/velocity/spring.vm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+    
+    <bean id="viewCounter" class="com.beathive.service.ViewCounter">
+        <constructor-arg ref="storeManager"/>
+    </bean>
+    
+    <!-- Add new Managers here -->
+    <bean id="cartManager" class="com.beathive.service.impl.CartManagerImpl">
+        <property name="cartDao" ref="cartDao"/>
+    </bean>
+        
+    <bean id="purchaseManager" class="com.beathive.service.impl.PurchaseManagerImpl">
+        <property name="purchaseDao" ref="purchaseDao"/>
+    </bean>
+    
+    
+    <!--  webapp pager -->
+	<bean id="paginatedListFactory" class="com.beathive.webapp.helper.PaginatedListFactory" />
+
+
+    <bean id="promoManager" class="com.beathive.service.impl.PromoManagerImpl">
+        <property name="promoDao" ref="promoDao"/>
+    </bean>
+
+	<bean id="commentManager" class="com.beathive.service.impl.CommentManagerImpl">
+		<property name="commentDao" ref="commentDao"/>
+	</bean>
+	
+	<bean id="chargeManager" class="com.beathive.service.commerce.impl.CybersourceChargeManager">
+        <property name="cybProperties">
+            <props>
+        <prop key="merchantID">${cybersource.merchantID}</prop>
+        <prop key="keysDirectory">${cybersource.keysDirectory}</prop>
+        <prop key="targetAPIVersion">${cybersource.targetAPIVersion}</prop>
+        <prop key="sendToProduction">${cybersource.sendToProduction}</prop>
+        <prop key="enableLog">${cybersource.enableLog}</prop>
+        <prop key="logDirectory">${cybersource.logDirectory}</prop>
+        <prop key="logMaximumSize">${cybersource.logMaximumSize}</prop>
+        <prop key="debug">${cybersource.debug}</prop>
+        </props>
+        </property>
+    </bean>
+
+    <bean id="preferenceManager" class="com.beathive.service.impl.PreferenceManagerImpl">
+        <property name="preferenceDao" ref="preferenceDao"/>
+    </bean>
+    
+
+<!--  AJAX INTERCEPT -->
+<!-- 
+<dwr:controller id="dwrConrtoller" debug="true" />
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/*.htm">staticViewController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="staticViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+-->
+</beans>

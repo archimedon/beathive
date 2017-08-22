@@ -1,0 +1,70 @@
+      <!-- Forwards to the mainMenu tile definition -->
+<action path="/home" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/mainMenu.jsp" />
+
+<action path="/shopInstructions" type="org.apache.struts.actions.ForwardAction" parameter=".shopInstructions" />
+
+<action path="/describeTrackpack" type="org.apache.struts.actions.ForwardAction" parameter=".editTrackpackInfo" roles="producer" />
+<action path="/describeLoop" type="org.apache.struts.actions.ForwardAction" parameter=".editLoopInfo" roles="producer" />
+<action path="/trackpackView" type="org.apache.struts.actions.ForwardAction" parameter=".editTrackpack" roles="producer" />
+<action path="/trackpackComponent" type="org.apache.struts.actions.ForwardAction" parameter=".editPackLoop" roles="producer" />
+<action path="/producer/MyShop" type="org.apache.struts.actions.ForwardAction" parameter=".producerHome" roles="producer" />
+<action path="/trackpackResList" type="org.apache.struts.actions.ForwardAction" parameter=".trackpackSearchResult" />
+
+<!--  action path="/producer/editShopInfo" type="org.apache.struts.actions.ForwardAction"
+	parameter=".editShopInfo" / -->
+<action path="/loopResList" type="org.apache.struts.actions.ForwardAction" parameter=".loopSearchResult" />
+<action path="/selectshop" type="org.apache.struts.actions.ForwardAction" parameter=".selectshop" roles="user" />
+<!-- producer,producer_advanced,producer_basic,producer_premium -->
+<!--  action path="/addLoop" type="org.apache.struts.actions.ForwardAction"
+	parameter=".uploadLoop" roles="producer"/ -->
+
+<!--  action path="/addTrackpack" type="org.apache.struts.actions.ForwardAction"
+	parameter=".uploadTrackpack" roles="producer"/ -->
+
+<!-- Action to flush cache -->
+<!-- 
+<action path="/flush" type="org.apache.struts.actions.ForwardAction" parameter=".flushCache" roles="admin" />
+ -->
+<!-- Action to flush cache -->
+<action path="/flush" type="org.apache.struts.actions.ForwardAction"
+    parameter="/WEB-INF/pages/flushCache.jsp" roles="admin"/>
+
+<action path="/addData" type="org.apache.struts.actions.ForwardAction" name="soundClipFormWeb" parameter="/batch/addLine.jsp" />
+
+<!-- Forward to page to begin file upload -->
+<!-- 
+<action path="/selectFile" type="org.apache.struts.actions.ForwardAction"
+	parameter=".selectFile"/>
+ -->
+    <!-- Forward to page to begin file upload -->
+<!--
+    <action path="/selectFile" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/uploadForm.jsp"/>
+-->
+ <action path="/selectFile" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/uploadForm.jsp"/>        
+<!-- Forward to view Active Users -->
+<!--
+<action path="/activeUsers" type="org.apache.struts.actions.ForwardAction" parameter=".activeUsers" roles="admin" />
+-->
+    <!-- Forward to view Active Users -->
+    <action path="/activeUsers" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/activeUsers.jsp" roles="admin"/>
+<!--
+    <action path="/activeUsers" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/activeUsers.jsp" roles="admin"/>
+
+-->
+
+<!--  action path="/findLoop" type="org.apache.struts.actions.ForwardAction"
+	parameter=".loopSearchCriteria"/ -->
+
+    <action path="/viewShop" type="org.apache.struts.actions.ForwardAction"
+        parameter="/shops.jsp"/>
+	<action path="/searchLoops" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/loopSearch.jsp"/>
+        <!-- JAN 2009 -->
+
+        <!-- action path="/producer/home" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/producerHome.jsp" / -->
+
+        <action path="/producer/uploadClip" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/uploadClip.jsp" />

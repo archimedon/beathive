@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Preference"
+            table="preference"
+    >
+
+    <id
+        name="userId"
+            column="userId"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="assigned">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="format"
+                    column="format"
+        >
+
+        </property>
+
+        <property
+            name="locale"
+                    column="locale"
+        >
+
+        </property>
+
+        <property
+            name="hideOwned"
+                    type="yes_no"
+                    column="hideOwned"
+        >
+
+        </property>
+
+        <property
+            name="hideFav"
+                    type="yes_no"
+                    column="hideFav"
+        >
+
+        </property>
+
+        <property
+            name="sort"
+                    column="sort"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

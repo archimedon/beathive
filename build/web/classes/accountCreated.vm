@@ -1,0 +1,10 @@
+${message}
+
+Username: ${user.username}
+Password: ${user.confirmPassword}
+
+IMPORTANT! You must click on the link below to complete your registration:
+
+${applicationURL}
+
+Please let us know if you have any difficulty with registration or logging in through contact@BeatHive.com

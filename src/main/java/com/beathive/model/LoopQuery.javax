@@ -1,0 +1,101 @@
+/**
+ * 
+ */
+package com.beathive.model;
+
+import com.beathive.Constants;
+
+/**
+ * @author ron
+ *
+ */
+public class LoopQuery extends Loop implements SoundClipQuery{
+	private User viewer;
+	private int fetchSize = Constants.FETCH_SIZE;
+	private int startIndex = 0;
+	private int countLoop = 0;
+	private int countTrackpack = 0;
+	
+	
+	public int getCountLoop() {
+		return countLoop;
+	}
+
+	public void setCountLoop(int countLoop) {
+		this.countLoop = countLoop;
+	}
+
+	public int getCountTrackpack() {
+		return countTrackpack;
+	}
+
+	public void setCountTrackpack(int countTrackpack) {
+		this.countTrackpack = countTrackpack;
+	}
+
+	/**
+	 * @param viewer
+	 */
+	public LoopQuery() {
+		super();
+	}
+
+	/**
+	 * @param viewer
+	 */
+	public LoopQuery(User viewer) {
+		this();
+		this.viewer = viewer;
+	}
+
+	public int getFetchSize() {
+		return fetchSize;
+	}
+
+	public void setFetchSize(int fetchSize) {
+		this.fetchSize = fetchSize;
+	}
+
+	public User getViewer() {
+		return viewer;
+	}
+
+	public void setViewer(User viewer) {
+		this.viewer = viewer;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	/**
+	 * @param genre
+	 */
+	public void addGenre(Genre genre) {
+		this.getGenre().add(genre);
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @return
+	 */
+	public Class getQueryClass() {
+		// TODO Auto-generated method stub
+		return Loop.class;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.beathive.model.SoundClipQuery#setQueryClass(java.lang.Class)
+	 */
+	public void setQueryClass(Class returnType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+}

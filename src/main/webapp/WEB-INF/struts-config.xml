@@ -1,0 +1,1725 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+  <!-- ========== Data Sources Definitions =================================== -->
+  <!--
+    Define your Struts data sources in a file called struts-data-sources.xml and place
+    it in your merge directory.
+  -->
+
+  <!-- ========== Form Bean Definitions =================================== -->
+  <form-beans>
+
+    <form-bean
+      name="purchaseForm"
+      type="com.beathive.webapp.form.PurchaseForm"
+    />
+    <form-bean
+      name="genreForm"
+      type="com.beathive.webapp.form.GenreForm"
+    />
+    <form-bean
+      name="statusForm"
+      type="com.beathive.webapp.form.StatusForm"
+    />
+    <form-bean
+      name="scaleForm"
+      type="com.beathive.webapp.form.ScaleForm"
+    />
+    <form-bean
+      name="feelForm"
+      type="com.beathive.webapp.form.FeelForm"
+    />
+    <form-bean
+      name="soundClipQueryImplForm"
+      type="com.beathive.webapp.form.SoundClipQueryImplForm"
+    />
+    <form-bean
+      name="descriptorImplForm"
+      type="com.beathive.webapp.form.DescriptorImplForm"
+    />
+    <form-bean
+      name="cartItemForm"
+      type="com.beathive.webapp.form.CartItemForm"
+    />
+    <form-bean
+      name="loopForm"
+      type="com.beathive.webapp.form.LoopForm"
+    />
+    <form-bean
+      name="storeForm"
+      type="com.beathive.webapp.form.StoreForm"
+    />
+    <form-bean
+      name="timespanForm"
+      type="com.beathive.webapp.form.TimespanForm"
+    />
+    <form-bean
+      name="soundClipQueryForm"
+      type="com.beathive.webapp.form.SoundClipQueryForm"
+    />
+    <form-bean
+      name="passageForm"
+      type="com.beathive.webapp.form.PassageForm"
+    />
+    <form-bean
+      name="energyForm"
+      type="com.beathive.webapp.form.EnergyForm"
+    />
+    <form-bean
+      name="soundClipForm"
+      type="com.beathive.webapp.form.SoundClipForm"
+    />
+    <form-bean
+      name="trackpackQueryForm"
+      type="com.beathive.webapp.form.TrackpackQueryForm"
+    />
+    <form-bean
+      name="instrumentgroupForm"
+      type="com.beathive.webapp.form.InstrumentgroupForm"
+    />
+    <form-bean
+      name="textureForm"
+      type="com.beathive.webapp.form.TextureForm"
+    />
+    <form-bean
+      name="stateForm"
+      type="com.beathive.webapp.form.StateForm"
+    />
+    <form-bean
+      name="trackpackForm"
+      type="com.beathive.webapp.form.TrackpackForm"
+    />
+    <form-bean
+      name="userForm"
+      type="com.beathive.webapp.form.UserForm"
+    />
+    <form-bean
+      name="timesignatureForm"
+      type="com.beathive.webapp.form.TimesignatureForm"
+    />
+    <form-bean
+      name="canadaTerritoryForm"
+      type="com.beathive.webapp.form.CanadaTerritoryForm"
+    />
+    <form-bean
+      name="instrumentForm"
+      type="com.beathive.webapp.form.InstrumentForm"
+    />
+    <form-bean
+      name="addressForm"
+      type="com.beathive.webapp.form.AddressForm"
+    />
+    <form-bean
+      name="tempoForm"
+      type="com.beathive.webapp.form.TempoForm"
+    />
+    <form-bean
+      name="favoriteForm"
+      type="com.beathive.webapp.form.FavoriteForm"
+    />
+    <form-bean
+      name="zipForm"
+      type="com.beathive.webapp.form.ZipForm"
+    />
+    <form-bean
+      name="userClipScoreForm"
+      type="com.beathive.webapp.form.UserClipScoreForm"
+    />
+    <form-bean
+      name="sonorityForm"
+      type="com.beathive.webapp.form.SonorityForm"
+    />
+    <form-bean
+      name="originForm"
+      type="com.beathive.webapp.form.OriginForm"
+    />
+    <form-bean
+      name="keynoteForm"
+      type="com.beathive.webapp.form.KeynoteForm"
+    />
+    <form-bean
+      name="priceForm"
+      type="com.beathive.webapp.form.PriceForm"
+    />
+    <form-bean
+      name="roleForm"
+      type="com.beathive.webapp.form.RoleForm"
+    />
+    <form-bean
+      name="preferenceForm"
+      type="com.beathive.webapp.form.PreferenceForm"
+    />
+    <form-bean
+      name="purchaseItemForm"
+      type="com.beathive.webapp.form.PurchaseItemForm"
+    />
+    <form-bean
+      name="formatForm"
+      type="com.beathive.webapp.form.FormatForm"
+    />
+    <form-bean
+      name="loopSearchForm"
+      type="com.beathive.webapp.form.LoopFormSearch"
+    />
+    <form-bean
+      name="passwordForm"
+      type="com.beathive.webapp.form.PasswordForm"
+    />
+    <form-bean
+      name="zipItemForm"
+      type="com.beathive.webapp.form.ZipItemForm"
+    />
+    <form-bean
+      name="loopQueryForm"
+      type="com.beathive.webapp.form.LoopQueryForm"
+    />
+    <form-bean
+      name="uploadForm"
+      type="com.beathive.webapp.form.UploadForm"
+    />
+    <form-bean
+      name="audioFileForm"
+      type="com.beathive.webapp.form.AudioFileForm"
+    />
+    <form-bean
+      name="billingForm"
+      type="com.beathive.webapp.form.BillingForm"
+    />
+    <form-bean
+      name="moodForm"
+      type="com.beathive.webapp.form.MoodForm"
+    />
+    <form-bean
+      name="countryForm"
+      type="com.beathive.webapp.form.CountryForm"
+    />
+    <form-bean
+      name="commentForm"
+      type="com.beathive.webapp.form.CommentForm"
+    />
+
+    <form-bean
+      name="signupForm"
+      type="com.beathive.webapp.form.SignupForm"
+    />
+
+    <form-bean
+      name="clipDetailsForm"
+      type="com.beathive.webapp.form.ClipDetailsForm"
+    />
+
+    <form-bean
+      name="promoForm"
+      type="com.beathive.webapp.form.PromoForm"
+    />
+
+    <form-bean
+      name="shopReportForm"
+      type="com.beathive.webapp.form.ShopReportForm"
+    />
+
+    <form-bean
+      name="userReportForm"
+      type="com.beathive.webapp.form.UserReportForm"
+    />
+
+    <form-bean
+      name="contactForm"
+      type="com.beathive.webapp.form.ContactForm"
+    />
+
+    <form-bean
+      name="offenseForm"
+      type="com.beathive.webapp.form.OffenseForm"
+    />
+    <form-bean
+      name="feedbackForm"
+      type="com.beathive.webapp.form.FeedbackForm"
+    />
+
+    <form-bean
+      name="changeEmailKeyForm"
+      type="com.beathive.webapp.form.ChangeEmailKeyForm"
+    />
+
+    <form-bean
+      name="paypalForm"
+      type="com.beathive.webapp.form.PaypalForm"
+    />
+
+    <!--
+         If you have non XDoclet forms, define them in a file called struts-forms.xml and
+         place it in your merge directory.
+    -->
+  </form-beans>
+
+  <!-- ========== Global Exceptions Definitions =================================== -->
+      <global-exceptions>
+        <exception type="java.lang.Exception"
+            key="errors.general"
+            handler="com.beathive.webapp.action.ActionExceptionHandler"/>
+    </global-exceptions>
+
+  <!-- ========== Global Forward Definitions =================================== -->
+  <global-forwards>
+	<forward name="mainMenu" path="/searchLoops.html" />
+	<!-- Forwards specified in actions -->
+	<forward name="addUser" path="/editUser.html?method=Add&amp;from=list" redirect="true" />
+	<forward name="cancelUser" path="/editUser.html?method=Cancel" />
+	<forward name="deleteUser" path="/editUser.html?method=Delete" />
+	<forward name="updateUser" path="/userProfile.html" />
+	<!-- Forwards for links used in Menu -->
+	<forward name="editPreference" path="/user/editPreferences.html"/>
+	<forward name="editProfile" path="/user/editProfile.html"/>
+	<forward name="userHome" path="/user/home.html" />
+	<forward name="userDownloads" path="/user/zips.html" />
+	<!-- The 'editUser' forward is protected so only admins can use it -->
+	<forward name="editUser" path="/editUser.html" />
+	<forward name="viewUsers" path="/editUser.html?method=Search" />
+	
+	<forward name="adminHome" path="/admin/home.html" />
+	<forward name="siteSalesReport" path="/admin/salesReportForm.html" />
+	<!-- ========================================== -->
+
+	<!--  Feb. 22 2009. Transcribe links from current BH to named forwards [ron]  -->
+	<!--  used in main menu -->
+    <forward name="searchLoops" path="/searchLoops.html"/>
+    <!-- forward name="shopDirectory" path="/shopDirectory.html" redirect="true"/ -->
+    <forward name="shopDirectory" path="/stores.html?genreId=7&amp;method=search" redirect="true"/>
+    <forward name="producerHome" path="/producer/home.html"/>
+    
+    <forward name="inventory" path="/producer/home.html?method=inventory"/>
+    <forward name="editShop" path="/producer/home.html?method=edit"/>
+    <forward name="shopReport" path="/producer/reports.html"/>
+   
+    <forward name="closeShop" path="/producer/home.html?method=done"/>
+    <forward name="uploadClip" path="/producer/uploadClip.html"/>
+    
+    <forward name="createShop" path="/producer/createShop.html"/>
+    <forward name="editStore" path="/producer/editStore.html"/>
+    <forward name="addStore" path="/addStore.html?method=edit"/>
+   <forward name="agreementForm" path="/agreementForm.html"/>
+    
+    
+    <forward name="paymentForm" path="/cart.html?method=info"/>
+    <forward name="checkout" path="/purchase.html?method=auth"/>
+	
+	<!-- ========================================== -->
+	<!-- Logout by forward to a JSP, I do this b/c if I forward to an 
+		an action, and the users session is expired - they'll be prompted
+		to login - just to logout!  Seems silly to me.
+	-->
+    <forward name="logout" path="/logout.jsp"/>
+
+	<!-- ========================================== -->
+	<!-- Add Loop and producer Forwards 													-->
+    <forward name="viewShopInfo" path="/shop/viewInfo.html" redirect="false"/>
+    <forward name="viewUsers" path="/admin/users.html" redirect="true"/>
+
+	<forward name="shopInstructions" path="/shopInstructions.html" redirect="true" />
+	<!-- forward name="producerhome" path="/producer/MyShop.html" redirect="true" / -->
+<!-- 
+	<forward name="trackpackInput" path=".uploadTrackpack" />
+ -->
+	<forward name="loopDetail" path="/describeLoop.html" redirect="true" />
+	<forward name="trackpackDetail" path="/describeTrackpack.html" redirect="true" />
+	<!--  forward name="packLoopInput" path=".uploadLoopPack"/ -->
+	<forward name="packLoopDetail" path="/trackpackComponent.html" redirect="true" />
+	<forward name="trackpackView" path="/trackpackView.html" redirect="true" />
+	<forward name="findProducers" path="/editUser.html?method=Find+Producers" redirect="true" />
+	<forward name="editSoundClip" path="/editSoundClip.html" />
+	<forward name="findloop" path="/findLoop.html" />
+	<!--  forward name="searchLoop" path="/searchSoundClip.html"/ -->
+	<forward name="viewLoop" path="/viewLoop.html" />
+	<forward name="producerLoops" path="/viewLoop.html?method=By+Producer" />
+	<forward name="findTrackpack" path="/findTrackpack.html" />
+	<forward name="searchTrackpack" path="/searchTrackpack.html" />
+	<forward name="viewTrackpack" path="/viewTrackpack.html" />
+	<!-- oooooooooooooooooo -->
+	<forward name="addItem" path="/saveItem.html" />
+	<forward name="removeItem" path="/deleteItem.html" />
+   
+</global-forwards>
+	<!-- ========================================== -->
+  <!-- ========== Action Mapping Definitions =================================== -->
+   <action-mappings>
+    <action
+      path="/component/uploadFile"
+      type="com.beathive.webapp.action.UploadAction"
+      name="uploadForm"
+      scope="request"
+      input="failure"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="failure"
+        path="/WEB-INF/pages/uploadForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="banner"
+        path="/WEB-INF/pages/uploadDisplay.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/admin/users"
+      type="com.beathive.webapp.action.AdminUserAction"
+      name="userReportForm"
+      scope="request"
+      input="edit"
+      roles="admin"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/userList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="searchform"
+        path="/WEB-INF/pages/userSearchForm.jsp"
+        redirect="false"
+      />
+    </action>
+    <!-- action path="/admin/users" type="org.apache.struts.actions.ForwardAction" name="userReportForm" parameter="/WEB-INF/pages/userSearchForm.jsp" roles="admin"/ -->
+
+    <action
+      path="/user/home"
+      type="com.beathive.webapp.action.UserAction"
+      name="userForm"
+      scope="request"
+      input="list"
+      roles="user,producer,admin"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="home"
+        path="/WEB-INF/pages/user/home.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/editUser"
+      type="com.beathive.webapp.action.UserAction"
+      name="userForm"
+      scope="request"
+      input="list"
+      roles="user,producer,admin"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/userList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/userForm.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/user/editProfile"
+      type="com.beathive.webapp.action.UserAction"
+      name="userForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/userList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/userForm.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/saveUser"
+      type="com.beathive.webapp.action.UserAction"
+      name="userForm"
+      scope="request"
+      input="edit"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/userList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/userForm.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/user/changeEmail"
+      type="com.beathive.webapp.action.UserAction"
+      name="changeEmailKeyForm"
+      scope="request"
+      input="form"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/userList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="form"
+        path="/WEB-INF/pages/user/changeEmailForm.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/viewCart"
+      type="com.beathive.webapp.action.CartAction"
+      name="cartItemForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="summary"
+        path="/WEB-INF/pages/cart/cartSummary.jsp"
+        redirect="false"
+      />
+      <forward
+        name="view"
+        path="/WEB-INF/pages/cart/viewCart.jsp"
+        redirect="false"
+      />
+      <forward
+        name="success"
+        path="/WEB-INF/pages/cart/viewCart.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/loopCart"
+      type="com.beathive.webapp.action.CartAction"
+      name="cartItemForm"
+      scope="request"
+      input="viewCart"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="summary"
+        path="/WEB-INF/pages/cart/viewCart.jsp"
+        redirect="false"
+      />
+      <forward
+        name="success"
+        path="/WEB-INF/pages/cart/status.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/cart"
+      type="com.beathive.webapp.action.PurchaseAction"
+      name="billingForm"
+      scope="session"
+      input="editBilling"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="editBilling"
+        path="/WEB-INF/pages/cart/billingForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="purchaseComplete"
+        path="/purchaseComplete.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/ppcomplete"
+      type="com.beathive.webapp.action.PurchaseAction"
+      name="paypalForm"
+      scope="request"
+      input="editBilling"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="editBilling"
+        path="/WEB-INF/pages/cart/billingForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="ppsuccess"
+        path="/WEB-INF/pages/cart/purchaseComplete.jsp"
+        redirect="false"
+      />
+    </action>
+<!-- IPN receiver. uses unspecified(), req.URI.match(this.path) -->
+    <action
+      path="/ppnotify"
+      type="com.beathive.webapp.action.PurchaseAction"
+      name="paypalForm"
+      scope="request"
+      input="editBilling"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="editBilling"
+        path="/WEB-INF/pages/cart/billingForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="purchaseComplete"
+        path="/purchaseComplete.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/ppdt"
+      type="com.beathive.webapp.action.PurchaseAction"
+      name="paypalForm"
+      scope="request"
+      input="editBilling"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="editBilling"
+        path="/WEB-INF/pages/cart/billingForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="purchaseComplete"
+        path="/purchaseComplete.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/purchase"
+      type="com.beathive.webapp.action.PurchaseAction"
+      name="billingForm"
+      scope="session"
+      input="editBilling"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <forward
+        name="editBilling"
+        path="/WEB-INF/pages/cart/billingForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="purchaseComplete"
+        path="/purchaseComplete.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/user/wishList"
+      type="com.beathive.webapp.action.WishListAction"
+      name="favoriteForm"
+      scope="request"
+      input="view"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+    <forward
+        name="view"
+        path="/WEB-INF/pages/cart/viewWishList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="jsreply"
+        path="/WEB-INF/pages/cart/viewCart.jsp"
+        redirect="false"
+      />
+    </action>
+
+
+    <action
+      path="/component/loops"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/loopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="loopList"
+        path="/WEB-INF/pages/loopSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="trackpackList"
+        path="/WEB-INF/pages/trackpackSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/loops"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/loopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="loopList"
+        path="/WEB-INF/pages/loopSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="trackpackList"
+        path="/WEB-INF/pages/trackpackSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/searchLoops"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="search"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="search"
+        path="/WEB-INF/pages/loopSearch.jsp"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    
+    
+    <action
+      path="/viewComponents"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="success"
+        path="/WEB-INF/pages/resultsInnerLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    
+    
+    <action
+      path="/viewTrackpack"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="success"
+        path="/WEB-INF/pages/trackpackView.jsp"
+        redirect="false"
+      />
+    </action>
+    
+    
+    <action
+      path="/shop/loops"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/loopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="loopList"
+        path="/WEB-INF/pages/loopSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="trackpackList"
+        path="/WEB-INF/pages/trackpackSearchResults.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    
+    
+    
+    <action
+      path="/producer/editLoop"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/loopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="editrackpack"
+        path="/WEB-INF/pages/trackpackForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/loopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/producer/saveLoop"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopForm"
+      scope="request"
+      input="edit"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/loopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/loopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/producer/deleteLoop"
+      type="com.beathive.webapp.action.LoopAction"
+      name="loopForm"
+      scope="request"
+      input="edit"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="success"
+        path="/WEB-INF/pages/empty.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/producer/saveLoopInfo"
+      type="com.beathive.webapp.action.LoopAction"
+      name="clipDetailsForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="jsdata"
+        path="/WEB-INF/pages/producer/jsdata.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/loopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/searchLoops.html"
+        redirect="false"
+      />
+      <forward
+        name="audioView"
+        path="/WEB-INF/pages/unboundLoopList.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/passwordHint"
+      type="com.beathive.webapp.action.PasswordHintAction"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="previousPage"
+        path="/"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/admin/reload"
+      type="com.beathive.webapp.action.ReloadAction"
+      roles="admin"
+      unknown="false"
+      validate="false"
+    >
+    </action>
+    <action
+      path="/signup"
+      type="com.beathive.webapp.action.SignupAction"
+      name="signupForm"
+      scope="session"
+      parameter="method"
+      input="signup"
+      unknown="false"
+      validate="true"
+    >
+      <forward
+        name="signup"
+        path="/WEB-INF/pages/signup.jsp"
+        redirect="false"
+      />
+      <forward
+        name="success"
+        path="/registered.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/resetPassword"
+      type="com.beathive.webapp.action.SignupAction"
+      name="passwordForm"
+      parameter="method"
+      scope="request"
+      input="newPassword"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="newPassword"
+        path="/WEB-INF/pages/lostPassword.jsp"
+        redirect="false"
+      />
+    </action>
+<!--  Defines/Maps most producer actions. 
+	Actions specific to Shop eg: addStore (no-auth access), editStore,
+	are in StoreAction-->
+    <action
+      path="/producer/home"
+      type="com.beathive.webapp.action.ProducerAction"
+      name="storeForm"
+      parameter="method"
+      scope="session"
+      input="home"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="home"
+        path="/WEB-INF/pages/producer/home.jsp"
+        redirect="false"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/producer/editShopForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="inventory"
+        path="/WEB-INF/pages/producer/inventory.jsp"
+        redirect="false"
+      />
+      <forward
+        name="loopList"
+        path="/WEB-INF/pages/producer/loopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="innerLoopList"
+        path="/WEB-INF/pages/producer/reloadInnerLoopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="trackpackList"
+        path="/WEB-INF/pages/producer/trackpackList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="shopReport"
+        path="/WEB-INF/pages/producer/salesForm.jsp"
+        redirect="false"
+      />
+    </action>
+
+    <action
+      path="/producer/viewComponents"
+      type="com.beathive.webapp.action.ProducerAction"
+      name="storeForm"
+      parameter="method"
+      scope="request"
+      input="home"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="home"
+        path="/WEB-INF/pages/producer/home.jsp"
+        redirect="false"
+      />
+      <forward
+        name="innerLoopList"
+        path="/WEB-INF/pages/producer/reloadInnerLoopList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="trackpackList"
+        path="/WEB-INF/pages/producer/trackpackList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="shopReport"
+        path="/WEB-INF/pages/producer/salesForm.jsp"
+        redirect="false"
+      />
+    </action>
+
+   <action
+      path="/producer/reports"
+      type="com.beathive.webapp.action.ReportAction"
+      name="shopReportForm"
+      scope="request"
+      input="reportsHome"
+      parameter="method"
+      unknown="false"
+      validate="false"
+      roles="admin,producer"
+    >
+      <forward
+        name="reportsHome"
+        path="/WEB-INF/pages/producer/reports/home.jsp"
+        redirect="false"
+      />
+      <forward
+        name="salesForm"
+        path="/WEB-INF/pages/producer/reports/salesForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="salesResults"
+        path="/WEB-INF/pages/producer/reports/salesResults.jsp"
+        redirect="false"
+      />
+    </action>
+
+   <action
+      path="/admin/salesReport"
+      type="com.beathive.webapp.action.ReportAction"
+      name="shopReportForm"
+      scope="request"
+      input="salesForm"
+      parameter="method"
+      unknown="false"
+      validate="false"
+      roles="admin,producer"
+    >
+      <forward
+        name="salesForm"
+        path="/WEB-INF/pages/admin/salesForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="salesResults"
+        path="/WEB-INF/pages/admin/salesResults.jsp"
+        redirect="false"
+      />
+    </action>
+
+
+    <action
+      path="/stores"
+      type="com.beathive.webapp.action.StoreAction"
+      name="loopSearchForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <!-- used by producer's/ create shop -->
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/store/storeForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/store/storeList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/shopDirectory.html"
+        redirect="true"
+      />
+    </action>
+
+    <action
+      path="/shop/viewInfo"
+      type="com.beathive.webapp.action.StoreAction"
+      name="storeForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="info"
+        path="/WEB-INF/pages/store/info.jsp"
+        redirect="false"
+      />
+    </action>
+    <action
+      path="/producer/editStore"
+      type="com.beathive.webapp.action.StoreAction"
+      name="storeForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="false"
+      roles="producer,admin"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/store/storeForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/store/storeList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/stores.html"
+        redirect="true"
+      />
+    </action>
+    <action
+      path="/addStore"
+      type="com.beathive.webapp.action.StoreAction"
+      name="storeForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="false"
+      roles="user,admin"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/store/storeForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/store/storeList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/stores.html"
+        redirect="true"
+      />
+    </action>
+    <action
+      path="/producer/saveStore"
+      type="com.beathive.webapp.action.StoreAction"
+      name="storeForm"
+      scope="request"
+      input="edit"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/store/storeForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/store/storeList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="search"
+        path="/stores.html"
+        redirect="true"
+      />
+    </action>
+
+
+    <action
+      path="/admin/promos"
+      type="com.beathive.webapp.action.PromoAction"
+      name="promoForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/admin/promoForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/admin/promoList.jsp"
+        redirect="false"
+      />
+        <forward
+        name="search"
+        path="/admin/promos.html"
+        redirect="true"
+      />
+</action>
+
+    <action
+      path="/admin/savePromo"
+      type="com.beathive.webapp.action.PromoAction"
+      name="promoForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/admin/promoForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/admin/promoList.jsp"
+        redirect="false"
+      />
+        <forward
+        name="search"
+        path="/admin/promos.html"
+        redirect="true"
+      />
+</action>
+
+    <action
+      path="/admin/editPromo"
+      type="com.beathive.webapp.action.PromoAction"
+      name="promoForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/admin/promoForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/admin/promoList.jsp"
+        redirect="false"
+      />
+        <forward
+        name="search"
+        path="/admin/promos.html"
+        redirect="true"
+      />
+</action>
+ 
+     <action
+      path="/shop/saveComment"
+      type="com.beathive.webapp.action.CommentAction"
+      name="commentForm"
+      scope="request"
+      input="list"
+      parameter="method"
+      unknown="false"
+      validate="true"
+      roles="admin,producer,user"
+
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/commentList.jsp"
+        redirect="false"
+      />
+      <forward
+        name="comment"
+        path="/WEB-INF/pages/comment.jsp"
+        redirect="false"
+      />
+        <forward
+        name="search"
+        path="/shop/comments.html"
+        redirect="true"
+      />
+</action>
+
+     <action
+      path="/shop/comments"
+      type="com.beathive.webapp.action.CommentAction"
+      name="commentForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="list"
+        path="/WEB-INF/pages/commentList.jsp"
+        redirect="false"
+      />
+</action>
+
+
+     <action
+      path="/user/zips"
+      type="com.beathive.webapp.action.ZipAction"
+      name="zipForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+        name="list"
+        path="/WEB-INF/pages/zipList.jsp"
+        redirect="false"
+      />
+        <forward
+        name="search"
+        path="/user/zips.html"
+        redirect="true"
+      />
+</action>
+
+     <action
+      path="/shop/contactProducer"
+      type="com.beathive.webapp.action.ProducerContactAction"
+      name="contactForm"
+      scope="request"
+      input="mainMenu"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <forward
+       name="sendForm"
+       path="/WEB-INF/pages/store/contactProducer.jsp"
+        redirect="false"
+      />
+      <forward
+       name="replyForm"
+       path="/WEB-INF/pages/store/contactProducer.jsp"
+       redirect="false"
+      />
+</action>
+
+     <action
+      path="/sendOffense"
+      type="com.beathive.webapp.action.OffenseAction"
+      name="offenseForm"
+      scope="request"
+      input="report"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <forward
+       name="report"
+       path="/reportOffense.html"
+        redirect="false"
+      />
+</action>
+    <action
+      path="/sendFeedback"
+      type="com.beathive.webapp.action.ContactAction"
+      name="feedbackForm"
+      scope="request"
+      input="form"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <forward
+        name="form"
+        path="/feedbackForm.html"
+        redirect="true"
+      />
+    </action>
+
+
+    <action
+      path="/user/editPreferences"
+      type="com.beathive.webapp.action.PreferenceAction"
+      name="preferenceForm"
+      scope="session"
+      input="userHome"
+      parameter="method"
+      unknown="false"
+      validate="false"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/preferenceForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="view"
+        path="/WEB-INF/pages/preferences.jsp"
+        redirect="false"
+      />
+	    </action>
+    <action
+      path="/user/savePreferences"
+      type="com.beathive.webapp.action.PreferenceAction"
+      name="preferenceForm"
+      scope="session"
+      input="edit"
+      parameter="method"
+      unknown="false"
+      validate="true"
+    >
+      <set-property
+        property="cancellable"
+        value="true"
+      />
+      <forward
+        name="edit"
+        path="/WEB-INF/pages/preferenceForm.jsp"
+        redirect="false"
+      />
+      <forward
+        name="success"
+        path="/user/editPreferences.html"
+        redirect="true"
+      />
+    </action>
+
+
+<!-- footer links -->
+<action path="/feedbackForm" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/sendFeedback.jsp" />
+<action path="/reportOffense" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/reportOffense.jsp" />
+<action path="/about/termsofservice" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/termsofservice.jsp"/>
+
+<action path="/about/privacypolicy" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/privacypolicy.jsp"/>
+
+<action path="/about/copyrightpolicy" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/copyrightpolicy.jsp"/>
+
+<action path="/about/licenseagreement" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/licenseagreement.jsp"/>
+
+<action path="/about/trademark" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/trademark.jsp"/>
+
+<action path="/about/press" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/press.jsp"/>
+<action path="/about/faq" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/faq.jsp"/>
+<action path="/about/linktous" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/about/linktous.jsp"/>
+
+<!-- END footer links -->
+
+    <!-- Forwards to the mainMenu tile definition -->
+<action path="/home" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/mainMenu.jsp" />
+
+<action path="/producer/confirmDelete" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/producer/confirmDelete.jsp" />
+
+<action path="/admin/home" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/admin/home.jsp" />
+<action path="/admin/salesReportForm" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/admin/salesForm.jsp" />
+
+<!--action path="/shopInstructions" type="org.apache.struts.actions.ForwardAction" parameter=".shopInstructions" /-->
+
+<!--action path="/describeTrackpack" type="org.apache.struts.actions.ForwardAction" parameter=".editTrackpackInfo" roles="producer" /-->
+<!--action path="/describeLoop" type="org.apache.struts.actions.ForwardAction" parameter=".editLoopInfo" roles="producer" /-->
+<!--action path="/trackpackView" type="org.apache.struts.actions.ForwardAction" parameter=".editTrackpack" roles="producer" /-->
+<!--action path="/trackpackComponent" type="org.apache.struts.actions.ForwardAction" parameter=".editPackLoop" roles="producer" /-->
+<!--action path="/producer/MyShop" type="org.apache.struts.actions.ForwardAction" parameter="producerHome" roles="producer" /-->
+<!--action path="/trackpackResList" type="org.apache.struts.actions.ForwardAction" parameter=".trackpackSearchResult" /-->
+
+<action path="/agreementForm" type="org.apache.struts.actions.ForwardAction"
+    parameter="/WEB-INF/pages/producer/agreementForm.jsp"/>
+<action path="/registrationComplete" type="org.apache.struts.actions.ForwardAction"
+    parameter="/WEB-INF/pages/registrationComplete.jsp"/>
+
+<!-- Action to flush cache -->
+<action path="/flush" type="org.apache.struts.actions.ForwardAction"
+    parameter="/WEB-INF/pages/flushCache.jsp" roles="admin"/>
+
+  <action
+        path="/comment" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/commentForm.jsp"
+        roles="user,producer,admin"
+      />
+ <action path="/selectFile" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/uploadForm.jsp"/>        
+<!-- Forward to view Active Users -->
+<!--
+<action path="/activeUsers" type="org.apache.struts.actions.ForwardAction" parameter=".activeUsers" roles="admin" />
+-->
+    <!-- Forward to view Active Users -->
+    <action path="/admin/activeUsers" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/activeUsers.jsp" roles="admin"/>
+
+    <action path="/registered" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/signup.jsp"/>
+<!--
+    <action path="/activeUsers" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/activeUsers.jsp" roles="admin"/>
+
+-->
+
+<!--  action path="/findLoop" type="org.apache.struts.actions.ForwardAction"
+	parameter=".loopSearchCriteria"/ -->
+	
+	
+    <!-- action path="/producer/salesForm" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/producer/reports/salesForm.jsp"/ -->
+
+    <action path="/shopDirectory" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/shopDirectory.jsp"/>
+	<!-- action path="/searchLoops" type="org.apache.struts.actions.ForwardAction"
+        parameter="/WEB-INF/pages/loopSearch.jsp"/ -->
+
+        <!-- action path="/producer/home" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/producerHome.jsp" / -->
+
+        <action path="/producer/uploadClip" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/uploadClip.jsp"  roles="admin,producer"/>
+
+        <action path="/producer/uploadClip" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/uploadClip.jsp"  roles="admin,producer"/>
+
+
+        <action path="/register" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/signup.jsp" />
+
+
+        <action path="/producer/createShop" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/createshop.jsp"  roles="user.admin" />
+
+        <action path="/purchaseComplete" type="org.apache.struts.actions.ForwardAction" parameter="/WEB-INF/pages/cart/purchaseComplete.jsp"/>
+        
+        
+        
+  </action-mappings>
+
+  <controller nocache="true" inputForward="true" maxFileSize="30M"/>
+
+<message-resources parameter="ApplicationResources" key="org.apache.struts.action.MESSAGE"/>
+<message-resources key="cybersourceCodes" parameter="cybersourceResponses"/>
+
+
+
+      <!-- ========== Tiles plugin ===================  -->
+    <!-- plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" 
+                      value="/WEB-INF/tiles-config.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+    </plug-in -->
+    <!-- ========== Validator plugin ===================  -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames" value="/WEB-INF/validator-rules.xml,
+                                        /WEB-INF/validator-rules-custom.xml,
+                                        /WEB-INF/validation.xml"/>
+    </plug-in>
+
+</struts-config>

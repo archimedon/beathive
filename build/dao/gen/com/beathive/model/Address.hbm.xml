@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.Address"
+            table="address"
+    >
+
+    <id
+        name="userId"
+            column="userId"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="assigned">
+
+    </generator>
+
+    </id>
+
+        <property
+            name="AVSCode"
+                    column="avs_code"
+        >
+
+        </property>
+
+        <property
+            name="areacode"
+                    column="areacode"
+        >
+
+        </property>
+
+        <property
+            name="phone"
+                    column="phone"
+        >
+
+        </property>
+
+        <property
+            name="street1"
+                    column="street1"
+                length="150"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="street2"
+                    column="street2"
+                length="50"
+                not-null="false"
+        >
+
+        </property>
+
+        <property
+            name="city"
+                    column="city"
+                length="50"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="province"
+                    column="province"
+                length="100"
+        >
+
+        </property>
+
+        <property
+            name="country"
+                    column="country"
+                length="100"
+        >
+
+        </property>
+
+        <property
+            name="postalCode"
+                    column="postal_code"
+                length="15"
+                not-null="true"
+        >
+
+        </property>
+
+    </class>    
+
+</hibernate-mapping>
+

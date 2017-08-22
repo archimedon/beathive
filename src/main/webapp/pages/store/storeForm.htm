@@ -1,0 +1,45 @@
+<form id="storeForm" method="post" action="/producer/saveStore.html" onsubmit="return validateStoreForm(this)">
+
+<input name="id" value="265" type="hidden">
+<input name="bannerImg" value="/images/producer_banners/ronnied/0_banner.gif" id="bannerImg" type="hidden">
+
+<input name="userId" value="2927" id="userId" type="hidden">
+<input name="views" value="10" id="views" type="hidden">
+
+<input name="statusId" value="" id="statusId" type="hidden">
+<input name="level" value="1" id="level" type="hidden">
+
+<ul id="store_form_table" border="0" cellpadding="0" cellspacing="0">
+	<li class="label">
+		<input name="agreement" value="true" id="agreement" type="hidden">
+		<label for="name" class="desc">Shop Name <span class="req">*</span></label>
+		<input name="name" value="Ahmaprudusah" id="name" class="text medium" type="text">
+	</li>
+
+	<li>
+		<label for="paymentEmail" class="desc">Payment Email <small>(if different)</small><span class="req">*</span></label>
+		<input name="paymentEmail" value="ron@beathive.com" id="paymentEmail" class="text medium" type="text">
+	</li>
+	<li>
+		<label for="description" class="desc">Description (250 chars.) <span class="req">*</span></label>
+		<textarea name="description" cols="40" rows="7" id="description" class="aTextarea">A test shop only. don't buy my crappy test loops</textarea>
+	</li>
+</ul>
+
+<ul id="store_form_table_right" class="fr">
+	<li>
+		<label for="bannerImg" class="desc">Banner Image <span class="req">*</span><span style="font-size: 10px; display:inline">(120x120 jpg or gif)</span></label> 
+		<input class="" id="bannerfile" type="file">
+	</li>
+	<li id="imgcell" class="emptyImg">
+		<img style="display: block;" class="bannerImg" src="/images/producer_banners/ronnied/0_banner.gif">
+	</li>
+	
+	
+</ul>
+		
+<div bgcolor="#f2deb6" style="clear:both">
+	<span class="RequiredFormField">*</span> = Required Field 
+	<input name="method.save" value="Save" onclick="bCancel=false" class="button" type="submit">
+</div>
+</form>

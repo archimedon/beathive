@@ -1,0 +1,9 @@
+Dear ${username},
+
+Please validate this email address by copying the key below into the validation form field.
+
+key: ${userkey}
+
+Thank you!
+
+BeatHive Customer Support

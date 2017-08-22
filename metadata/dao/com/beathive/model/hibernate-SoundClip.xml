@@ -1,0 +1,3 @@
+<filter-def name="thisUsersScore">
+<filter-param name="viewerId" type="java.lang.Long"/>
+</filter-def>

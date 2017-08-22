@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+
+>
+
+    <class
+            name="com.beathive.model.SoundClip"
+            table="soundclip"
+    >
+
+    <id
+        name="id"
+            column="id"
+            unsaved-value="null"
+    >
+
+    <!-- The generator-class attribute of @hibernate.id is deprecated, use the @hibernate.generator tag instead -->
+    <generator class="native">
+
+    </generator>
+
+    </id>
+
+        <discriminator
+            column="type"
+        />
+<!--  column="score" -->
+
+        <property
+            name="storeId"
+            column="storeId"
+            not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="name"
+                    column="name"
+                not-null="true"
+                unique="false"
+        >
+
+        </property>
+
+        <property
+            name="modified"
+                    type="timestamp"
+                    column="modified"
+                not-null="true"
+        >
+
+        </property>
+
+        <property
+            name="created"
+                    type="timestamp"
+                    column="created"
+                not-null="true"
+                update="false"
+        >
+
+        </property>
+
+        <property
+            name="statusId"
+                    column="statusId"
+        >
+
+        </property>
+
+        <list
+            name="genre"
+            table="clip_genre"
+            lazy="true"
+            cascade="none"
+        >
+
+            <key
+                column="clipId"
+            >
+
+            </key>          
+
+            <list-index
+                column="genreOrder"
+            >
+
+            </list-index>
+
+            <many-to-many
+                class="com.beathive.model.Genre"
+                column="genreId"
+                outer-join="auto"
+                unique="false"
+             >
+
+             </many-to-many>
+
+        </list>
+
+        <set
+            name="audioFormat"
+            table="clip_audiofile"
+            lazy="false"
+            inverse="false"
+            cascade="all"
+           
+            fetch="select"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="clip_id"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-many-to-many tag is deprecated, use @hibernate.many-to-many instead  outer-join="auto"-->
+            <many-to-many
+                class="com.beathive.model.AudioFile"
+                column="fileId"
+                order-by="formatId asc"
+               unique="true"
+             />
+
+        </set>
+
+        <component
+            name="price"
+        >
+
+        <property
+            name="currencyCode"
+                    column="currencyCode"
+        >
+
+        </property>
+
+        <property
+            name="amount"
+                    column="amount"
+        >
+
+        </property>
+
+        </component>
+
+        <property
+            name="keyword"
+                    type="text"
+                    column="keyword"
+        >
+
+        </property>
+
+        <property
+            name="score"
+                    column="score"
+                update="false"
+                insert="false"
+                formula="(select ifNUll(sum(cr.score),0) from user_clip_score cr where cr.clipId=id)"
+                lazy="false"
+        >
+
+        </property>
+
+	<property name="storeName">
+        <formula>
+            ( select s.name from store s where s.id=storeId )
+        </formula>
+    </property>
+
+        <property
+            name="timesrated"
+                    column="timesrated"
+                update="false"
+                insert="false"
+                formula="(select count(cr.clipId) from user_clip_score cr where cr.clipId=id)"
+                lazy="false"
+        >
+
+        </property>
+
+        <property
+            name="bpm"
+                    column="bpm"
+        >
+
+        </property>
+
+        <property
+            name="keynote"
+                    column="keynote"
+        >
+
+        </property>
+
+        <property
+            name="scale"
+                    column="scale"
+        >
+
+        </property>
+
+        <property
+            name="timesignature"
+                    column="timesignature"
+        >
+
+        </property>
+
+        <property
+            name="passage"
+                    column="passage"
+        >
+
+        </property>
+
+        <property
+            name="energy"
+                    column="energy"
+        >
+
+        </property>
+
+        <property
+            name="feel"
+                    column="feel"
+        >
+
+        </property>
+
+        <property
+            name="mood"
+                    column="mood"
+        >
+
+        </property>
+
+        <property
+            name="origin"
+                    column="origin"
+        >
+
+        </property>
+
+        <property
+            name="sonority"
+                    column="sonority"
+        >
+
+        </property>
+
+        <property
+            name="texture"
+                    column="texture"
+        >
+
+        </property>
+
+        <property
+            name="ready"
+            column="ready"
+			type="yes_no"
+        />
+
+        <set
+            name="userClipScore"
+            table="user_clip_score"
+            lazy="true"
+            cascade="all"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="clipId"
+            >
+
+            </key>
+<element type="integer" column="score"/>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead
+            <one-to-many
+                  class="com.beathive.model.UserClipScore"
+            />
+ -->
+             <filter
+                name="thisUsersScore"
+                condition="userId=:viewerId"
+             >
+             </filter>
+
+        </set>
+
+        <set
+            name="userItems"
+            table="purchase_item"
+            lazy="true"
+            cascade="none"
+        >
+
+            <key column="clipId" />
+ <element type="long" column="customerId"/>
+            
+             <filter
+                name="thisUserOwns"
+                condition="customerId=:viewerId"
+             >
+             </filter>
+
+        </set>
+        
+        <property name="timesSold">
+        <formula>
+            ( select count(p.id) from purchase_item p where p.clipId=id )
+        </formula>
+    </property>
+
+        
+        
+         <set
+            name="userFavorites"
+            table="favorite"
+            lazy="true"
+            cascade="none"
+        >
+
+            <key column="clipId" />
+            <element type="long" column="userId"/>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead
+            inverse="false"
+            <one-to-many
+                  class="com.beathive.model.Favorite"
+            />
+             -->
+             <filter
+                name="thisUsersFavorite"
+                condition="userId=:viewerId"
+             >
+             </filter>
+
+        </set>
+ 
+    <subclass
+        name="com.beathive.model.Trackpack"
+            discriminator-value="Trackpack"
+    >
+
+        <bag
+            name="loops"
+            lazy="true"
+            inverse="false"
+            cascade="none"
+        >
+
+            <!-- @hibernate.collection-key tag is deprecated, use @hibernate.key instead -->
+            <key
+                column="trackpackId"
+            >
+
+            </key>
+
+            <!-- @hibernate.collection-one-to-many tag is deprecated, use @hibernate.one-to-many instead -->
+            <one-to-many
+                  class="com.beathive.model.Loop"
+            />
+            
+		<filter name="active" condition="( statusId=2 or statusId is NULL)"/>
+
+        </bag>
+
+        <property
+            name="loopsExpected"
+            column="loopsExpected"
+        />
+
+
+
+    </subclass>
+
+    <subclass
+        name="com.beathive.model.Loop"
+            discriminator-value="Loop"
+    >
+        <property
+            name="searchable"
+                    type="yes_no"
+                    column="searchable"
+        >
+
+        </property>
+
+
+        <property
+            name="trackpackId"
+                    column="trackpackId"
+        >
+
+        </property>
+
+        <many-to-one
+            name="trackpack"
+            column="trackpackId"
+            cascade="none"
+                insert="false"
+                update="false"
+                lazy="proxy"
+        >
+
+        </many-to-one>
+
+        <many-to-one
+            name="instrument"
+                    column="instrument_id"
+                cascade="none"
+                insert="false"
+                update="false"
+                lazy="false"
+        >
+
+        </many-to-one>
+
+        <property
+            name="instrumentId"
+                    column="instrument_id"
+        >
+
+        </property>
+
+    </subclass>
+
+    </class>
+<filter-def name="active"/>
+    
+
+<filter-def name="thisUsersFavorite">
+<filter-param name="viewerId" type="java.lang.Long"/>
+</filter-def>
+<filter-def name="thisUsersScore">
+<filter-param name="viewerId" type="java.lang.Long"/>
+</filter-def>
+<filter-def name="thisUserOwns">
+<filter-param name="viewerId" type="java.lang.Long"/>
+</filter-def>
+<filter-def name="withGenre">
+    <filter-param name="genreId" type="Long"/>
+</filter-def>
+</hibernate-mapping>
+

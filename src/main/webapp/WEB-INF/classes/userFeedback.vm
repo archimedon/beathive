@@ -1,0 +1,14 @@
+
+To: ${feedback.recipient}
+Subject: ${feedback.subject}	
+Entered Queue at: ${feedback.creationTime}
+
+
+username: ${feedback.username}
+user email: ${feedback.email}
+user ip: ${feedback.userip}
+
+
+message:
+
+${feedback.message}

@@ -1,0 +1,152 @@
+/**
+ * 
+ */
+package com.beathive.model;
+
+import java.io.Serializable;
+
+
+
+
+/**
+ * @author ron
+ * @struts.form include-all="true" extends="BaseForm"
+ */
+public class CartItem implements Serializable{
+		private String price;
+		private String format;
+		private String shopname;
+		private String instrumentName;
+		// if a collective item like a trackpack
+		private String type;
+		private String clipname;
+		// the audioFileId
+		private String fileId;
+	    protected Long id;
+	    
+	    
+	    /**
+	     * @hibernate.id generator-class="native" unsaved-value="null"
+	     */
+	    public Long getId() {
+	        return id;
+	    }
+		public void setId(Long id) {
+		    this.id = id;
+		}
+
+		/**
+		 * @return Returns the format.
+		 */
+		public String getFormat() {
+			return format;
+		}
+
+		public String getPrice() {
+			return price;
+		}
+
+		public void setFormat(String format) {
+			this.format = format;
+		}
+
+		public String getShopname() {
+			return shopname;
+		}
+		public void setShopname(String shopname) {
+			this.shopname = shopname;
+		}
+		public String getInstrumentName() {
+			return instrumentName;
+		}
+		public void setInstrumentName(String instrumentName) {
+			this.instrumentName = instrumentName;
+		}
+		public String getType() {
+			return type;
+		}
+		public void setType(String type) {
+			this.type = type;
+		}
+		public String getClipname() {
+			return clipname;
+		}
+		public void setClipname(String clipname) {
+			this.clipname = clipname;
+		}
+		public String getFileId() {
+			return fileId;
+		}
+		public void setFileId(String fileId) {
+			this.fileId = fileId;
+		}
+		public void setPrice(String price) {
+			this.price = price;
+		}
+		/* (non-Javadoc)
+		 * @see com.beathive.model.BaseObject#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object o) {
+			if (o!=null && o instanceof CartItem){
+			CartItem c = (CartItem)o;
+			return this.fileId.equals(c.fileId);
+			}
+			return false;
+		}
+
+		/* (non-Javadoc)
+		 * @see com.beathive.model.BaseObject#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			return this.fileId.hashCode();
+		}
+
+		/* (non-Javadoc)
+		 * @see com.beathive.model.BaseObject#toString()
+		 */
+		@Override
+		public String toString() {
+			StringBuffer buf = new StringBuffer();
+			buf.append("{");
+			
+			buf.append("'fileId'");
+			buf.append(":");
+			buf.append("'"+this.fileId+"'");
+			buf.append(",");
+			
+			buf.append("'clipname'");
+			buf.append(":");
+			buf.append("'"+this.clipname+"'");
+			buf.append(",");
+			
+			buf.append("'format'");
+			buf.append(":");
+			buf.append("'"+this.format+"'");
+			buf.append(",");
+			
+			buf.append("'instrumentName'");
+			buf.append(":");
+			buf.append("'"+this.instrumentName+"'");
+			buf.append(",");
+			
+			buf.append("'price'");
+			buf.append(":");
+			buf.append("'"+this.price+"'");
+			buf.append(",");
+			
+			buf.append("'shopname'");
+			buf.append(":");
+			buf.append("'"+this.shopname+"'");
+			buf.append(",");
+			
+			buf.append("'type'");
+			buf.append(":");
+			buf.append("'"+this.type+"'");
+			
+			buf.append("}");
+			return buf.toString();
+		}
+
+}

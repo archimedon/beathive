@@ -1,0 +1,2 @@
+<%@page contentType="text/plain" %><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>{<c:forEach items="${loopdata}" var="entry" varStatus="stat">
+<c:out value="'${entry.key}':'${entry.value}'" escapeXml="false"/><c:if test="${not stat.last}">,</c:if></c:forEach>}
